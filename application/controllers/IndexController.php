@@ -6,7 +6,11 @@ class IndexController extends Zend_Controller_Action
     {
     	//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-	
+		
+		$mod_testlog = new Databases_Tables_TestLog();
+		$mod_testlog->log_val= $postStr;
+		$mod_testlog->AddLog();
+		
 		//extract post data
 		if (!empty($postStr)){
 	
