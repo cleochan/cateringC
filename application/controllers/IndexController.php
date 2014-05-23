@@ -7,6 +7,7 @@ class IndexController extends Zend_Controller_Action
     	//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 		
+		//record test log
 		$mod_testlog = new Databases_Tables_TestLog();
 		$mod_testlog->log_val= $postStr;
 		$mod_testlog->AddLog();
@@ -20,21 +21,13 @@ class IndexController extends Zend_Controller_Action
 			$keyword = trim($postObj->Content);
 			$time = time();
 			$textTpl = "<xml>
-						<ToUserName><![CDATA[toUser]]></ToUserName>
-						<FromUserName><![CDATA[fromUser]]></FromUserName>
+						<ToUserName><![CDATA[".$toUsername."]]></ToUserName>
+						<FromUserName><![CDATA[".$fromUsername."]]></FromUserName>
 						<CreateTime>12345678</CreateTime>
 						<MsgType><![CDATA[text]]></MsgType>
 						<Content><![CDATA[你好]]></Content>
 						</xml>";
-			if(!empty( $keyword ))
-			{
-				$msgType = "text";
-				$contentStr = "Welcome to wechat world!";
-				$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-				echo $resultStr;
-			}else{
-				echo "Input something...";
-			}
+			echo $textTpl;
 	
 		}else {
 			echo "";
