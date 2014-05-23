@@ -113,7 +113,7 @@ class IndexController extends Zend_Controller_Action
     	);
     	
     	$menu_string = Zend_Json::encode($menu);
-    	
+    	echo $menu_string;die;
     	$mod_test = new Algorithms_Extensions_Test();
     	$mod_test->http_post_data($post_uri, $menu_string);
     	
