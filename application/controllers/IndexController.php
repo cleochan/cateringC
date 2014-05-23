@@ -21,9 +21,9 @@ class IndexController extends Zend_Controller_Action
 			$keyword = trim($postObj->Content);
 			$time = time();
 			$textTpl = "<xml>
-						<ToUserName><![CDATA[".$toUsername."]]></ToUserName>
-						<FromUserName><![CDATA[".$fromUsername."]]></FromUserName>
-						<CreateTime>12345678</CreateTime>
+						<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
+						<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
+						<CreateTime><![CDATA[".$time."]]></CreateTime>
 						<MsgType><![CDATA[text]]></MsgType>
 						<Content><![CDATA[你好]]></Content>
 						</xml>";
