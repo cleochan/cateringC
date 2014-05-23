@@ -75,22 +75,39 @@ class IndexController extends Zend_Controller_Action
     
     function makeMenuAction()
     {
-    	$mod_params = new Databases_Tables_Params();
-    	$token = $mod_params->GetVal("WechatToken");
-    	
-    	$post_uri = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$token;
+    	$post_uri = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=iN0uomjBy9DAyawFcFJ3HbtkiaJlPpP-RXLCSqwCjKhJxRbNpns3A64kYc7XGjOZZlMKH8V2oUXSuj-W4FgsjQ";
     	
     	$menu = array(
     		'button' => array(
     			array(
     				'type' => 'view',
-    				'name' => 'aaa',
-    				'link' => 'http://aaa.com'
+    				'name' => '点餐Go',
+    				'url' => 'http://wechat.jushulin.mobi/index/morder'
     			),
     			array(
     				'type' => 'view',
-    				'name' => 'aaa',
-    				'link' => 'bbb.com'
+    				'name' => '关于我们',
+    				'url' => 'http://wechat.jushulin.mobi/index/about'
+    			),
+    			array(
+    				'name' => '营销活动',
+    				'sub_button' => array(
+    						array(
+    								'type' => 'view',
+    								'name' => '每日特价',
+    								'url' => 'http://wechat.jushulin.mobi/index/marketing-sub1'
+    						),
+    						array(
+    								'type' => 'view',
+    								'name' => '厨师推荐',
+    								'url' => 'http://wechat.jushulin.mobi/index/marketing-sub2'
+    						),
+    						array(
+    								'type' => 'view',
+    								'name' => '促销活动',
+    								'url' => 'http://wechat.jushulin.mobi/index/marketing-sub3'
+    						)
+    				)
     			)
     		)
     	);
