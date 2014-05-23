@@ -4,7 +4,10 @@ class IndexController extends Zend_Controller_Action
 {
     function indexAction()
     {
-    	echo "I'm here.";
+    	$mod_test = new Algorithms_Extensions_Test();
+    	$mod_test->valid();
+    	
+    	echo "<br /><br />End.</br />";
 		die;
     }
 }
