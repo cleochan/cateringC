@@ -39,8 +39,7 @@ class IndexController extends Zend_Controller_Action
     
     function aboutAction()
     {
-    	echo "About Us";
-    	die;
+    	
     }
     
     function marketingAction()
