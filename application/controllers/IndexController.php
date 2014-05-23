@@ -80,41 +80,25 @@ class IndexController extends Zend_Controller_Action
     	
     	$post_uri = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$token;
     	
-    	$menu = ' {
-				     "button":[
-				     {	
-				          "type":"click",
-				          "name":"今日歌曲",
-				          "key":"V1001_TODAY_MUSIC"
-				      },
-				      {
-				           "type":"click",
-				           "name":"歌手简介",
-				           "key":"V1001_TODAY_SINGER"
-				      },
-				      {
-				           "name":"菜单",
-				           "sub_button":[
-				           {	
-				               "type":"view",
-				               "name":"搜索",
-				               "url":"http://www.soso.com/"
-				            },
-				            {
-				               "type":"view",
-				               "name":"视频",
-				               "url":"http://v.qq.com/"
-				            },
-				            {
-				               "type":"click",
-				               "name":"赞一下我们",
-				               "key":"V1001_GOOD"
-				            }]
-				       }]
-				 }';
+    	$menu = array(
+    		'button' => array(
+    			array(
+    				'type' => 'view',
+    				'name' => 'aaa',
+    				'link' => 'http://aaa.com'
+    			),
+    			array(
+    				'type' => 'view',
+    				'name' => 'aaa',
+    				'link' => 'bbb.com'
+    			)
+    		)
+    	);
+    	
+    	$menu_string = Zend_Json::encode($menu);
     	
     	$mod_test = new Algorithms_Extensions_Test();
-    	$mod_test->http_post_data($post_uri, $menu);
+    	$mod_test->http_post_data($post_uri, $menu_string);
     	
     	echo "End.";
     	die;
