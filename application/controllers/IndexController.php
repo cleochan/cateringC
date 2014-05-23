@@ -36,5 +36,88 @@ class IndexController extends Zend_Controller_Action
 		
 		die;
     }
+    
+    function aboutAction()
+    {
+    	echo "About Us";
+    	die;
+    }
+    
+    function marketingAction()
+    {
+    	echo "营销活动";
+    	die;
+    }
+    
+    function morderAction()
+    {
+    	echo "点餐页";
+    	die;
+    }
+    
+    function marketingSub1Action()
+    {
+    	echo "每日特价";
+    	die;
+    }
+    
+    function marketingSub2Action()
+    {
+    	echo "厨师推荐";
+    	die;
+    }
+    
+    function marketingSub3Action()
+    {
+    	echo "促销活动";
+    	die;
+    }
+    
+    function makeMenuAction()
+    {
+    	$mod_params = new Databases_Tables_Params();
+    	$token = $mod_params->GetVal("WechatToken");
+    	
+    	$post_uri = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$token;
+    	
+    	$menu = ' {
+				     "button":[
+				     {	
+				          "type":"click",
+				          "name":"今日歌曲",
+				          "key":"V1001_TODAY_MUSIC"
+				      },
+				      {
+				           "type":"click",
+				           "name":"歌手简介",
+				           "key":"V1001_TODAY_SINGER"
+				      },
+				      {
+				           "name":"菜单",
+				           "sub_button":[
+				           {	
+				               "type":"view",
+				               "name":"搜索",
+				               "url":"http://www.soso.com/"
+				            },
+				            {
+				               "type":"view",
+				               "name":"视频",
+				               "url":"http://v.qq.com/"
+				            },
+				            {
+				               "type":"click",
+				               "name":"赞一下我们",
+				               "key":"V1001_GOOD"
+				            }]
+				       }]
+				 }';
+    	
+    	$mod_test = new Algorithms_Extensions_Test();
+    	$mod_test->http_post_data($post_uri, $menu);
+    	
+    	echo "End.";
+    	die;
+    }
 }
 
