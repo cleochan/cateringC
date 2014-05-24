@@ -15,15 +15,18 @@ class OrdersController extends Zend_Controller_Action
 		
 		if($params['session_id'])
     	{
-    		$mod_admin->session_id = $params['session_id'];
-    		if(!$mod_admin->CheckInitialValidation())
-    		{
-    			$error = 1002;
-    		}
-    	}elseif($_SESSION['admin_session']){
-    		if(!$mod_admin->CheckCurrentSessionValidation())
+    		$_SESSION['admin_session'] = $params['session_id'];
+    	}
+    	
+    	if($_SESSION['admin_session']){
+    		
+    		$admin_info = $mod_admin->CheckSessionValidation();
+    		
+    		if(empty($admin_info))
     		{
     			$error = 1005;
+    		}else{
+    			$_SESSION['admin_info'] = $admin_info;
     		}
     	}else{
     		$error = 1002;
@@ -51,15 +54,12 @@ class OrdersController extends Zend_Controller_Action
     
     function placeOrderAction()
     {
-    	$params = $this->_request->getParams();
     	
     }
     
     function viewStatusAction()
     {
-    	echo "View Status Page.";
-    		
-    	die;
+    	
     }
 }
 
