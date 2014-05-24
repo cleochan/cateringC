@@ -32,7 +32,7 @@ class IndexController extends Zend_Controller_Action
 			//extract post data
 			if (!empty($postStr)){
 				$postObj = $mod_basic_services->TurnMsgToObj($postStr);
-				$erorr = $mod_basic_services->OperationCenter($postObj);
+				$error = $mod_basic_services->OperationCenter($postObj);
 			}else {
 				$error = 1003;
 			}
