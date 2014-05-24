@@ -9,7 +9,7 @@ class IndexController extends Zend_Controller_Action
     	$signature = $_GET["signature"];
     	$timestamp = $_GET["timestamp"];
     	$nonce = $_GET["nonce"];
-    	echo "aa";die;
+    	
     	//initial for error log
     	$ip = NULL;
     	$note1 = NULL;
@@ -19,16 +19,17 @@ class IndexController extends Zend_Controller_Action
 		$mod_testlog = new Databases_Tables_TestLog();
 		$mod_testlog->log_val= $postStr;
 		$mod_testlog->AddLog();
-		
+		echo "a";
 		//load basic service class
 		$mod_basic_services = new Algorithms_Core_BasicServices();
-		
+		echo "b";
 		//check error 1002
 		$mod_basic_services->wechat_signature = $_GET["signature"];
 		$mod_basic_services->wechat_timestamp = $_GET["timestamp"];
 		$mod_basic_services->wechat_nonce = $_GET["nonce"];
 		if($mod_basic_services->CheckSignature())
 		{
+			echo "c";die;
 			//extract post data
 			if (!empty($postStr)){
 				$postObj = $mod_basic_services->TurnMsgToObj($postStr);
@@ -39,7 +40,7 @@ class IndexController extends Zend_Controller_Action
 		}else{
 			$error = 1002;
 		}
-		
+		echo "d";die;
 		//register error
 		if($error)
 		{
