@@ -42,24 +42,41 @@ class Algorithms_Core_BasicServices
 					switch($post_obj->Event)
 					{
 						case 'CLICK':
-							if('PLACE_ORDER' == $post_obj->EventKey)
-							{
-								$content = "PLACE_ORDER";
-							}elseif('VIEW_STATUS' == $post_obj->EventKey){
-								$content = "VIEW_STATUS";
-							}else{
-								$content = "OTHER";
-							}
+							
+							//public params
 							$fromUsername = $post_obj->FromUserName;
 							$toUsername = $post_obj->ToUserName;
 							$time = time();
-							$textTpl = "<xml>
-								<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
-								<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
-								<CreateTime><![CDATA[".$time."]]></CreateTime>
-								<MsgType><![CDATA[text]]></MsgType>
-								<Content><![CDATA[".$content."]]></Content>
-								</xml>";
+							
+							if('PLACE_ORDER' == $post_obj->EventKey)
+							{
+								$url = "http://wechat.jushulin.mobi/orders/place-order";
+								
+								$textTpl = "<xml>
+									<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
+									<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
+									<CreateTime><![CDATA[".$time."]]></CreateTime>
+									<MsgType><![CDATA[news]]></MsgType>
+									<ArticleCount>1</ArticleCount>
+									<Articles>
+									<item>
+									<Title><![CDATA[Place Order]]></Title>
+									<Description><![CDATA[用户陈鹏进入点餐系统]]></Description>
+									<Url><![CDATA[".$url."]]></Url>
+									</item>
+									</Articles>
+									</xml>";
+							}elseif('VIEW_STATUS' == $post_obj->EventKey){
+								$content = "VIEW_STATUS";
+							}
+							
+// 							$textTpl = "<xml>
+// 								<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
+// 								<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
+// 								<CreateTime><![CDATA[".$time."]]></CreateTime>
+// 								<MsgType><![CDATA[text]]></MsgType>
+// 								<Content><![CDATA[".$content."]]></Content>
+// 								</xml>";
 							echo $textTpl;
 							break;
 						default:
