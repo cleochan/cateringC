@@ -26,6 +26,10 @@ class Algorithms_Core_BasicServices
 	{
 		$error = 0;
 		
+		$this->wechat_signature = $this->wechat_signature;
+		$this->wechat_timestamp = $this->wechat_timestamp;
+		$this->wechat_nonce = $this->wechat_nonce;
+		
 		//check visitor permission
 		if($this->CheckSignature())
 		{
