@@ -42,6 +42,14 @@ class Algorithms_Core_BasicServices
 					switch($post_obj->Event)
 					{
 						case 'CLICK':
+							if('PLACE_ORDER' == $post_obj->EventKey)
+							{
+								$content = "PLACE_ORDER";
+							}elseif('VIEW_STATUS' == $post_obj->EventKey){
+								$content = "VIEW_STATUS";
+							}else{
+								$content = "OTHER";
+							}
 							$fromUsername = $post_obj->FromUserName;
 							$toUsername = $post_obj->ToUserName;
 							$time = time();
@@ -50,7 +58,7 @@ class Algorithms_Core_BasicServices
 								<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
 								<CreateTime><![CDATA[".$time."]]></CreateTime>
 								<MsgType><![CDATA[text]]></MsgType>
-								<Content><![CDATA[成功访问]]></Content>
+								<Content><![CDATA[".$content."]]></Content>
 								</xml>";
 							echo $textTpl;
 							break;
