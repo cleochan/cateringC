@@ -9,7 +9,7 @@ class IndexController extends Zend_Controller_Action
     	$signature = $_GET["signature"];
     	$timestamp = $_GET["timestamp"];
     	$nonce = $_GET["nonce"];
-    	
+    	echo "aa";die;
     	//initial for error log
     	$ip = NULL;
     	$note1 = NULL;
