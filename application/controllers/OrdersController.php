@@ -11,7 +11,9 @@ class OrdersController extends Zend_Controller_Action
     
     function placeOrderAction()
     {
+    	$params = $this->_request->getParams();
     	
+    	$this->view->session_id = $params['session_id'];
     }
     
     function viewStatusAction()

@@ -40,6 +40,9 @@ class Algorithms_Core_BasicServices
 				
 				if('event' == $post_obj->MsgType)
 				{
+					//generate session for wechat user
+					$session_val = $mod_admin->GenerateSession();
+					
 					//proceed
 					switch($post_obj->Event)
 					{
@@ -52,7 +55,7 @@ class Algorithms_Core_BasicServices
 							
 							if('PLACE_ORDER' == $post_obj->EventKey)
 							{
-								$url = $mod_params->GetVal("SystemDomain")."/orders/place-order";
+								$url = $mod_params->GetVal("SystemDomain")."/orders/place-order/session_id/".$session_val;
 								
 								$textTpl = "<xml>
 									<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
