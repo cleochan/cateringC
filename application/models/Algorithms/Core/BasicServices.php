@@ -76,6 +76,11 @@ class Algorithms_Core_BasicServices
 	
 	function CheckSignature()
 	{
+		echo "sign = ".$this->wechat_signature."<br />";
+		echo "timestamp = ".$this->wechat_timestamp."<br />";
+		echo "nonce = ".$this->wechat_nonce."<br />";
+		die;
+		
 		$signature = $this->wechat_signature;
 		$timestamp = $this->wechat_timestamp;
 		$nonce = $this->wechat_nonce;
