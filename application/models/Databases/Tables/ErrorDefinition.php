@@ -1,0 +1,1 @@
+<?phpclass Databases_Tables_ErrorDefinition extends Zend_Db_Table{    protected $_name = 'error-definition';        function GetVal($error_id)    {        $result = $this->fetchRow("error_id='".$error_id."'");        return $result->error_msg;    }}
