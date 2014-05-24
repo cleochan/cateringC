@@ -11,9 +11,7 @@ class OrdersController extends Zend_Controller_Action
     
     function placeOrderAction()
     {
-    	echo "Place Order Page.";
-    		
-    	die;
+    	
     }
     
     function viewStatusAction()

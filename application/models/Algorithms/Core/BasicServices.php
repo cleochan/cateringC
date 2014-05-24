@@ -36,6 +36,8 @@ class Algorithms_Core_BasicServices
 			
 			if(!empty($admin_info)) //valid
 			{
+				$mod_params = new Databases_Tables_Params();
+				
 				if('event' == $post_obj->MsgType)
 				{
 					//proceed
@@ -50,7 +52,7 @@ class Algorithms_Core_BasicServices
 							
 							if('PLACE_ORDER' == $post_obj->EventKey)
 							{
-								$url = "http://wechat.jushulin.mobi/orders/place-order";
+								$url = $mod_params->GetVal("SystemDomain")."/orders/place-order";
 								
 								$textTpl = "<xml>
 									<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
@@ -61,7 +63,7 @@ class Algorithms_Core_BasicServices
 									<Articles>
 									<item>
 									<Title><![CDATA[Place Order]]></Title>
-									<Description><![CDATA[用户陈鹏进入点餐系统]]></Description>
+									<Description><![CDATA[用户".$admin_info['admin_alias']."进入点餐系统]]></Description>
 									<Url><![CDATA[".$url."]]></Url>
 									</item>
 									</Articles>
@@ -70,13 +72,6 @@ class Algorithms_Core_BasicServices
 								$content = "VIEW_STATUS";
 							}
 							
-// 							$textTpl = "<xml>
-// 								<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
-// 								<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
-// 								<CreateTime><![CDATA[".$time."]]></CreateTime>
-// 								<MsgType><![CDATA[text]]></MsgType>
-// 								<Content><![CDATA[".$content."]]></Content>
-// 								</xml>";
 							echo $textTpl;
 							break;
 						default:
