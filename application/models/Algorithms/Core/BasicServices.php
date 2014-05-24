@@ -82,7 +82,7 @@ class Algorithms_Core_BasicServices
 									<ArticleCount>1</ArticleCount>
 									<Articles>
 									<item>
-									<Title><![CDATA[Place Order]]></Title>
+									<Title><![CDATA[View Status]]></Title>
 									<Description><![CDATA[用户".$admin_info['admin_alias']."进入订单查询]]></Description>
 									<Url><![CDATA[".$url."]]></Url>
 									</item>
