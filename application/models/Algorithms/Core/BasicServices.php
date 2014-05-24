@@ -72,7 +72,22 @@ class Algorithms_Core_BasicServices
 									</Articles>
 									</xml>";
 							}elseif('VIEW_STATUS' == $post_obj->EventKey){
-								$content = "VIEW_STATUS";
+								$url = $mod_params->GetVal("SystemDomain")."/orders/view-status/session_id/".$session_val;
+								
+								$textTpl = "<xml>
+									<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
+									<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
+									<CreateTime><![CDATA[".$time."]]></CreateTime>
+									<MsgType><![CDATA[news]]></MsgType>
+									<ArticleCount>1</ArticleCount>
+									<Articles>
+									<item>
+									<Title><![CDATA[Place Order]]></Title>
+									<Description><![CDATA[用户".$admin_info['admin_alias']."进入订单查询]]></Description>
+									<Url><![CDATA[".$url."]]></Url>
+									</item>
+									</Articles>
+									</xml>";
 							}
 							
 							echo $textTpl;
