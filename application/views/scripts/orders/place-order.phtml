@@ -47,7 +47,7 @@ function test(val1)
 	    cache:false,    
 	    dataType:'json',    
 	    success:function(data) {    
-	    	$("#vdata").innerHTML = data.msg;
+	    	document.getElementById("vdata").innerHTML = data.msg;
 	     },    
 	     error : function() {      
 	          alert("操作异常，请联系管理员");    
