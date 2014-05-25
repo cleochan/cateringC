@@ -1,60 +1,29 @@
-<div id="eatinbar"><div style="font-size: 75px; font-weight:900;">套餐</div>
+<?php if(!empty($this->categories_array['sets'])):?>
+<?php foreach($this->categories_array['sets'] as $sets_key => $sets_val):?>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900;"><?=$sets_val?></div>
 <div id="eatinicon">
   <ul>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>801</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>802</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>803</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>804</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>805</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>806</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>807</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>808</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>809</strong></a></li>
+	<?php foreach($this->sets_array[$sets_key] as $sets_details):?>
+  		<li><a href="/eat-in/add-item/type/product/id/<?=$sets_details[0]?>"><strong><?=$sets_details[1]?></strong></a></li>
+  	<?php endforeach;?>
   </ul>
 </div>
 </div>
-<div id="eatinbar"><div style="font-size: 75px; font-weight:900;">主食</div>
+<?php endforeach;?>
+<?php endif;?>
+<?php if(!empty($this->categories_array['normal'])):?>
+<?php foreach($this->categories_array['normal'] as $normal_key => $normal_val):?>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900;"><?=$normal_val?></div>
 <div id="eatinicon">
   <ul>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>1</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>2</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>3</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>4</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>5</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>6</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>7</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>8</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>9</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>10</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>11</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>12</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>13</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>14</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>15</strong></a></li>
+	<?php foreach($this->product_array[$normal_key] as $normal_details):?>
+  		<li><a href="/eat-in/add-item/type/product/id/<?=$normal_details[0]?>"><strong><?=$normal_details[1]?></strong></a></li>
+  	<?php endforeach;?>
   </ul>
 </div>
 </div>
-<div id="eatinbar"><div style="font-size: 75px; font-weight:900;">酒水饮料</div>
-<div id="eatinicon">
-  <ul>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>16</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>17</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>18</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>19</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>20</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>21</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>22</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>23</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>24</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>25</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>26</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>27</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>28</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>29</strong></a></li>
-		<li><a href="/eat-in/add-item/type/product/id/"><strong>30</strong></a></li>
-  </ul>
-</div>
-</div>
+<?php endforeach;?>
+<?php endif;?>
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 <div id="bottomNav">
 <table width="100%" border="0">
