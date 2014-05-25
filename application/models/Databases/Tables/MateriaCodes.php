@@ -48,4 +48,26 @@ class Databases_Tables_MateriaCodes extends Zend_Db_Table
     	
     	return $result;
     }
+    
+    function DumpAll()
+    {
+    	$result = array();
+    	
+    	if($this->item_type)
+    	{
+    		$data = $this->fetchAll("item_type=.".$this->item_type."'");
+    	}else{
+    		$data = array();
+    	}
+    	
+    	if(!empty($data))
+    	{
+    		foreach($data as $row)
+    		{
+    			$result[$row['item_id']] = $row['item_code'];
+    		}
+    	}
+    	
+    	return $result;
+    }
 }

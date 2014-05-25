@@ -10,7 +10,7 @@ class Databases_Tables_MateriaProducts extends Zend_Db_Table
     var $status;
     var $order_code;
     
-    function FetchProductsByCategory()
+    function FetchProductsByCategory($type=NULL)
     {
     	$result = array();
     	$product_id_array = array();
@@ -43,13 +43,18 @@ class Databases_Tables_MateriaProducts extends Zend_Db_Table
     			$get_prices->product_id_array = $product_id_array;
     			$prices_array = $get_prices->FetchPricesById();
     			
+    			//get product codes
+    			$mod_codes = new Databases_Tables_MateriaCodes();
+    			$mod_codes->item_type = 1; //products
+    			$codes_array = $mod_codes->DumpAll();
+    			
     			foreach($rows as $row)
     			{
     				if(!$result[$row['product_category']])
     				{
     					$result[$row['product_category']] = array();
     				}
-    				$result[$row['product_category']][] = array(0=>$row['products_id'], 1=>$row['product_name'], 2=>$row['stock_on_hand'], 3=>$prices_array[$row['products_id']]);
+    				$result[$row['product_category']][] = array(0=>$row['products_id'], 1=>$row['product_name'], 2=>$row['stock_on_hand'], 3=>$prices_array[$row['products_id']], 4=>$codes_array[$row['products_id']]);
     			}
     		}
     	}

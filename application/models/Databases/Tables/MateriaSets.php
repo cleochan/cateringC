@@ -40,6 +40,11 @@ class Databases_Tables_MateriaSets extends Zend_Db_Table
     			$get_prices_and_stock->sets_id_array = $product_id_array;
     			$get_result = $get_prices_and_stock->GetSetsPricesAndStock();
     			
+    			//get sets codes
+    			$mod_codes = new Databases_Tables_MateriaCodes();
+    			$mod_codes->item_type = 2; //sets
+    			$codes_array = $mod_codes->DumpAll();
+    			
     			foreach($rows as $row)
     			{
     				if(!$result[$row['sets_category']])
@@ -48,7 +53,7 @@ class Databases_Tables_MateriaSets extends Zend_Db_Table
     				}
     				if($get_result['stock'][$row['sets_id']]) //remvoe out of stock
     				{
-    					$result[$row['sets_category']][] = array(0=>$row['sets_id'], 1=>$row['sets_name'], 2=>$get_result['stock'][$row['sets_id']], 3=>$get_result['price'][$row['sets_id']]);
+    					$result[$row['sets_category']][] = array(0=>$row['sets_id'], 1=>$row['sets_name'], 2=>$get_result['stock'][$row['sets_id']], 3=>$get_result['price'][$row['sets_id']], 4=>$codes_array[$row['sets_id']]);
     				}
     			}
     		}

@@ -4,7 +4,7 @@
 <div id="eatinicon">
   <ul>
 	<?php foreach($this->sets_array[$sets_key] as $sets_details):?>
-  		<li><a href="/eat-in/add-item/type/product/id/<?=$sets_details[0]?>"><strong><?=$sets_details[1]?></strong></a></li>
+  		<li><a href="/eat-in/add-item/type/product/id/<?=$sets_details[0]?>"><strong><?=$sets_details[4]?></strong></a></li>
   	<?php endforeach;?>
   </ul>
 </div>
@@ -17,7 +17,7 @@
 <div id="eatinicon">
   <ul>
 	<?php foreach($this->product_array[$normal_key] as $normal_details):?>
-  		<li><a href="/eat-in/add-item/type/product/id/<?=$normal_details[0]?>"><strong><?=$normal_details[1]?></strong></a></li>
+  		<li><a href="/eat-in/add-item/type/product/id/<?=$normal_details[0]?>"><strong><?=$normal_details[4]?></strong></a></li>
   	<?php endforeach;?>
   </ul>
 </div>
