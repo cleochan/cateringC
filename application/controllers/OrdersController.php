@@ -55,7 +55,7 @@ class OrdersController extends Zend_Controller_Action
 	
 	function indexAction()
     {
-    	echo "Invaid Operation";
+    	echo "Invaid Action";
 			
 		die;
     }
@@ -66,16 +66,6 @@ class OrdersController extends Zend_Controller_Action
     }
     
     function viewStatusAction()
-    {
-    	
-    }
-    
-    function placeOrderMainAction()
-    {
-    	
-    }
-    
-    function placeOrderBottomAction()
     {
     	
     }

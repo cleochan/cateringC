@@ -8,5 +8,13 @@
 </head>
 <body onload="onBridgeReady()">
 <?php echo $this->layout()->content; ?>
+
+<script>
+function onBridgeReady(){
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady()  {
+		WeixinJSBridge.call('hideOptionMenu');
+		});
+}
+</script>
 </body>
 </html>
