@@ -1,32 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<link rel="SHORTCUT ICON" href="/images/favicon.ico">
-	<script src="/scripts/jquery-1.10.2.js"></script>
-	<?php if($this->call_jquery_ui):?>
-	<link rel="stylesheet" href="/styles/redmond/jquery-ui-1.10.4.custom.min.css">
-	<script src="/scripts/jquery-ui-1.10.4.custom.min.js"></script>
-	<?php endif;?>
-	<link rel="stylesheet" type="text/css" href="/styles/default/default.css">
-	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-	<title><?=$this->title?> - <?=$this->system_name?></title>	
-<?php if($this->refresh_page):?>
-<meta http-equiv="refresh" content="<?=$this->refresh_page?>"> 
-<?php endif;?>
-<?php if($this->call_lodop_js):?>
-<script src="/scripts/LodopFuncs.js"></script>
-<?php endif;?>
+	<title>桔树林</title>	
 </head>
-<body>
-
-<div class="info_menu">
-    <table width="100%" border="0">
-    	<tr>
-    		<td width="30%" align="left"><?=$this->top_menu[0]?></td>
-    		<td width="70%" align="right"><?=$this->top_menu[1]?></td>
-    	</tr>
-    </table>
-</div>
+<body onload="onBridgeReady()">
 <?php echo $this->layout()->content; ?>
 </body>
 </html>
