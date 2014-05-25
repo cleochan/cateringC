@@ -30,7 +30,7 @@
 <table width="100%" border="0">
 <tr>
 <td><img src="/images/icons/trash2.png" border="0" alt="废弃订单" /></td>
-<td align="right" style="font-size: 75px; color: white;">(3)件:￥65.00</td>
+<td align="right" style="font-size: 75px; color: white;"><div id="vdata">(3)件:￥65.00</div></td>
 </tr>
 </table>
 </div>
@@ -47,10 +47,10 @@ function test(val1)
 	    cache:false,    
 	    dataType:'json',    
 	    success:function(data) {    
-	        alert(data.msg);
+	    	$("#duoduo").innerHTML = data.msg;
 	     },    
 	     error : function() {      
-	          alert("异常！");    
+	          alert("操作异常，请联系管理员");    
 	     }    
 	});  
 }
