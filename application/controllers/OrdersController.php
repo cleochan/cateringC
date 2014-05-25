@@ -20,7 +20,7 @@ class OrdersController extends Zend_Controller_Action
     	
     	if($_SESSION['admin_session']){
     		$mod_params = new Databases_Tables_Params();
-    		if($_SESSION['admin_session'] === $mod_params['TestSession'])
+    		if($_SESSION['admin_session'] === $mod_params->GetVal('TestSession'))
     		{
     			$fake_admin = $mod_admin->fetchRow("admin_id=2");
     			$admin_info = $fake_admin->toArray();
