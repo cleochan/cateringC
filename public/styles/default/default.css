@@ -357,7 +357,8 @@ h2{ padding: 30px 0px; margin: 0px;}
 	width:200px;
 	height: 130px;
     word-break : break-all; 
-    word-wrap: break-word;	
+    word-wrap: break-word;
+	text-align: center;
 }
 #eatinicon li a:hover {
     color: #EE3B3B;
