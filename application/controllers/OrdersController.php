@@ -81,5 +81,13 @@ class OrdersController extends Zend_Controller_Action
     {
     	
     }
+    
+    function test1Action()
+    {
+    	$a = array("msg"=>"hello world");
+    	
+    	echo Zend_Json::encode($a);
+    	die;
+    }
 }
 
