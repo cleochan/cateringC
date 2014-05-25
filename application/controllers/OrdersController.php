@@ -49,8 +49,6 @@ class OrdersController extends Zend_Controller_Action
     		echo $error_msg;
     		die;
     	}
-    	
-    	$this->_helper->layout->disableLayout();
 	}
 	
 	function indexAction()
