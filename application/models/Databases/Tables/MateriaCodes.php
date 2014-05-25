@@ -55,7 +55,7 @@ class Databases_Tables_MateriaCodes extends Zend_Db_Table
     	
     	if($this->item_type)
     	{
-    		$data = $this->fetchAll("item_type=.".$this->item_type."'");
+    		$data = $this->fetchAll("item_type='".$this->item_type."'");
     	}else{
     		$data = array();
     	}
