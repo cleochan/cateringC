@@ -1,59 +1,25 @@
-<p></p>
-<form action="/account-adjustment/index-submit" method="post" name="form1">
-<table width="100%" border="1" cellpadding="0" cellspacing="0" align="center">
-	<tr>
-		<td colspan="2" style="font-size: 30px;"><strong>Place Order</strong></td>
-	</tr>
-	<tr>
-		<td align="right">调整原因：</td>
-		<td>
-			<select name="action_category">
-				<option value="">[必选]</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td align="right">调整动作：</td>
-		<td>
-			<select name="action_type">
-				<option value="">[必选]</option>
-				<option value="1" <?php if($this->type == 1){echo "selected='selected'";}?>>增加 (+)</option>
-				<option value="2" <?php if($this->type == 2){echo "selected='selected'";}?>>扣除 (-)</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td align="right">调整金额：</td>
-		<td><input type="text" name="action_value" /> * 数字必须大于零</td>
-	</tr>
-	<tr>
-		<td align="right">补充说明：</td>
-		<td><input type="text" name="action_remind" /></td>
-	</tr>
-	<tr>
-		<td align="center" colspan="2" height="200"><a href="#" onclick="submitform() " class="large green awesome">提交调整</a>
-		<?php if($this->msg): ?>
-		<br /><br />
-		<font color="red">* <?=$this->msg?></font>
-		<?php endif;?>
-		<?php if(1 == $this->success): ?>
-		<br /><br />
-		<font color="green">* 操作成功。</font>
-		<?php endif;?>
-		</td>
-	</tr>
-</table>
-</form>
+<div id="eatinbar"><strong>主食</strong>
+<div id="eatinicon">
+  <ul>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>1</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>2</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>3</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>4</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>5</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>6</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>7</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>8</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>9</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>10</strong></a></li>
+		<li><a href="/eat-in/add-item/type/product/id/"><strong>11</strong></a></li>
+  </ul>
+</div>
+</div>
 
 <script>
 function onBridgeReady(){
     document.addEventListener('WeixinJSBridgeReady', function onBridgeReady()  {
 		WeixinJSBridge.call('hideOptionMenu');
 		});
-}
-
-function submitform() 
-{
-	form1.submit();
 }
 </script>
