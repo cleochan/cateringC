@@ -205,6 +205,11 @@ class Algorithms_Core_OrdersInfoGeneration
 	
 	function AddSetsIntoEatInSession()
 	{
+		$result = array(
+				"qty_in_cart" => 0,
+				"amount_in_cart" => 0.00
+		);
+		
 		$error = 1; //unknown reason
 		$model_plugin = new Algorithms_Extensions_Plugin();
 		
@@ -249,6 +254,26 @@ class Algorithms_Core_OrdersInfoGeneration
 							$_SESSION['eat-in']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['eat-in']['payment']['cash'] - $_SESSION['eat-in']['payment']['total']);
 						}
 						
+						//count qty
+						if($_SESSION['eat-in']['items']['sets'])
+						{
+							$qty_sets = count($_SESSION['eat-in']['items']['sets']);
+						}else{
+							$qty_sets = 0;
+						}
+						
+						$qty_products = 0;
+						
+						foreach($_SESSION['eat-in']['items']['products'] as $parray)
+						{
+							$qty_products += $parray[0];
+						}
+						
+						$result = array(
+								"qty_in_cart" => $qty_sets + $qty_products,
+								"amount_in_cart" => $_SESSION['eat-in']['payment']['total']
+						);
+						
 						$error = 0; // no error
 						
 					}else{
@@ -258,7 +283,7 @@ class Algorithms_Core_OrdersInfoGeneration
 			}
 		}
 		
-		return $error;
+		return $result;
 	}
 	
 	function RemoveSetsFromEatInSession()

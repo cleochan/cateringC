@@ -34,5 +34,26 @@ class AjaxController extends Zend_Controller_Action
     		die;
     	}
     }
+    
+    function addSetsIntoEatinSessionAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['pid'])
+    	{
+    		$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
+    		
+    		if(!$_SESSION['eat-in'])
+    		{
+    			$mod_orders_info_generation->InitialEatInSession();
+    		}
+    		
+    		$mod_orders_info_generation->item_id = $params['pid'];
+    		$result = $mod_orders_info_generation->AddSetsIntoEatInSession();
+    		
+    		echo Zend_Json::encode($result);
+    		die;
+    	}
+    }
 }
 

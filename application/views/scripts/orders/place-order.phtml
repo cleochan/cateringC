@@ -4,7 +4,7 @@
 <div id="eatinicon">
   <ul>
 	<?php foreach($this->sets_array[$sets_key] as $sets_details):?>
-  		<li><a href="/orders/add-sets/id/<?=$sets_details[0]?>"><strong><?=$sets_details[4]?></strong></a></li>
+  		<li><a onclick="AddSets(<?=$sets_details[0]?>)"><strong><?=$sets_details[4]?></strong></a></li>
   	<?php endforeach;?>
   </ul>
 </div>
@@ -17,7 +17,7 @@
 <div id="eatinicon">
   <ul>
 	<?php foreach($this->product_array[$normal_key] as $normal_details):?>
-  		<li><a onclick="test(<?=$normal_details[0]?>)"><strong><?=$normal_details[4]?></strong></a></li>
+  		<li><a onclick="AddProduct(<?=$normal_details[0]?>)"><strong><?=$normal_details[4]?></strong></a></li>
   	<?php endforeach;?>
   </ul>
 </div>
@@ -35,10 +35,29 @@
 </div>
 
 <script>
-function test(val1)
+function AddProduct(val1)
 {
 	var aj = $.ajax( {    
 	    url:'/ajax/add-product-into-eatin-session',
+	    data:{
+			pid: val1
+		},    
+	    type:'post',    
+	    cache:false,    
+	    dataType:'json',    
+	    success:function(data) {    
+	    	document.getElementById("vdata").innerHTML = "(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart;
+	     },    
+	     error : function() {      
+	          alert("操作异常，请联系管理员");    
+	     }    
+	});  
+}
+
+function AddSets(val1)
+{
+	var aj = $.ajax( {    
+	    url:'/ajax/add-sets-into-eatin-session',
 	    data:{
 			pid: val1
 		},    
