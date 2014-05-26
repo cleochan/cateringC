@@ -115,5 +115,21 @@ class OrdersController extends Zend_Controller_Action
     	
     	$this->_redirect("/orders/place-order");
     }
+    
+    function addSetsAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['id'])
+    	{
+    		$mod_sets_operation = new Databases_Joins_SetsOperation();
+    		$mod_sets_operation->business_channel_id = 1; //堂吃
+    		$mod_sets_operation->current_sets_info = array("sets_id" => $params['id']);
+    		$this->view->replacement_pool = $mod_sets_operation->FetchReplacements();
+    	}else{
+    		echo "Invalid Action";
+    		die;
+    	}
+    }
 }
 
