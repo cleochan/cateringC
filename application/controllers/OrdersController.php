@@ -77,27 +77,30 @@ class OrdersController extends Zend_Controller_Action
     	$this->view->sets_array = $sets->FetchProductsByCategory();
     	
     	//Check data in current cart
-    	if($_SESSION['eat-in']['items']['sets'])
+    	if($_SESSION['eat-in'])
     	{
-    		$qty_sets = count($_SESSION['eat-in']['items']['sets']);
-    	}else{
-    		$qty_sets = 0;
+    		if($_SESSION['eat-in']['items']['sets'])
+    		{
+    			$qty_sets = count($_SESSION['eat-in']['items']['sets']);
+    		}else{
+    			$qty_sets = 0;
+    		}
+    		 
+    		$qty_products = 0;
+    		 
+    		if($_SESSION['eat-in']['items']['products'])
+    		{
+    			foreach($_SESSION['eat-in']['items']['products'] as $parray)
+    			{
+    				$qty_products += $parray[0];
+    			}
+    		}
+    		
+    		$this->view->current_data = array(
+    				"qty_in_cart" => $qty_sets + $qty_products,
+    				"amount_in_cart" => $_SESSION['eat-in']['payment']['total']
+    		);
     	}
-    	
-    	$qty_products = 0;
-    	
-    	if($_SESSION['eat-in']['products'])
-    	{
-	    	foreach($_SESSION['eat-in']['items']['products'] as $parray)
-	    	{
-	    		$qty_products += $parray[0];
-	    	}
-    	}
-	    	
-	    $this->view->current_data = array(
-	    		"qty_in_cart" => $qty_sets + $qty_products,
-	    		"amount_in_cart" => $_SESSION['eat-in']['payment']['total']
-	    );
     }
     
     function viewStatusAction()
