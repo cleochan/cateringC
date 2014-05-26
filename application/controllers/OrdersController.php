@@ -81,15 +81,5 @@ class OrdersController extends Zend_Controller_Action
     {
     	
     }
-    
-    function test1Action()
-    {
-    	$params = $this->_request->getParams();
-    	
-    	$a = array("msg"=>$params['pid']);
-    	
-    	echo Zend_Json::encode($a);
-    	die;
-    }
 }
 

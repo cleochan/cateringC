@@ -25,7 +25,6 @@
 <?php endforeach;?>
 <?php endif;?>
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<!--  <a href="/eat-in/add-item/type/product/id/<?=$normal_details[0]?>"></a> -->
 <div id="bottomNav">
 <table width="100%" border="0">
 <tr>
@@ -39,7 +38,7 @@
 function test(val1)
 {
 	var aj = $.ajax( {    
-	    url:'/orders/test1',// 跳转到 action    
+	    url:'/ajax/add-product-into-eatin-session',
 	    data:{
 			pid: val1
 		},    
@@ -47,7 +46,7 @@ function test(val1)
 	    cache:false,    
 	    dataType:'json',    
 	    success:function(data) {    
-	    	document.getElementById("vdata").innerHTML = "(" + data.msg + ")件:￥65.00";
+	    	document.getElementById("vdata").innerHTML = "(" + data.qty_in_cart + ")件:￥" + data.qty_in_cart;
 	     },    
 	     error : function() {      
 	          alert("操作异常，请联系管理员");    
