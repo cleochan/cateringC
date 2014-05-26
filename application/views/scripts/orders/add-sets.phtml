@@ -1,14 +1,12 @@
 <table width="100%" border="0">
+	<tr>
+		<td align="center" style="font-size: 30px">可替换选项</td>
+	</tr>
 <?php if($this->replacement_pool):?>
-	<?php foreach ($this->replacement_pool as $rp_key => $rp_val):?>
-		<tr>
-			<td align="right" style="font-size: 30px"><?=$_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_name']?></td>
-			<td align="center" style="font-size: 30px"> -> </td>
-			<td align="left" style="font-size: 30px">
-				<select name="update-item" style="font-size:25px;" onchange="javascript:location.href=this.value;">
-					<option>--可替换商品--</option>
+<?php foreach ($this->replacement_pool as $rp_key => $rp_val):?>
+	<tr>
+		<td align="center"><select name="contains-<?=$rp_key?>" style="font-size:25px;">
 				<?php foreach ($rp_val as $product_id => $product_info):?>
-					<?php if($_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_id'] != $product_id):?>
 					<?php
 						$model_plugin = new Algorithms_Extensions_Plugin();
 						$price_diff = $model_plugin->FormatPrice($product_info['price'] - $_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['unit_price']);
@@ -23,12 +21,14 @@
 						}
 					?>
 					
-					<option value="/eat-in/update-sets-submit/item_id/<?=$this->item_id?>/act/upd/conid/<?=$rp_key?>/newpro/<?=$product_id?>"><?php echo $product_info['name'].$extra;?></option>
-					<?php endif;?>
+					<option value="<?=$product_id?>" <?php if($product_id==$this->initial_contains[$rp_key]){echo "selected='selected'";}?>><?php echo $product_info['name'].$extra;?></option>
 				<?php endforeach;?>
 				</select>
 			</td>
 		</tr>
 	<?php endforeach;?>
 <?php endif;?>
+	<tr>
+		<td align="center" style="font-size: 30px">提交</td>
+	</tr>
 </table>

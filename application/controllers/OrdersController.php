@@ -126,6 +126,11 @@ class OrdersController extends Zend_Controller_Action
     		$mod_sets_operation->business_channel_id = 1; //堂吃
     		$mod_sets_operation->current_sets_info = array("sets_id" => $params['id']);
     		$this->view->replacement_pool = $mod_sets_operation->FetchReplacements();
+    		
+    		//initial contains
+    		$mod_contains = new Databases_Tables_MateriaSetsContains();
+    		$mod_contains->sets_id = $params['id'];
+    		$this->view->initial_contains = $mod_contains->InitialContains();
     	}else{
     		echo "Invalid Action";
     		die;
