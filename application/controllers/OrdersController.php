@@ -81,5 +81,13 @@ class OrdersController extends Zend_Controller_Action
     {
     	
     }
+    
+    function trashOrderAction()
+    {
+    	$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
+    	$mod_orders_info_generation->CleanEatInSession();
+    	
+    	$this->_redirect("/orders/place-order");
+    }
 }
 
