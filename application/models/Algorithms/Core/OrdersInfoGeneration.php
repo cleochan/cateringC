@@ -129,9 +129,9 @@ class Algorithms_Core_OrdersInfoGeneration
 						}
 						
 						//count qty
-						if($_SESSION['eat-in']['sets'])
+						if($_SESSION['eat-in']['items']['sets'])
 						{
-							$qty_sets = count($_SESSION['eat-in']['sets']);
+							$qty_sets = count($_SESSION['eat-in']['items']['sets']);
 						}else{
 							$qty_sets = 0;
 						}
