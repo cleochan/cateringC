@@ -1,6 +1,6 @@
 <?php
 
-class OrdersController extends Zend_Controller_Action
+class AjaxController extends Zend_Controller_Action
 {
 	function init()
 	{

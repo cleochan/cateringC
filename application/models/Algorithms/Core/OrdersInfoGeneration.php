@@ -101,7 +101,7 @@ class Algorithms_Core_OrdersInfoGeneration
 			$model_products->product_id = $this->item_id;
 			$model_products->business_channel_id = 1; //eat-in
 			$product_info = $model_products->FetchProductById();
-			echo "a";die;
+			
 			if($product_info)
 			{
 				if($product_info['product_status'])
