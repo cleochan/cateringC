@@ -1,18 +1,13 @@
 <table width="100%" border="0">
-	<tr align="center" height="200">
-		<td colspan="3" style="font-size: 50px">编辑已选套餐</td>
-	</tr>
-	<tr align="left">
-		<td colspan="3" style="font-size: 30px">可替换商品</td>
+	<tr align="center" height="300">
+		<td colspan="2" style="color: green; font-weight: 900">编辑已选套餐<br /><?=$_SESSION['eat-in']['items']['sets'][$this->item_id]['sets_name']?></td>
 	</tr>
 	<?php if($this->replacement_pool):?>
 	<?php foreach ($this->replacement_pool as $rp_key => $rp_val):?>
 		<tr>
-			<td align="right" style="font-size: 30px"><?=$_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_name']?></td>
-			<td align="center" style="font-size: 30px"> -> </td>
-			<td align="left" style="font-size: 30px">
-				<select name="update-item" style="font-size:25px;" onchange="javascript:location.href=this.value;">
-					<option>--可替换商品--</option>
+			<td colspan="2" align="center">
+				<select name="update-item" onchange="javascript:location.href=this.value;">
+					<option><?=$_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_name']?></option>
 				<?php foreach ($rp_val as $product_id => $product_info):?>
 					<?php if($_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_id'] != $product_id):?>
 					<?php
@@ -29,7 +24,7 @@
 						}
 					?>
 					
-					<option value="/eat-in/update-sets-submit/item_id/<?=$this->item_id?>/act/upd/conid/<?=$rp_key?>/newpro/<?=$product_id?>"><?php echo $product_info['name'].$extra;?></option>
+					<option value="/orders/update-sets-submit/item_id/<?=$this->item_id?>/act/upd/conid/<?=$rp_key?>/newpro/<?=$product_id?>"><?php echo $product_info['name'].$extra;?></option>
 					<?php endif;?>
 				<?php endforeach;?>
 				</select>
@@ -37,13 +32,8 @@
 		</tr>
 	<?php endforeach;?>
 	<?php endif;?>
-
-	<?php if($this->msg):?>
-	<tr align="center">
-		<td colspan="3" style="font-size: 30px;color:#ff0000">* <?=$this->msg?></td>
-	</tr>
-	<?php endif;?>
 	<tr align="center" valign="middle" height="200">
-		<td colspan="3" style="font-size: 30px"><a href="/eat-in/update-sets-submit/item_id/<?=$this->item_id?>/act/del" target="_self" class="huge red awesome">删除套餐</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/eat-in/rightzone" target="_self" class="large yellow awesome">返回点餐页</a></td>
+		<td><a href="/orders/update-sets-submit/item_id/<?=$this->item_id?>/act/del" class="large red awesome">删除套餐</a></td>
+		<td><a href="/orders/cart" class="large yellow awesome">返回</a></td>
 	</tr>
 </table>
