@@ -4,7 +4,7 @@
 	</tr>
 	<?php if($this->replacement_pool):?>
 	<?php foreach ($this->replacement_pool as $rp_key => $rp_val):?>
-		<tr>
+		<tr height="200">
 			<td colspan="2" align="center">
 				<select name="update-item" onchange="javascript:location.href=this.value;">
 					<option><?=$_SESSION['eat-in']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_name']?></option>
