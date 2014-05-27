@@ -394,6 +394,18 @@ class Databases_Joins_OrdersInfo
     	
     	return $result;
     }
+    
+    function DumpLogOnWechat()
+    {
+    	$data = $this->db->select();
+    	$data->from("orders as o", array("orders_code", "orders_time", "table_id", "orders_amount", "orders_type", "orders_payment_status"));
+    	$data->joinLeft("orders-statuses as s", "s.orders_statuses_id=o.orders_status", array("orders_statuses_external_name as status_name"));
+    	$data->order("orders_id DESC");
+    	$data->limit(100);
+    	$rows = $this->db->fetchAll($data);
+    	
+    	return $rows;
+    }
 }
 
 

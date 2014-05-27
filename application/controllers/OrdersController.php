@@ -103,11 +103,6 @@ class OrdersController extends Zend_Controller_Action
     	}
     }
     
-    function viewStatusAction()
-    {
-    	
-    }
-    
     function trashOrderAction()
     {
     	$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
@@ -239,8 +234,13 @@ class OrdersController extends Zend_Controller_Action
     		echo "下单失败。错误代码001";
     	}
 
-    	
     	die;
+    }
+    
+    function viewStatusAction()
+    {
+    	$mod_orders_info = new Databases_Joins_OrdersInfo();
+    	$this->view->data = $mod_orders_info->DumpLogOnWechat();
     }
 }
 
