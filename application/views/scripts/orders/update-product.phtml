@@ -1,11 +1,8 @@
-<table width="100%" border=0>
+<table width="100%" border="0">
 	<tr align="center" height="300">
-		<td colspan="2"><strong>编辑已点餐品</strong></td>
+		<td colspan="2" style="color: green; font-weight: 900">编辑已点餐品<br /><?=$_SESSION['eat-in']['items']['products'][$this->product_id][2]?></td>
 	</tr>
-	<tr align="center" height="300">
-		<td colspan="2" style="color: green; font-weight: 900"><?=$_SESSION['eat-in']['items']['products'][$this->product_id][2]?></td>
-	</tr>
-	<tr height="300">
+	<tr height="400">
 		<td align="right">数量：</td>
 		<td align="left">
 			<select name="updated-qty" onchange="javascript:location.href=this.value;">

@@ -158,7 +158,7 @@ class OrdersController extends Zend_Controller_Action
     		}
     	}
     	
-    	$this->_redirect("/eat-in/rightzone");
+    	$this->_redirect("/orders/cart");
     }
     
     function updateSetsAction()
@@ -202,7 +202,7 @@ class OrdersController extends Zend_Controller_Action
     		}
     	}
     	
-    	$this->_redirect("/eat-in/rightzone");
+    	$this->_redirect("/orders/cart");
     }
 }
 
