@@ -2,7 +2,7 @@ body {
 	background-color: #ffffff; 
 	color: #000000; 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	font-size: 10pt; 
+	font-size: 75px; 
 	margin: 6px 4px; 
 }
 
@@ -17,7 +17,7 @@ address{
 
 a.alinks{
     font-family: Arial;
-    font-size: 10px;
+    font-size: 75px;
     text-align: center;
     margin: 3px;
     position: relative;
@@ -87,7 +87,7 @@ table.width60		{ width: 60%;  border: solid 1px #000000; }
 table.width50		{ width: 50%;  border: solid 1px #000000; }
 table.width900		{ width: 900px; border: solid 1px #000000; }
 
-td 					{ font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; padding: 4px; }
+td 					{ font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 75px; padding: 4px; }
 td.center			{ text-align: center; }
 td.left				{ text-align: left; }
 td.right			{ text-align: right; }
