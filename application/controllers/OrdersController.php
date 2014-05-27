@@ -118,9 +118,91 @@ class OrdersController extends Zend_Controller_Action
     
     function cartAction()
     {
-//     	$params = $this->_request->getParams();
     	
+    }
+    
+    function updateProductAction()
+    {
+    	$params = $this->_request->getParams();
     	
+    	if($params['id'])
+    	{
+    		$this->view->product_id = $params['id'];
+    	}
+    }
+    
+    function updateProductSubmitAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['item_id'])
+    	{
+    		if(is_numeric($params['qty']))
+    		{
+    			$mod_order_generation = new Algorithms_Core_OrdersInfoGeneration();
+    			$mod_order_generation->item_id = $params['item_id'];
+    			$ori_qty = $_SESSION['eat-in']['items']['products'][$params['item_id']][0];
+    			
+    			if($params['qty'] > $ori_qty)
+    			{
+    				for($n=1;$n<=($params['qty']-$ori_qty);$n++)
+    				{
+    					$mod_order_generation->AddProductIntoEatInSession();
+    				}
+    			}elseif($params['qty'] < $ori_qty){
+    				for($n=1;$n<=($ori_qty-$params['qty']);$n++)
+    				{
+    					$mod_order_generation->RemoveProductFromEatInSession();
+    				}
+    			}
+    		}
+    	}
+    	
+    	$this->_redirect("/eat-in/rightzone");
+    }
+    
+    function updateSetsAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	$this->view->item_id = $params['id'];
+    	
+    	//analyze replacement
+    	if($_SESSION['eat-in']['items']['sets'][$params['id']])
+    	{
+    		$mod_sets_operation = new Databases_Joins_SetsOperation();
+    		$mod_sets_operation->business_channel_id = 1; //堂吃
+    		$mod_sets_operation->current_sets_info = $_SESSION['eat-in']['items']['sets'][$params['id']];
+    		$this->view->replacement_pool = $mod_sets_operation->FetchReplacements();
+    	}
+    }
+    
+    function updateSetsSubmitAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['act'])
+    	{
+    		if('del' == $params['act'])
+    		{
+    			$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
+    			$mod_orders_info_generation->item_id = $params['item_id'];
+    			$mod_orders_info_generation->RemoveSetsFromEatInSession();
+    		}elseif('upd' == $params['act']){
+    			$mod_sets_operation = new Databases_Joins_SetsOperation();
+    			$mod_sets_operation->business_channel_id = 1; //堂吃
+    			$mod_sets_operation->current_sets_info = $_SESSION['eat-in']['items']['sets'][$params['item_id']];
+    			$replacement_pool = $mod_sets_operation->FetchReplacements();
+    			
+    			$mod_sets_operation->item_id = $params['item_id'];
+    			$mod_sets_operation->replacement_pool = $replacement_pool;
+    			$mod_sets_operation->original_contains_id = $params['conid'];
+    			$mod_sets_operation->new_product_id = $params['newpro'];
+    			$mod_sets_operation->UpdateSetsInfo();
+    		}
+    	}
+    	
+    	$this->_redirect("/eat-in/rightzone");
     }
 }
 
