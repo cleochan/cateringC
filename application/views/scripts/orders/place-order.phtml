@@ -29,7 +29,7 @@
 <table width="100%" border="0">
 <tr>
 <td><a href="/orders/trash-order" onClick="return confirm('确认作废？');"><img src="/images/icons/trash2.png" border="0" alt="废弃订单" /></a></td>
-<td align="right" style="font-size: 75px; color: white;"><div id="vdata"><?php if($this->current_data['qty_in_cart']){echo "<a href='/orders/cart'>(".$this->current_data['qty_in_cart'].")件:￥".$this->current_data['amount_in_cart']."</a>";}else{echo "&nbsp;";}?></div></td>
+<td align="right"><div id="vdata" style="font-size: 75px; color: white;"><?php if($this->current_data['qty_in_cart']){echo "<a href='/orders/cart'>(".$this->current_data['qty_in_cart'].")件:￥".$this->current_data['amount_in_cart']."</a>";}else{echo "&nbsp;";}?></div></td>
 </tr>
 </table>
 </div>
