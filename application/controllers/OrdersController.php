@@ -212,6 +212,7 @@ class OrdersController extends Zend_Controller_Action
     	//proceed
     	$mod_orders = new Databases_Tables_Orders();
     	
+    	$mod_orders->createRow();
     	$mod_orders-> orders_channel = 1; //eat-in
     	$mod_orders-> orders_payment_status = 0; //Unpaid
     	$mod_orders-> orders_type = $params['cotype']; //eat-in
