@@ -1,21 +1,22 @@
 <table width="100%" border=0>
-	<tr align="center">
+	<tr align="center" height="300">
 		<td colspan="2"><strong>编辑已点餐品</strong></td>
 	</tr>
-	<tr align="center">
+	<tr align="center" height="300">
 		<td colspan="2" style="color: green; font-weight: 900"><?=$_SESSION['eat-in']['items']['products'][$this->product_id][2]?></td>
 	</tr>
-	<tr>
-		<td align="left">数量：</td>
-		<td align="right">
-			<select name="updated-qty" style="font-size:25px;" onchange="javascript:location.href=this.value;">
+	<tr height="300">
+		<td align="right">数量：</td>
+		<td align="left">
+			<select name="updated-qty" onchange="javascript:location.href=this.value;">
 			<?php for($n=1;$n<21;$n++):?>
 				<option value="/orders/update-product-submit/item_id/<?=$this->product_id?>/qty/<?=$n?>" <?php if($n==$_SESSION['eat-in']['items']['products'][$this->product_id][0]){echo "selected='selected'";}?>>-<?=$n?>-</option>
 			<?php endfor;?>
 			</select>
 		</td>
 	</tr>
-	<tr align="center" valign="middle">
-		<td colspan="2"><a href="/orders/update-product-submit/item_id/<?=$this->product_id?>/qty/0" class="large red awesome">删 除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/orders/cart" class="large yellow awesome">返回</a></td>
+	<tr align="center" valign="middle" height="300">
+		<td align="left"><a href="/orders/update-product-submit/item_id/<?=$this->product_id?>/qty/0" class="large red awesome">删 除</a></td>
+		<td align="right"><a href="/orders/cart" class="large yellow awesome">返回</a></td>
 	</tr>
 </table>
