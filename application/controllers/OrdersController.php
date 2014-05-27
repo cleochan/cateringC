@@ -115,5 +115,14 @@ class OrdersController extends Zend_Controller_Action
     	
     	$this->_redirect("/orders/place-order");
     }
+    
+    function cartAction()
+    {
+//     	$params = $this->_request->getParams();
+    	
+    	
+    }
 }
+
+
 
