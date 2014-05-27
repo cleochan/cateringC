@@ -70,7 +70,7 @@ input.button			{}
 input.button-small		{ font-size: 8pt; }
 
 textarea			{}
-select				{}
+select				{ font-size: 75px;}
 
 span				{ font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 span.print			{ font-size: 8pt; }
