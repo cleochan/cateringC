@@ -46,34 +46,55 @@ class Algorithms_Core_OrdersInfoGeneration
 	 * 		)
 	 * )
 	 */
-	function InitialEatInSession()
+	function InitialEatInSession($to_array=NULL) //to_array = make array not session
 	{
 		$result = FALSE;
 		
-		if(!$_SESSION['eat-in'])
+		if($to_array)
 		{
-    		$_SESSION['eat-in'] = array(
-    			'items' => array(
-    					'sets' => array(),
-    					'products' => array()
-    			),
-    			'payment' => array(
-    					'order_id' => NULL,
-    					'ctime' => date("Y-m-d H:i:s"),
-    					'subtotal' => 0,
-    					'used_coupon' => 0,
-    					'discount' => 0,
-    					'total' => 0,
-    					'cash' => 0,
-    					'change' => 0,
-    					'user_code' => $_SESSION['user_info']['user_code'],
-    					'user_alias' => $_SESSION['user_info']['user_alias'],
-    					'member_id' => NULL,
-    					'table_id' => NULL
-    			)
-    		);
-    		
-    		$result = TRUE;
+			$result = array(
+					'items' => array(
+							'sets' => array(),
+							'products' => array()
+					),
+					'payment' => array(
+							'order_id' => NULL,
+							'ctime' => date("Y-m-d H:i:s"),
+							'subtotal' => 0,
+							'used_coupon' => 0,
+							'discount' => 0,
+							'total' => 0,
+							'cash' => 0,
+							'change' => 0,
+							'user_code' => $_SESSION['user_info']['user_code'],
+							'user_alias' => $_SESSION['user_info']['user_alias'],
+							'member_id' => NULL,
+							'table_id' => NULL
+					)
+			);
+		}elseif(!$_SESSION['eat-in']){
+				$_SESSION['eat-in'] = array(
+						'items' => array(
+								'sets' => array(),
+								'products' => array()
+						),
+						'payment' => array(
+								'order_id' => NULL,
+								'ctime' => date("Y-m-d H:i:s"),
+								'subtotal' => 0,
+								'used_coupon' => 0,
+								'discount' => 0,
+								'total' => 0,
+								'cash' => 0,
+								'change' => 0,
+								'user_code' => $_SESSION['user_info']['user_code'],
+								'user_alias' => $_SESSION['user_info']['user_alias'],
+								'member_id' => NULL,
+								'table_id' => NULL
+						)
+				);
+			
+				$result = TRUE;
 		}
 		
 		return $result;
@@ -487,6 +508,113 @@ class Algorithms_Core_OrdersInfoGeneration
 				$mod_products->StockOperation(1); //plus
 				
 				$result = TRUE;
+			}
+		}
+		
+		return $result;
+	}
+	
+	function MakeOrderArrayLikeSession()
+	{
+		$result = NULL;
+		
+		if($this->order_id)
+		{
+			$table_orders = new Databases_Tables_Orders();
+			$orders_row = $table_orders->fetchRow("orders_id='".$this->order_id."'");
+			$orders_row = $orders_row->toArray();
+			if(!empty($orders_row))
+			{
+				//contains
+				$table_orders_contains = new Databases_Tables_OrdersContains();
+				$orders_contains_rows = $table_orders_contains->fetchAll("orders_id='".$this->order_id."'");
+				$orders_contains_rows = $orders_contains_rows->toArray();
+				
+				if(!empty($orders_contains_rows))
+				{
+					$orders_contains_id_array = array();
+					
+					foreach($orders_contains_rows as $orders_contains_row)
+					{
+						$orders_contains_id_array[] = $orders_contains_row['orders_contains_id'];
+					}
+					
+					$orders_contains_id_string = implode(",", $orders_contains_id_array);
+					
+					//contains sets
+					if(!empty($orders_contains_id_array))
+					{
+						$table_orders_sets_contains = new Databases_Tables_OrdersSetsContains();
+						$orders_sets_contains_rows =$table_orders_sets_contains->fetchAll("orders_contains_id IN (".$orders_contains_id_string.")");
+						$orders_sets_contains_rows = $orders_sets_contains_rows->toArray();
+					}
+				}
+				
+				$result = $this->InitialEatInSession(1);
+			
+				/**
+				 * $orders_row
+				 * $orders_contains_rows
+				 * $orders_sets_contains_rows
+				 */
+					
+				//restructure
+				$result['payment']['order_id'] = $orders_row['orders_id'];
+				$result['payment']['ctime'] = $orders_row['orders_time'];
+				$result['payment']['subtotal'] = $orders_row['orders_subtotal'];
+				$result['payment']['used_coupon'] = $orders_row['orders_coupon'];
+				$result['payment']['total'] = $orders_row['orders_amount'];
+				$result['payment']['cash'] = $orders_row['orders_amount']; //initial
+				$result['payment']['change'] = 0; //initial
+				$result['payment']['user_code'] = $_SESSION['user_info']['user_code'];
+				$result['payment']['user_alias'] = $_SESSION['user_info']['user_alias'];
+				$result['payment']['member_id'] = $orders_row['orders_member_id'];
+				$result['payment']['table_id'] = $orders_row['table_id'];
+					
+				if(!empty($orders_contains_rows))
+				{
+					$mod_categories = new Databases_Tables_MateriaCategories();
+					$is_sets = $mod_categories->IsSets();
+				
+					foreach($orders_contains_rows as $orders_contains_row)
+					{
+						if(in_array($orders_contains_row['orders_item_category'], $is_sets)) //sets
+						{
+							//make sets contains
+							$a_sets_contains = array();
+				
+							foreach($orders_sets_contains_rows as $orders_sets_contains_row)
+							{
+								if($orders_sets_contains_row['orders_contains_id'] == $orders_contains_row['orders_contains_id'])
+								{
+									$a_sets_contains[$orders_sets_contains_row['materia_contains_id']] = array(
+											'product_id' => $orders_sets_contains_row['materia_product_id'],
+											'qty' => $orders_sets_contains_row['materia_product_qty'],
+											'unit_price' => $orders_sets_contains_row['materia_product_price'],
+											'product_name' => $orders_sets_contains_row['materia_product_name'],
+											'product_category' => $orders_sets_contains_row['materia_category_id']
+									);
+								}
+							}
+				
+							//make contains
+							$result['items']['sets'][] = array(
+									'sets_id' => $orders_contains_row['orders_item_id'],
+									'sets_category' => $orders_contains_row['orders_item_category'],
+									'sets_name' => $orders_contains_row['orders_item_name'],
+									'sets_price' => $orders_contains_row['orders_item_price'],
+									'contains' => $a_sets_contains
+							);
+						}else{ //product
+							$result['items']['products'][$orders_contains_row['orders_item_id']] = array(
+									0 => $orders_contains_row['orders_item_qty'],
+									1 => $orders_contains_row['orders_item_price'],
+									2 => $orders_contains_row['orders_item_name'],
+									3 => $orders_contains_row['orders_item_category']
+							);
+						}
+					}
+				}
 			}
 		}
 		
