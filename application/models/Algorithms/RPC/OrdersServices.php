@@ -41,7 +41,7 @@ class Algorithms_RPC_OrdersServices
     		//update order status
     		$mod_orders= new Databases_Tables_Orders();
     		$set = array("orders_status"=>2); //Sent
-    		$where = $mod_orders->quoteInto("orders_id IN (?)", $order_id_array);
+    		$where = $this->db->quoteInto("orders_id IN (?)", $order_id_array);
     		echo $where;die;
     		$mod_orders->update($set, $where);
     	}
