@@ -16,7 +16,7 @@ class Databases_Joins_OrdersInfo
     var $time_start; // * search
     var $time_end; // * search
     var $skip_pagination; //for export
-	
+    
 	function __construct(){
     	$this->db = Zend_Registry::get("db");
     }
@@ -400,6 +400,12 @@ class Databases_Joins_OrdersInfo
     	$data = $this->db->select();
     	$data->from("orders as o", array("orders_code", "orders_time", "table_id", "orders_amount", "orders_type", "orders_payment_status"));
     	$data->joinLeft("orders-statuses as s", "s.orders_statuses_id=o.orders_status", array("orders_statuses_external_name as status_name"));
+    	
+    	if($this->users_id)
+    	{
+    		$data->where("users_id = ?", $this->users_id);
+    	}
+    	
     	$data->order("orders_id DESC");
     	$data->limit(100);
     	$rows = $this->db->fetchAll($data);

@@ -212,6 +212,7 @@ class OrdersController extends Zend_Controller_Action
     	$mod_orders-> orders_payment_status = 0; //Unpaid
     	$mod_orders-> orders_type = $params['cotype']; //eat-in
     	$mod_orders-> table_id = $params['table_id'];
+    	$mod_orders-> users_id = $_SESSION['admin_users_id'];
     	$mod_orders-> orders_status = 1; //Pending
     	$mod_orders-> orders_time = date("Y-m-d H:i:s");
     	$mod_orders-> orders_amount = $_SESSION['eat-in']['payment']['total'];
@@ -221,6 +222,7 @@ class OrdersController extends Zend_Controller_Action
     	$mod_orders-> orders_coupon = $_SESSION['eat-in']['payment']['used_coupon'];
     	$mod_orders-> orders_discount = $_SESSION['eat-in']['payment']['discount'];
     	$mod_orders-> orders_items = $_SESSION['eat-in']['items'];
+    	
     	$result = $mod_orders-> InsertOrder();
     	
     	if($result)
@@ -239,7 +241,15 @@ class OrdersController extends Zend_Controller_Action
     
     function viewStatusAction()
     {
+    	$params = $this->_request->getParams();
+    	
     	$mod_orders_info = new Databases_Joins_OrdersInfo();
+    	
+    	if($params['id'])
+    	{
+    		$mod_orders_info->users_id = $params['id'];
+    	}
+    	
     	$this->view->data = $mod_orders_info->DumpLogOnWechat();
     }
 }
