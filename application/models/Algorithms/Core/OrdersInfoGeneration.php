@@ -68,6 +68,7 @@ class Algorithms_Core_OrdersInfoGeneration
 							'change' => 0,
 							'user_code' => $_SESSION['user_info']['user_code'],
 							'user_alias' => $_SESSION['user_info']['user_alias'],
+							'users_id' => NULL,
 							'member_id' => NULL,
 							'table_id' => NULL
 					)
@@ -566,8 +567,7 @@ class Algorithms_Core_OrdersInfoGeneration
 				$result['payment']['total'] = $orders_row['orders_amount'];
 				$result['payment']['cash'] = $orders_row['orders_amount']; //initial
 				$result['payment']['change'] = 0; //initial
-				$result['payment']['user_code'] = $_SESSION['user_info']['user_code'];
-				$result['payment']['user_alias'] = $_SESSION['user_info']['user_alias'];
+				$result['payment']['users_id'] = $orders_row['users_id'];
 				$result['payment']['member_id'] = $orders_row['orders_member_id'];
 				$result['payment']['table_id'] = $orders_row['table_id'];
 					

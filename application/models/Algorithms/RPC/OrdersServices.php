@@ -12,6 +12,7 @@ class Algorithms_RPC_OrdersServices
     	$data = $this->db->select();
     	$data->from("orders", array("orders_id"));
     	$data->where("orders_status = ?", 1);
+    	$data->where("orders_time >= ?", date("Y-m-d")." 00:00:00");
     	
     	$rows = $this->db->fetchAll($data);
     	
@@ -36,6 +37,10 @@ class Algorithms_RPC_OrdersServices
     			
     			$result[$order_id] = Zend_Json::encode($order_info);
     		}
+    		
+    		//update order status
+    		$update_data = array("orders_status"=>2); //Sent
+    		$this->db->update("orders", $update_data, "orders_id IN (".implode(",", $order_id).")");
     	}
     	
     	return $result;
