@@ -37,6 +37,13 @@ class Algorithms_RPC_OrdersServices
     			
     			$result[$order_id] = Zend_Json::encode($order_info);
     		}
+    		
+    		//update order status
+    		$mod_orders= new Databases_Tables_Orders();
+    		$set = array("orders_status"=>2); //Sent
+    		$where = $mod_orders->quoteInto("orders_id IN (?)", $order_id_array);
+    		echo $where;die;
+    		$mod_orders->update($set, $where);
     	}
     	
     	return $result;
