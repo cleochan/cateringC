@@ -37,10 +37,6 @@ class Algorithms_RPC_OrdersServices
     			
     			$result[$order_id] = Zend_Json::encode($order_info);
     		}
-    		
-    		//update order status
-    		$update_data = array("orders_status"=>2); //Sent
-    		$this->db->update("orders", $update_data, "orders_id IN (".implode(",", $order_id).")");
     	}
     	
     	return $result;
