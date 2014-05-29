@@ -44,6 +44,7 @@ class Databases_Tables_Orders extends Zend_Db_Table
     		$row->orders_member_id = $this->orders_member_id;
     		$row->table_id = $this->table_id;
     		$row->users_id = $this->users_id;
+    		$row->device_id = $this->device_id;
     		$orders_id = $row->save();
     		
     		//insert items
