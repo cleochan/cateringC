@@ -212,8 +212,8 @@ class OrdersController extends Zend_Controller_Action
     	$mod_orders-> orders_payment_status = 0; //Unpaid
     	$mod_orders-> orders_type = $params['cotype']; //eat-in
     	$mod_orders-> table_id = $params['table_id'];
-    	$mod_orders-> users_id = $_SESSION['admin_users_id'];
-    	$mod_orders-> device_id = $_SESSION['admin_id'];
+    	$mod_orders-> users_id = $_SESSION['admin_info']['admin_users_id'];
+    	$mod_orders-> device_id = $_SESSION['admin_info']['admin_id'];
     	$mod_orders-> orders_status = 1; //Pending
     	$mod_orders-> orders_time = date("Y-m-d H:i:s");
     	$mod_orders-> orders_amount = $_SESSION['eat-in']['payment']['total'];
