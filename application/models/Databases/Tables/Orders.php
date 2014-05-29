@@ -18,6 +18,7 @@ class Databases_Tables_Orders extends Zend_Db_Table
     var $orders_discount;
     var $orders_member_id;
     var $table_id;
+    var $users_id;
     var $device_id;
     var $orders_items; //array
     var $take_out_phone;
@@ -42,7 +43,7 @@ class Databases_Tables_Orders extends Zend_Db_Table
     		$row->orders_discount = $this->orders_discount;
     		$row->orders_member_id = $this->orders_member_id;
     		$row->table_id = $this->table_id;
-    		$row->users_id = $_SESSION['user_info']['users_id'];
+    		$row->users_id = $this->users_id;
     		$orders_id = $row->save();
     		
     		//insert items
