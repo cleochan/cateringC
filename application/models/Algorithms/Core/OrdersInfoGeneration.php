@@ -560,7 +560,7 @@ class Algorithms_Core_OrdersInfoGeneration
 				 */
 					
 				//restructure
-				$result['payment']['order_id'] = $orders_row['orders_id'];
+				$result['payment']['orders_ref'] = $orders_row['orders_id'];
 				$result['payment']['ctime'] = $orders_row['orders_time'];
 				$result['payment']['subtotal'] = $orders_row['orders_subtotal'];
 				$result['payment']['used_coupon'] = $orders_row['orders_coupon'];
