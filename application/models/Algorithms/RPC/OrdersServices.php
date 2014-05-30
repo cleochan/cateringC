@@ -116,6 +116,80 @@ class Algorithms_RPC_OrdersServices
     				}
     			}
     		}
+    		
+    		/**
+    		 * UPDATE_PRODUCT_STATUS
+    		 */
+    		if(!empty($event_array['UPDATE_PRODUCT_STATUS']))
+    		{
+    			$mod_products = new Databases_Tables_MateriaProducts();
+    			 
+    			foreach ($event_array['UPDATE_PRODUCT_STATUS'] as $key => $val)
+    			{
+    				$mod_products->product_id = $key;
+    				$mod_products->status = $val['status'];
+    				$mod_products->UpdateStatus();
+    			}
+    		}
+    		
+    		/**
+    		 * UPDATE_SETS_STATUS
+    		 */
+    		if(!empty($event_array['UPDATE_SETS_STATUS']))
+    		{
+    			$mod_sets = new Databases_Tables_MateriaSets();
+    		
+    			foreach ($event_array['UPDATE_SETS_STATUS'] as $key => $val)
+    			{
+    				$mod_sets->sets_id = $key;
+    				$mod_sets->status = $val['status'];
+    				$mod_sets->UpdateStatus();
+    			}
+    		}
+    		
+    		/**
+    		 * UPDATE_STOCK
+    		 */
+    		if(!empty($event_array['UPDATE_STOCK']))
+    		{
+    			$mod_products = new Databases_Tables_MateriaProducts();
+    			
+    			$items_plus = array();
+    			$items_deduct = array();
+    		
+    			foreach ($event_array['UPDATE_STOCK'] as $key => $val)
+    			{
+    				if(1 == $val['action_type'])
+    				{
+    					if(!$items_plus[$key])
+    					{
+    						$items_plus[$key] = 0;
+    					}
+    					
+    					$items_plus[$key] += $val['qty'];
+    				}elseif(2 == $val['action_type'])
+    				{
+    					if(!$items_deduct[$key])
+    					{
+    						$items_deduct[$key] = 0;
+    					}
+    					
+    					$items_deduct[$key] += $val['qty'];
+    				}
+    			}
+    			
+    			if(!empty($items_plus))
+    			{
+    				$mod_products->product_stock_array = $items_plus;
+    				$mod_products->StockOperation(1);
+    			}
+
+    			if(!empty($items_deduct))
+    			{
+    				$mod_products->product_stock_array = $items_deduct;
+    				$mod_products->StockOperation(2);
+    			}
+    		}
     	}
     	
     	return $result;
