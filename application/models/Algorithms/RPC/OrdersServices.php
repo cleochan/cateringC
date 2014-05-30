@@ -64,6 +64,7 @@ class Algorithms_RPC_OrdersServices
     			$mod_log_sync->log_time = $pa['log_time'];
     			$mod_log_sync->log_event = $pa['log_event'];
     			$mod_log_sync->log_key = $pa['log_key'];
+    			
     			if($pa['log_val'])
     			{
     				$mod_log_sync->log_val = $pa['log_val'];
@@ -71,12 +72,15 @@ class Algorithms_RPC_OrdersServices
     			$mod_log_sync->AddLog();
     			
     			//combine array
+    			
+    			$log_val = Zend_Json::decode($pa['log_val']);
+    			
     			if(!$event_array[$pa['log_event']])
     			{
     				$event_array[$pa['log_event']] = array();
     			}
     			
-    			$event_array[$pa['log_event']][$pa['log_key']] = $pa['log_val'];
+    			$event_array[$pa['log_event']][$pa['log_key']] = $log_val;
     		}
     		
     		//proceed
