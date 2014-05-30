@@ -129,6 +129,8 @@ class Algorithms_RPC_OrdersServices
     				$mod_products->product_id = $key;
     				$mod_products->status = $val['status'];
     				$mod_products->UpdateStatus();
+    				
+    				$result += 1;
     			}
     		}
     		
@@ -144,6 +146,8 @@ class Algorithms_RPC_OrdersServices
     				$mod_sets->sets_id = $key;
     				$mod_sets->status = $val['status'];
     				$mod_sets->UpdateStatus();
+    				
+    				$result += 1;
     			}
     		}
     		
@@ -176,6 +180,8 @@ class Algorithms_RPC_OrdersServices
     					
     					$items_deduct[$key] += $val['qty'];
     				}
+    				
+    				$result += 1;
     			}
     			
     			if(!empty($items_plus))
