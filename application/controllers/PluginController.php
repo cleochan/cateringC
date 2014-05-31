@@ -38,16 +38,17 @@ class PluginController extends Zend_Controller_Action
 		curl_setopt($ch, CURLOPT_URL, $str);
 		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
 		$output = curl_exec($ch);
-		var_dump( $output );
-		die;
-		if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $params['openid'])
+		
+		$result = Zend_Json::decode($output);
+		
+		if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $result['openid'])
 		{
 			if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $_SESSION['openid'])
 			{
 				echo "Valid: Existed User.";
 			}else{
 				echo "Valid: New User.";
-				$_SESSION['openid'] = $params['openid'];
+				$_SESSION['openid'] = $result['openid'];
 			}
 		}else{
 			echo "Invalid visits.";
