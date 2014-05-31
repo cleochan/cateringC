@@ -31,7 +31,15 @@ class PluginController extends Zend_Controller_Action
 	function test3Action()
 	{
 		$params = $this->_request->getParams();
-		var_dump($params);die;
+		
+		$ch = curl_init();
+		
+		$str ='https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx8e7db22a86a79ad8&secret=eb47e51ca5e3bc2b880133fa21d87696&code='.$params['code'].'&grant_type=authorization_code';
+		curl_setopt($ch, CURLOPT_URL, $str);
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+		$output = curl_exec($ch);
+		var_dump( $output );
+		die;
 		if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $params['openid'])
 		{
 			if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $_SESSION['openid'])
