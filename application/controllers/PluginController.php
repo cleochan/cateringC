@@ -31,7 +31,7 @@ class PluginController extends Zend_Controller_Action
 	function test3Action()
 	{
 		$params = $this->_request->getParams();
-		
+		var_dump($params);die;
 		if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $params['openid'])
 		{
 			if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $_SESSION['openid'])
