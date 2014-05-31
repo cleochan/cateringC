@@ -16,7 +16,7 @@ class PluginController extends Zend_Controller_Action
 	
 	function test1Action()
 	{
-		$redirect_uri = urlencode("http://wechat.jushulin.mobi/plugin/test-target");
+		$redirect_uri = urlencode("http://wechat.jushulin.mobi/plugin/test3");
 		
 		$this->_redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8e7db22a86a79ad8&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
 		die;
@@ -28,11 +28,23 @@ class PluginController extends Zend_Controller_Action
 		die;
 	}
 	
-	function testTargetAction()
+	function test3Action()
 	{
 		$params = $this->_request->getParams();
 		
-		var_dump($params);
+		if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $params['openid'])
+		{
+			if('oigx2uF2eZLp3sPxp3V8Nco-3q2M' == $_SESSION['openid'])
+			{
+				echo "Valid: Existed User.";
+			}else{
+				echo "Valid: New User.";
+				$_SESSION['openid'] = $params['openid'];
+			}
+		}else{
+			echo "Invalid visits.";
+		}
+		
 		die;
 	}
 }
