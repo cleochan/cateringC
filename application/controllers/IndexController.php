@@ -121,7 +121,7 @@ class IndexController extends Zend_Controller_Action
 	
 	function authViewStatusSubmitAction()
 	{
-		$params = $this->_request->getParams();
+		$params = $this->_request->getParams(); //
 		
 		$mod_params = new Databases_Tables_Params();
 		$app_id = $mod_params->GetVal('AppIdYX');
