@@ -101,6 +101,8 @@ class IndexController extends Zend_Controller_Action
 			$this->_redirect("/orders/place-order");
 		}else{
 			echo "<font size='80'>对不起，系统不对外开放。</font>";
+			$mod_yx_tried_openid_log = new Databases_Tables_YxTriedOpenidLog();
+			$mod_yx_tried_openid_log->AddLog($result['openid']);
 		}
 		
 		die;

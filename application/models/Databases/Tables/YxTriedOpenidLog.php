@@ -1,0 +1,1 @@
+<?phpclass Databases_Tables_YxTriedOpenidLog extends Zend_Db_Table{    protected $_name = 'yx-tried-openid-log';        function AddLog($openid)    {    	$row = $this->createRow();    	$row->openid = $openid;    	$row->ctime = date("Y-m-d H:i:s");    	$log_id = $row->save();    	    	return $log_id;    }}
