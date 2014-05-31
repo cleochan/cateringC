@@ -398,7 +398,7 @@ class Databases_Joins_OrdersInfo
     function DumpLogOnWechat()
     {
     	$data = $this->db->select();
-    	$data->from("orders as o", array("orders_code", "orders_time", "table_id", "orders_amount", "orders_type", "orders_payment_status"));
+    	$data->from("orders as o", array("orders_code", "orders_time", "table_id", "orders_amount", "orders_type", "orders_payment_status", "users_id"));
     	$data->joinLeft("orders-statuses as s", "s.orders_statuses_id=o.orders_status", array("orders_statuses_external_name as status_name"));
     	
     	if($this->users_id)

@@ -252,6 +252,9 @@ class OrdersController extends Zend_Controller_Action
     	}
     	
     	$this->view->data = $mod_orders_info->DumpLogOnWechat();
+    	
+    	$mod_admin = new Databases_Tables_Admin();
+    	$this->view->alias_array = $mod_admin->AliasArray();
     }
 }
 
