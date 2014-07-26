@@ -570,6 +570,7 @@ class Algorithms_Core_OrdersInfoGeneration
 				$result['payment']['users_id'] = $orders_row['users_id'];
 				$result['payment']['member_id'] = $orders_row['orders_member_id'];
 				$result['payment']['table_id'] = $orders_row['table_id'];
+				$result['payment']['orders_type'] = $orders_row['orders_type'];
 					
 				if(!empty($orders_contains_rows))
 				{

@@ -102,7 +102,6 @@ class Algorithms_RPC_OrdersServices
     					{
     						$row->orders_code = $val['order_code'];
     						$row->orders_status = $val['status'];
-    						$row->orders_payment_status = 1; //Paid
     						$row->save();
     						
     						$result += 1;
