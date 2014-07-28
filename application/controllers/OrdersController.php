@@ -259,6 +259,37 @@ class OrdersController extends Zend_Controller_Action
     	$mod_admin = new Databases_Tables_Admin();
     	$this->view->alias_array = $mod_admin->AliasArray();
     }
+    
+    function changeTableAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['orders_id'])
+    	{
+    		$mod_orders_info = new Databases_Joins_OrdersInfo();
+    		$mod_orders_info->order_id = $params['orders_id'];
+    		$this->view->orders_id = $params['orders_id'];
+    		$this->view->data = $mod_orders_info->GetSpecifiedOrderDetails();
+    	}else{
+    		echo "Invalid Action";
+    		die;
+    	}
+    }
+    
+    function changeTableSubmitAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	if($params['orders_id'] && $params['table_id'])
+    	{
+    		$mod_orders = new Databases_Tables_Orders();
+    		$mod_orders->orders_id = $params['orders_id'];
+    		$mod_orders->table_id = $params['table_id'];
+    		$mod_orders->ChangeTableId();
+    	}
+    	
+    	$this->_redirect("/orders/view-status");
+    }
 }
 
 

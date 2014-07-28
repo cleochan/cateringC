@@ -73,4 +73,21 @@ class Databases_Tables_Orders extends Zend_Db_Table
     	
     	return $result;
     }
+    
+    function ChangeTableId()
+    {
+    	$result = FALSE;
+    	
+    	if($this->orders_id && $this->table_id)
+    	{
+    		$row = $this->fetchRow("orders_id='".$this->orders_id."'");
+    		if($row['orders_id'])
+    		{
+    			$row->table_id = $this->table_id;
+    			$result = $row->save();
+    		}
+    	}
+    	
+    	return $result;
+    }
 }
