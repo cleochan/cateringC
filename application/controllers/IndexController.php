@@ -43,12 +43,12 @@ class IndexController extends Zend_Controller_Action
 		//register error
 		if($error)
 		{
-			$mod_error = new Databases_Tables_ErrorLog();
-			$mod_error->error_id = $error;
-			$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
-			if($note1){$mod_error->note1 = $note1;}
-			if($note2){$mod_error->note2 = $note2;}
-			$error_msg = $mod_error->AddLog();
+// 			$mod_error = new Databases_Tables_ErrorLog();
+// 			$mod_error->error_id = $error;
+// 			$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
+// 			if($note1){$mod_error->note1 = $note1;}
+// 			if($note2){$mod_error->note2 = $note2;}
+// 			$error_msg = $mod_error->AddLog();
 			
 			$fromUsername = $postObj->FromUserName;
 			$toUsername = $postObj->ToUserName;

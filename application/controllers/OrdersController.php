@@ -42,16 +42,16 @@ class OrdersController extends Zend_Controller_Action
 		}
     	
     	//register error
-    	if($error)
-    	{
-    		$mod_error = new Databases_Tables_ErrorLog();
-    		$mod_error->error_id = $error;
-    		$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
-    		$error_msg = $mod_error->AddLog();
+//     	if($error)
+//     	{
+//     		$mod_error = new Databases_Tables_ErrorLog();
+//     		$mod_error->error_id = $error;
+//     		$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
+//     		$error_msg = $mod_error->AddLog();
     			
-    		echo $error_msg;
-    		die;
-    	}
+//     		echo $error_msg;
+//     		die;
+//     	}
 	}
 	
 	function indexAction()
