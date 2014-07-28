@@ -41,8 +41,8 @@ class IndexController extends Zend_Controller_Action
 		}
 		
 		//register error
-		if($error)
-		{
+// 		if($error)
+// 		{
 // 			$mod_error = new Databases_Tables_ErrorLog();
 // 			$mod_error->error_id = $error;
 // 			$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
@@ -50,18 +50,18 @@ class IndexController extends Zend_Controller_Action
 // 			if($note2){$mod_error->note2 = $note2;}
 // 			$error_msg = $mod_error->AddLog();
 			
-			$fromUsername = $postObj->FromUserName;
-			$toUsername = $postObj->ToUserName;
-			$time = time();
-			$textTpl = "<xml>
-						<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
-						<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
-						<CreateTime><![CDATA[".$time."]]></CreateTime>
-						<MsgType><![CDATA[text]]></MsgType>
-						<Content><![CDATA[".$error_msg."]]></Content>
-						</xml>";
-			echo $textTpl;
-		}
+// 			$fromUsername = $postObj->FromUserName;
+// 			$toUsername = $postObj->ToUserName;
+// 			$time = time();
+// 			$textTpl = "<xml>
+// 						<ToUserName><![CDATA[".$fromUsername."]]></ToUserName>
+// 						<FromUserName><![CDATA[".$toUsername."]]></FromUserName>
+// 						<CreateTime><![CDATA[".$time."]]></CreateTime>
+// 						<MsgType><![CDATA[text]]></MsgType>
+// 						<Content><![CDATA[".$error_msg."]]></Content>
+// 						</xml>";
+// 			echo $textTpl;
+// 		}
 			
 		die;
     }
