@@ -94,25 +94,29 @@ class Algorithms_RPC_OrdersServices
     			
     			foreach ($event_array['UPDATE_ORDER_STATUS'] as $key => $val)
     			{
-    				//initial update, need to update order code and payment status
-    				if($val['order_code'])
+    				if($val['orders_code'] || $val['status'] || $val['payment_status'])
     				{
     					$row = $mod_orders->fetchRow("orders_id = '".$key."'");
-    					if(!empty($row))
-    					{
-    						$row->orders_code = $val['order_code'];
-    						$row->orders_status = $val['status'];
-    						$row->save();
-    						
-    						$result += 1;
-    					}
-    				}else{ //update status only
-    					$mod_orders->orders_id = $key;
-    					$mod_orders->orders_status = $val['status'];
-    					$mod_orders->UpdateStatus();
     					
-    					$result += 1;
+    					if($val['orders_code'])
+    					{
+    						$row->orders_code = $val['orders_code'];
+    					}
+    					
+    					if($val['status'])
+    					{
+    						$row->orders_status = $val['status'];
+    					}
+    					
+    					if($val['payment_status'])
+    					{
+    						$row->orders_payment_status = $val['payment_status'];
+    					}
+    					
+    					$row->save();
     				}
+    				
+    				$result += 1;
     			}
     		}
     		
