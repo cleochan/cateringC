@@ -406,7 +406,7 @@ class Databases_Joins_OrdersInfo
     		$data->where("users_id = ?", $this->users_id);
     	}
     	
-    	$data->where("orders_time >= ?", date("Y-m-d H:i:s"));
+    	$data->where("orders_time >= ?", date("Y-m-d")." 00:00:00");
     	$data->order("orders_id DESC");
     	$rows = $this->db->fetchAll($data);
     	
