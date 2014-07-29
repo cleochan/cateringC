@@ -486,7 +486,7 @@ class OrdersController extends Zend_Controller_Action
         //clean session
         $eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
         $eatin_mod->CleanUpdateOrderSession();
-        
+        echo "ddd";die;
         $this->_redirect("/orders/view-status");
     }
 }
