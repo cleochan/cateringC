@@ -894,7 +894,7 @@ class Algorithms_Core_OrdersInfoGeneration
 		if(is_numeric($this->item_id))
 		{
 			$price = $_SESSION['update-order']['items']['sets'][$this->item_id]['sets_price'];
-				
+			
 			//remove in session
 			unset($_SESSION['update-order']['items']['sets'][$this->item_id]);
 				
