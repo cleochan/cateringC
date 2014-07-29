@@ -1,0 +1,19 @@
+<table width="100%" border="0">
+	<tr align="center" height="300">
+		<td colspan="2" style="color: green; font-weight: 900">编辑已点餐品<br /><?=$_SESSION['update-order']['items']['products'][$this->product_id][2]?></td>
+	</tr>
+	<tr height="400">
+		<td align="right">数量：</td>
+		<td align="left">
+			<select name="updated-qty" onchange="javascript:location.href=this.value;">
+			<?php for($n=1;$n<21;$n++):?>
+				<option value="/orders/update-product-in-add-item-submit/item_id/<?=$this->product_id?>/qty/<?=$n?>" <?php if($n==$_SESSION['update-order']['items']['products'][$this->product_id][0]){echo "selected='selected'";}?>>-<?=$n?>-</option>
+			<?php endfor;?>
+			</select>
+		</td>
+	</tr>
+	<tr align="center" valign="middle" height="300">
+		<td align="left"><a href="/orders/update-product-in-add-item-submit/item_id/<?=$this->product_id?>/qty/0" class="large red awesome">删 除</a></td>
+		<td align="right"><a href="/orders/update-order-add-item/orders_id/<?=$_SESSION['update-order']['payment']['order_id']?>" class="large yellow awesome">返回</a></td>
+	</tr>
+</table>

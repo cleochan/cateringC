@@ -622,7 +622,7 @@ class Algorithms_Core_OrdersInfoGeneration
 		return $result;
 	}
 	
-	function InitialUpdateOrderSession($to_array=NULL) //to_array = make array not session
+	function InitialUpdateOrderSession($orders_id, $to_array=NULL) //to_array = make array not session
 	{
 		$result = FALSE;
 	
@@ -634,7 +634,7 @@ class Algorithms_Core_OrdersInfoGeneration
 							'products' => array()
 					),
 					'payment' => array(
-							'order_id' => NULL,
+							'order_id' => $orders_id,
 							'ctime' => date("Y-m-d H:i:s"),
 							'subtotal' => 0,
 							'used_coupon' => 0,
@@ -649,14 +649,14 @@ class Algorithms_Core_OrdersInfoGeneration
 							'table_id' => NULL
 					)
 			);
-		}elseif(!$_SESSION['update-order']){
+		}else{
 			$_SESSION['update-order'] = array(
 					'items' => array(
 							'sets' => array(),
 							'products' => array()
 					),
 					'payment' => array(
-							'order_id' => NULL,
+							'order_id' => $orders_id,
 							'ctime' => date("Y-m-d H:i:s"),
 							'subtotal' => 0,
 							'used_coupon' => 0,
@@ -679,9 +679,11 @@ class Algorithms_Core_OrdersInfoGeneration
 	
 	function CleanUpdateOrderSession()
 	{
+		$orders_id = $_SESSION['update-order']['payment']['order_id'];
+		
 		unset($_SESSION['update-order']);
 	
-		return TRUE;
+		return $orders_id;
 	}
 	
 	function AddProductIntoUpdateOrderSession()

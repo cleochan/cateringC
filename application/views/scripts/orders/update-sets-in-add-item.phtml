@@ -1,0 +1,39 @@
+<table width="100%" border="0">
+	<tr align="center" height="300">
+		<td colspan="2" style="color: green; font-weight: 900">编辑已选套餐<br /><?=$_SESSION['update-order']['items']['sets'][$this->item_id]['sets_name']?></td>
+	</tr>
+	<?php if($this->replacement_pool):?>
+	<?php foreach ($this->replacement_pool as $rp_key => $rp_val):?>
+		<tr height="200">
+			<td colspan="2" align="center">
+				<select name="update-item" onchange="javascript:location.href=this.value;">
+					<option><?=$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_name']?></option>
+				<?php foreach ($rp_val as $product_id => $product_info):?>
+					<?php if($_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$rp_key]['product_id'] != $product_id):?>
+					<?php
+						$model_plugin = new Algorithms_Extensions_Plugin();
+						$price_diff = $model_plugin->FormatPrice($product_info['price'] - $_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$rp_key]['unit_price']);
+						if(0 < $price_diff)
+						{
+							$extra = " +".$price_diff;
+						}elseif(0 > $price_diff)
+						{
+							$extra = " ".$price_diff;
+						}else{
+							$extra = "";
+						}
+					?>
+					
+					<option value="/orders/update-sets-add-item-submit/item_id/<?=$this->item_id?>/act/upd/conid/<?=$rp_key?>/newpro/<?=$product_id?>"><?php echo $product_info['name'].$extra;?></option>
+					<?php endif;?>
+				<?php endforeach;?>
+				</select>
+			</td>
+		</tr>
+	<?php endforeach;?>
+	<?php endif;?>
+	<tr align="center" valign="middle" height="400">
+		<td><a href="/orders/update-sets-add-item-submit/item_id/<?=$this->item_id?>/act/del" class="large red awesome">删除套餐</a></td>
+		<td><a href="/orders/update-order-add-item/orders_id/<?=$_SESSION['update-order']['payment']['order_id']?>" class="large yellow awesome">返回</a></td>
+	</tr>
+</table>
