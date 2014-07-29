@@ -40,7 +40,7 @@ class OrdersController extends Zend_Controller_Action
 				$error = 1002;
 			}
 		}
-    	echo "aaa";die;
+    	
     	//register error
 //     	if($error)
 //     	{
