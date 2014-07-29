@@ -162,10 +162,6 @@ class Databases_Joins_OrdersInfo
     			{
     				if(!$n)
     				{
-    					$users_mod = new Databases_Tables_Users();
-    					$users_mod->user_id = $row['users_id'];
-    					$user_result = $users_mod->FetchUserInfo(2);//by id
-    					
     					$result['payment']['order_db_id'] = $row['orders_id'];
     					$result['payment']['order_id'] = $row['orders_code'];
     					$result['payment']['order_type'] = $row['orders_type'];
@@ -175,7 +171,7 @@ class Databases_Joins_OrdersInfo
     					$result['payment']['total'] = $row['orders_amount'];
     					$result['payment']['cash'] = $row['orders_cash'];
     					$result['payment']['change'] = $row['orders_change'];
-    					$result['payment']['user_alias'] = $user_result['user_alias'];
+    					$result['payment']['user_alias'] = NULL;
     					$result['payment']['table_id'] = $row['table_id'];
     					$n += 1;
     				}
