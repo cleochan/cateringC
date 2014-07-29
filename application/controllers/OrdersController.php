@@ -390,7 +390,7 @@ class OrdersController extends Zend_Controller_Action
     		{
     			$mod_order_generation = new Algorithms_Core_OrdersInfoGeneration();
     			$mod_order_generation->item_id = $params['item_id'];
-    			$ori_qty = $_SESSION['eat-in']['items']['products'][$params['item_id']][0];
+    			$ori_qty = $_SESSION['update-order']['items']['products'][$params['item_id']][0];
     			
     			if($params['qty'] > $ori_qty)
     			{
@@ -407,7 +407,7 @@ class OrdersController extends Zend_Controller_Action
     		}
     	}
     	
-    	$this->_redirect("/orders/cart");
+    	$this->_redirect("/orders/update-order-add-item-confirm");
     }
     
     function updateSetsInAddItemAction()
@@ -417,11 +417,11 @@ class OrdersController extends Zend_Controller_Action
     	$this->view->item_id = $params['id'];
     	
     	//analyze replacement
-    	if($_SESSION['eat-in']['items']['sets'][$params['id']])
+    	if($_SESSION['update-order']['items']['sets'][$params['id']])
     	{
     		$mod_sets_operation = new Databases_Joins_SetsOperation();
     		$mod_sets_operation->business_channel_id = 1; //堂吃
-    		$mod_sets_operation->current_sets_info = $_SESSION['eat-in']['items']['sets'][$params['id']];
+    		$mod_sets_operation->current_sets_info = $_SESSION['update-order']['items']['sets'][$params['id']];
     		$this->view->replacement_pool = $mod_sets_operation->FetchReplacements();
     	}
     }
@@ -436,22 +436,22 @@ class OrdersController extends Zend_Controller_Action
     		{
     			$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
     			$mod_orders_info_generation->item_id = $params['item_id'];
-    			$mod_orders_info_generation->RemoveSetsFromEatInSession();
+    			$mod_orders_info_generation->RemoveSetsFromUpdateOrderSession();
     		}elseif('upd' == $params['act']){
     			$mod_sets_operation = new Databases_Joins_SetsOperation();
     			$mod_sets_operation->business_channel_id = 1; //堂吃
-    			$mod_sets_operation->current_sets_info = $_SESSION['eat-in']['items']['sets'][$params['item_id']];
+    			$mod_sets_operation->current_sets_info = $_SESSION['update-order']['items']['sets'][$params['item_id']];
     			$replacement_pool = $mod_sets_operation->FetchReplacements();
     			
     			$mod_sets_operation->item_id = $params['item_id'];
     			$mod_sets_operation->replacement_pool = $replacement_pool;
     			$mod_sets_operation->original_contains_id = $params['conid'];
     			$mod_sets_operation->new_product_id = $params['newpro'];
-    			$mod_sets_operation->UpdateSetsInfo();
+    			$mod_sets_operation->UpdateSetsInfoInAddItem();
     		}
     	}
     	
-    	$this->_redirect("/orders/cart");
+    	$this->_redirect("/orders/update-order-add-item-confirm");
     }
     
     function updateOrderAddItemSubmitAction()

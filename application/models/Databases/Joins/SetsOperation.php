@@ -126,6 +126,49 @@ class Databases_Joins_SetsOperation
     	return TRUE;
     }
     
+    function UpdateSetsInfoInAddItem()
+    {
+    	/**
+    	 * $this->business_channel_id
+    	 * $this->replacement_pool
+    	 * $this->item_id
+    	 * $this->original_contains_id
+    	 * $this->new_product_id
+    	 * $_session['update-order']
+    	 */
+    	$model_plugin = new Algorithms_Extensions_Plugin();
+    	
+    	if(1 == $this->business_channel_id) //eat in
+    	{
+    		$price_diff = $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['price'] * $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['qty'] - $_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['unit_price'];
+    		
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['sets_price'] += $price_diff;
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['sets_price'] = $model_plugin->FormatPrice($_SESSION['update-order']['items']['sets'][$this->item_id]['sets_price']);
+    		
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['product_id'] = $this->new_product_id;
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['qty'] = $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['qty'];
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['unit_price'] = $model_plugin->FormatPrice($this->replacement_pool[$this->original_contains_id][$this->new_product_id]['price'] * $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['qty']);
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['product_name'] = $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['name'];
+    		$_SESSION['update-order']['items']['sets'][$this->item_id]['contains'][$this->original_contains_id]['product_category'] = $this->replacement_pool[$this->original_contains_id][$this->new_product_id]['category'];
+    		
+    		//payment
+    		$_SESSION['update-order']['payment']['subtotal'] += $price_diff;
+    		$_SESSION['update-order']['payment']['total'] += $price_diff;
+    		
+    		if($_SESSION['update-order']['payment']['cash'])
+    		{
+    			$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['cash'] - $_SESSION['update-order']['payment']['total']);
+    		}
+    		
+    		$_SESSION['update-order']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['subtotal']);
+    		$_SESSION['update-order']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['total']);
+    		$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['change']);
+    		
+    	}
+    	
+    	return TRUE;
+    }
+    
     function DumpList()
     {
     	$rows_per_page = 30;
