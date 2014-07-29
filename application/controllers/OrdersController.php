@@ -457,42 +457,37 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-    	$e = new Algorithms_Extensions_Plugin();
-    	$e->FormatArray($_SESSION['update-order']);die;
-    	//proceed
-    	$mod_orders = new Databases_Tables_Orders();
+//     	$e = new Algorithms_Extensions_Plugin();
+//     	$e->FormatArray($_SESSION['update-order']);die;
+    	//update order items
+        $mod_orders_contains = new Databases_Tables_OrdersContains();
+        $mod_orders_contains->orders_id = $_SESSION['update-order']['payments']['orders_id'];
+        $mod_orders_contains->items_array = $_SESSION['update-order']['items'];
+        $mod_orders_contains->InsertItems();
     	
-    	$mod_orders->createRow();
-    	$mod_orders-> orders_channel = 1; //eat-in
-    	$mod_orders-> orders_payment_status = 0; //Unpaid
-    	$mod_orders-> orders_type = $params['cotype']; //eat-in
-    	$mod_orders-> table_id = $params['table_id'];
-    	$mod_orders-> users_id = $_SESSION['admin_info']['admin_users_id'];
-    	$mod_orders-> device_id = $_SESSION['admin_info']['admin_id'];
-    	$mod_orders-> orders_status = 1; //Pending
-    	$mod_orders-> orders_time = date("Y-m-d H:i:s");
-    	$mod_orders-> orders_amount = $_SESSION['eat-in']['payment']['total'];
-    	$mod_orders-> orders_cash = $_SESSION['eat-in']['payment']['cash'];
-    	$mod_orders-> orders_change = $_SESSION['eat-in']['payment']['change'];
-    	$mod_orders-> orders_subtotal = $_SESSION['eat-in']['payment']['subtotal'];
-    	$mod_orders-> orders_coupon = $_SESSION['eat-in']['payment']['used_coupon'];
-    	$mod_orders-> orders_discount = $_SESSION['eat-in']['payment']['discount'];
-    	$mod_orders-> orders_items = $_SESSION['eat-in']['items'];
-    	
-    	$result = $mod_orders-> InsertOrder();
-    	
-    	if($result)
-    	{ //success
-    		//clean session
-    		$eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
-    		$eatin_mod->CleanEatInSession();
-    		
-    		$this->_redirect("/orders/place-order");
-    	}else{ //failed
-    		echo "下单失败。错误代码001";
-    	}
-
-    	die;
+        //update payments
+        $mod_orders = new Databases_Tables_Orders();
+        $get_order = $mod_orders->fetchRow("orders_id = '".$_SESSION['update-order']['payments']['orders_id']."'");
+        if(!empty($get_order))
+        {
+        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
+        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
+        	$get_order->save();
+        }
+        
+        //add to log sync down
+        $mod_sync_down = new Databases_Tables_LogSyncDown();
+        $mod_sync_down->log_time = date("Y-m-d H:i:s");
+        $mod_sync_down->log_event = 'ADD_ITEM';
+        $mod_sync_down->log_key = $_SESSION['update-order']['payments']['orders_id']; //order ref
+        $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
+        $mod_sync_down->AddLog();
+        
+        //clean session
+        $eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
+        $eatin_mod->CleanUpdateOrderSession();
+        
+        $this->_redirect("/orders/view-status");
     }
 }
 

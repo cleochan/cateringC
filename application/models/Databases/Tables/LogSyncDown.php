@@ -8,7 +8,6 @@
  * 
  * CHANGE_TABLE
  * ADD_ITEM
- * REMOVE_ITEM
  * 
  * =============================
  */
