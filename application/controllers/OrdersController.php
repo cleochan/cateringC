@@ -19,7 +19,7 @@ class OrdersController extends Zend_Controller_Action
 			{
 				$_SESSION['admin_session'] = $params['session_id'];
 			}
-			echo "bbb";die; 
+			 
 			if($_SESSION['admin_session']){
 				$mod_params = new Databases_Tables_Params();
 				if($_SESSION['admin_session'] === $mod_params->GetVal('TestSession'))
@@ -29,7 +29,7 @@ class OrdersController extends Zend_Controller_Action
 				}else{
 					$admin_info = $mod_admin->CheckSessionValidation();
 				}
-			var_dump($admin_info);die;
+				
 				if(empty($admin_info))
 				{
 					$error = 1005;
@@ -42,16 +42,16 @@ class OrdersController extends Zend_Controller_Action
 		}
     	
     	//register error
-//     	if($error)
-//     	{
-//     		$mod_error = new Databases_Tables_ErrorLog();
-//     		$mod_error->error_id = $error;
-//     		$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
-//     		$error_msg = $mod_error->AddLog();
+    	if($error)
+    	{
+    		$mod_error = new Databases_Tables_ErrorLog();
+    		$mod_error->error_id = $error;
+    		$mod_error->visitor_ip = $_SERVER['REMOTE_ADDR'];
+    		$error_msg = $mod_error->AddLog();
     			
-//     		echo $error_msg;
-//     		die;
-//     	}
+    		echo $error_msg;
+    		die;
+    	}
 	}
 	
 	function indexAction()
