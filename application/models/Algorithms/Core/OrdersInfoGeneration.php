@@ -622,7 +622,7 @@ class Algorithms_Core_OrdersInfoGeneration
 		return $result;
 	}
 	
-	function InitialUpdateOrderAddItemSession($to_array=NULL) //to_array = make array not session
+	function InitialUpdateOrderSession($to_array=NULL) //to_array = make array not session
 	{
 		$result = FALSE;
 	
@@ -649,8 +649,8 @@ class Algorithms_Core_OrdersInfoGeneration
 							'table_id' => NULL
 					)
 			);
-		}elseif(!$_SESSION['update-order-add-item']){
-			$_SESSION['update-order-add-item'] = array(
+		}elseif(!$_SESSION['update-order']){
+			$_SESSION['update-order'] = array(
 					'items' => array(
 							'sets' => array(),
 							'products' => array()
@@ -677,14 +677,14 @@ class Algorithms_Core_OrdersInfoGeneration
 		return $result;
 	}
 	
-	function CleanUpdateOrderAddItemSession()
+	function CleanUpdateOrderSession()
 	{
-		unset($_SESSION['update-order-add-item']);
+		unset($_SESSION['update-order']);
 	
 		return TRUE;
 	}
 	
-	function AddProductIntoUpdateOrderAddItemSession()
+	function AddProductIntoUpdateOrderSession()
 	{
 		$result = array(
 				"qty_in_cart" => 0,
@@ -707,43 +707,43 @@ class Algorithms_Core_OrdersInfoGeneration
 					if(0 < $product_info['stock_on_hand'])
 					{
 						//proceed
-						if($_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']]) //update qty
+						if($_SESSION['update-order']['items']['products'][$product_info['product_id']]) //update qty
 						{
-							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0] += 1;
-							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]);
+							$_SESSION['update-order']['items']['products'][$product_info['product_id']][0] += 1;
+							$_SESSION['update-order']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order']['items']['products'][$product_info['product_id']][0]);
 						}else{ //add one
-							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']] = array(1, $product_info['unit_price'], $product_info['product_name'], $product_info['product_category']);
+							$_SESSION['update-order']['items']['products'][$product_info['product_id']] = array(1, $product_info['unit_price'], $product_info['product_name'], $product_info['product_category']);
 						}
 	
 						//update order amount
-						$_SESSION['update-order-add-item']['payment']['subtotal'] += $product_info['unit_price'];
-						$_SESSION['update-order-add-item']['payment']['total'] += $product_info['unit_price'];
-						$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
-						$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+						$_SESSION['update-order']['payment']['subtotal'] += $product_info['unit_price'];
+						$_SESSION['update-order']['payment']['total'] += $product_info['unit_price'];
+						$_SESSION['update-order']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['subtotal']);
+						$_SESSION['update-order']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['total']);
 	
-						if($_SESSION['update-order-add-item']['payment']['cash'])
+						if($_SESSION['update-order']['payment']['cash'])
 						{
-							$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+							$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['cash'] - $_SESSION['update-order']['payment']['total']);
 						}
 	
 						//count qty
-						if($_SESSION['update-order-add-item']['items']['sets'])
+						if($_SESSION['update-order']['items']['sets'])
 						{
-							$qty_sets = count($_SESSION['update-order-add-item']['items']['sets']);
+							$qty_sets = count($_SESSION['update-order']['items']['sets']);
 						}else{
 							$qty_sets = 0;
 						}
 	
 						$qty_products = 0;
 	
-						foreach($_SESSION['update-order-add-item']['items']['products'] as $parray)
+						foreach($_SESSION['update-order']['items']['products'] as $parray)
 						{
 							$qty_products += $parray[0];
 						}
 	
 						$result = array(
 								"qty_in_cart" => $qty_sets + $qty_products,
-								"amount_in_cart" => $_SESSION['update-order-add-item']['payment']['total']
+								"amount_in_cart" => $_SESSION['update-order']['payment']['total']
 						);
 	
 						$error = 0; // no error
@@ -760,7 +760,7 @@ class Algorithms_Core_OrdersInfoGeneration
 		return $result;
 	}
 	
-	function RemoveProductFromUpdateOrderAddItemSession()
+	function RemoveProductFromUpdateOrderSession()
 	{
 		$error = 1; //unknown reason
 		$model_plugin = new Algorithms_Extensions_Plugin();
@@ -772,36 +772,36 @@ class Algorithms_Core_OrdersInfoGeneration
 			$model_products->business_channel_id = 1; //eat-in
 			$product_info = $model_products->FetchProductById();
 				
-			if(1 < $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]) //deduct one
+			if(1 < $_SESSION['update-order']['items']['products'][$product_info['product_id']][0]) //deduct one
 			{
 				if($product_info)
 				{
 					//proceed
-					$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0] -= 1;
-					$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]);
+					$_SESSION['update-order']['items']['products'][$product_info['product_id']][0] -= 1;
+					$_SESSION['update-order']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order']['items']['products'][$product_info['product_id']][0]);
 						
 					$error = 0; // no error
 				}
 			}else{ //unset directly
-				unset($_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']]);
+				unset($_SESSION['update-order']['items']['products'][$product_info['product_id']]);
 			}
 				
 			//update order amount
-			$_SESSION['update-order-add-item']['payment']['subtotal'] -= $product_info['unit_price'];
-			$_SESSION['update-order-add-item']['payment']['total'] -= $product_info['unit_price'];
-			$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
-			$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+			$_SESSION['update-order']['payment']['subtotal'] -= $product_info['unit_price'];
+			$_SESSION['update-order']['payment']['total'] -= $product_info['unit_price'];
+			$_SESSION['update-order']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['subtotal']);
+			$_SESSION['update-order']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['total']);
 				
-			if($_SESSION['update-order-add-item']['payment']['cash'])
+			if($_SESSION['update-order']['payment']['cash'])
 			{
-				$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+				$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['cash'] - $_SESSION['update-order']['payment']['total']);
 			}
 		}
 	
 		return $error;
 	}
 	
-	function AddSetsIntoUpdateOrderAddItemSession()
+	function AddSetsIntoUpdateOrderSession()
 	{
 		$result = array(
 				"qty_in_cart" => 0,
@@ -829,7 +829,7 @@ class Algorithms_Core_OrdersInfoGeneration
 					if(0 < $sets_details['stock'][$this->item_id])
 					{
 						//proceed
-						$_SESSION['update-order-add-item']['items']['sets'][] = array(
+						$_SESSION['update-order']['items']['sets'][] = array(
 								'sets_id' => $this->item_id,
 								'sets_category' => $sets_info['sets_category'],
 								'sets_name' => $sets_info['sets_name'],
@@ -840,36 +840,36 @@ class Algorithms_Core_OrdersInfoGeneration
 						//update order amount
 						foreach($sets_details['contains'][$this->item_id] as $item_details)
 						{
-							$_SESSION['update-order-add-item']['payment']['subtotal'] += $item_details['unit_price'];
-							$_SESSION['update-order-add-item']['payment']['total'] += $item_details['unit_price'];
+							$_SESSION['update-order']['payment']['subtotal'] += $item_details['unit_price'];
+							$_SESSION['update-order']['payment']['total'] += $item_details['unit_price'];
 						}
 	
-						$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
-						$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+						$_SESSION['update-order']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['subtotal']);
+						$_SESSION['update-order']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['total']);
 	
-						if($_SESSION['update-order-add-item']['payment']['cash'])
+						if($_SESSION['update-order']['payment']['cash'])
 						{
-							$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+							$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['cash'] - $_SESSION['update-order']['payment']['total']);
 						}
 	
 						//count qty
-						if($_SESSION['update-order-add-item']['items']['sets'])
+						if($_SESSION['update-order']['items']['sets'])
 						{
-							$qty_sets = count($_SESSION['update-order-add-item']['items']['sets']);
+							$qty_sets = count($_SESSION['update-order']['items']['sets']);
 						}else{
 							$qty_sets = 0;
 						}
 	
 						$qty_products = 0;
 	
-						foreach($_SESSION['update-order-add-item']['items']['products'] as $parray)
+						foreach($_SESSION['update-order']['items']['products'] as $parray)
 						{
 							$qty_products += $parray[0];
 						}
 	
 						$result = array(
 								"qty_in_cart" => $qty_sets + $qty_products,
-								"amount_in_cart" => $_SESSION['update-order-add-item']['payment']['total']
+								"amount_in_cart" => $_SESSION['update-order']['payment']['total']
 						);
 	
 						$error = 0; // no error
@@ -884,27 +884,27 @@ class Algorithms_Core_OrdersInfoGeneration
 		return $result;
 	}
 	
-	function RemoveSetsFromUpdateOrderAddItemSession()
+	function RemoveSetsFromUpdateOrderSession()
 	{
 		$error = 1; //unknown reason
 		$model_plugin = new Algorithms_Extensions_Plugin();
 	
 		if(is_numeric($this->item_id))
 		{
-			$price = $_SESSION['update-order-add-item']['items']['sets'][$this->item_id]['sets_price'];
+			$price = $_SESSION['update-order']['items']['sets'][$this->item_id]['sets_price'];
 				
 			//remove in session
-			unset($_SESSION['update-order-add-item']['items']['sets'][$this->item_id]);
+			unset($_SESSION['update-order']['items']['sets'][$this->item_id]);
 				
 			//update order amount
-			$_SESSION['update-order-add-item']['payment']['subtotal'] -= $price;
-			$_SESSION['update-order-add-item']['payment']['total'] -= $price;
-			$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
-			$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+			$_SESSION['update-order']['payment']['subtotal'] -= $price;
+			$_SESSION['update-order']['payment']['total'] -= $price;
+			$_SESSION['update-order']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['subtotal']);
+			$_SESSION['update-order']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['total']);
 				
-			if($_SESSION['update-order-add-item']['payment']['cash'])
+			if($_SESSION['update-order']['payment']['cash'])
 			{
-				$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+				$_SESSION['update-order']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order']['payment']['cash'] - $_SESSION['update-order']['payment']['total']);
 			}
 		}
 	

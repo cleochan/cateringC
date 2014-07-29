@@ -1,4 +1,4 @@
-<div id="eatinbar"><div style="font-size: 75px; font-weight:1200; background-color: #FFED97;" align="center">加菜单</div>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:1000; background-color: #FFED97;" align="center">加菜单</div></div>
 <?php if(!empty($this->categories_array['sets'])):?>
 <?php foreach($this->categories_array['sets'] as $sets_key => $sets_val):?>
 <div id="eatinbar" style="background-color: #FFED97;"><div style="font-size: 75px; font-weight:900;"><?=$sets_val?></div>
@@ -39,7 +39,7 @@
 function AddProduct(val1)
 {
 	var aj = $.ajax( {    
-	    url:'/ajax/add-product-into-eatin-session',
+	    url:'/ajax/add-product-into-update-order-session',
 	    data:{
 			pid: val1
 		},    
@@ -47,7 +47,7 @@ function AddProduct(val1)
 	    cache:false,    
 	    dataType:'json',    
 	    success:function(data) {    
-	    	document.getElementById("vdata").innerHTML = "<a href='/orders/cart'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
+	    	document.getElementById("vdata").innerHTML = "<a href='/orders/update-order-add-item-confirm'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
 	     },    
 	     error : function() {      
 	          alert("操作异常，请联系管理员");    
@@ -58,7 +58,7 @@ function AddProduct(val1)
 function AddSets(val1)
 {
 	var aj = $.ajax( {    
-	    url:'/ajax/add-sets-into-eatin-session',
+	    url:'/ajax/add-sets-into-update-order-session',
 	    data:{
 			pid: val1
 		},    
@@ -66,7 +66,7 @@ function AddSets(val1)
 	    cache:false,    
 	    dataType:'json',    
 	    success:function(data) {    
-	    	document.getElementById("vdata").innerHTML = "<a href='/orders/cart'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
+	    	document.getElementById("vdata").innerHTML = "<a href='/orders/update-order-add-item-confirm'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
 	     },    
 	     error : function() {      
 	          alert("操作异常，请联系管理员");    
