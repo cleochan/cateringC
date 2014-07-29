@@ -29,7 +29,7 @@ class OrdersController extends Zend_Controller_Action
 				}else{
 					$admin_info = $mod_admin->CheckSessionValidation();
 				}
-			
+			var_dump($admin_info);die;
 				if(empty($admin_info))
 				{
 					$error = 1005;
