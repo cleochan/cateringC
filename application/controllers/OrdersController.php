@@ -457,8 +457,8 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-//     	$e = new Algorithms_Extensions_Plugin();
-//     	$e->FormatArray($_SESSION['update-order']);die;
+    	$e = new Algorithms_Extensions_Plugin();
+    	$e->FormatArray($_SESSION['update-order']);die;
     	//update order items
         $mod_orders_contains = new Databases_Tables_OrdersContains();
         $mod_orders_contains->orders_id = $_SESSION['update-order']['payments']['orders_id'];
@@ -474,7 +474,7 @@ class OrdersController extends Zend_Controller_Action
         	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
         	$get_order->save();
         }
-        
+        $e->FormatArray($_SESSION['update-order']);die;
         //add to log sync down
         $mod_sync_down = new Databases_Tables_LogSyncDown();
         $mod_sync_down->log_time = date("Y-m-d H:i:s");
@@ -486,7 +486,7 @@ class OrdersController extends Zend_Controller_Action
         //clean session
         $eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
         $eatin_mod->CleanUpdateOrderSession();
-        echo "ddd";die;
+        
         $this->_redirect("/orders/view-status");
     }
 }
