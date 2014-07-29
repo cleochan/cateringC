@@ -203,4 +203,9 @@ class Algorithms_RPC_OrdersServices
     	
     	return $result;
     }
+    
+    function DownLogSync()
+    {
+    	
+    }
 }

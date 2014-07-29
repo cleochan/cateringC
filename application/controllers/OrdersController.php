@@ -280,12 +280,24 @@ class OrdersController extends Zend_Controller_Action
     {
     	$params = $this->_request->getParams();
     	
-    	if($params['orders_id'] && $params['table_id'])
+    	if($params['orders_id'] && $params['to_table'])
     	{
     		$mod_orders = new Databases_Tables_Orders();
     		$mod_orders->orders_id = $params['orders_id'];
-    		$mod_orders->table_id = $params['table_id'];
+    		$mod_orders->table_id = $params['to_table'];
     		$mod_orders->ChangeTableId();
+    		
+    		//add log sync down
+    		$mod_sync_down = new Databases_Tables_LogSyncDown();
+    		$mod_sync_down->log_time = date("Y-m-d H:i:s");
+    		$mod_sync_down->log_event = 'CHANGE_TABLE';
+    		$mod_sync_down->log_key = $params['orders_id']; //order ref
+    		$mod_sync_down->log_val = Zend_Json::encode(array(
+    				'from_table' => $params['from_table'],
+    				'to_table' => $params['to_table']
+    			)
+    		);
+    		$mod_sync_down->AddLog();
     	}
     	
     	$this->_redirect("/orders/view-status");
