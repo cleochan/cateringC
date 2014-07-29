@@ -1,0 +1,76 @@
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900; background-color: #ccc;">加菜单</div>
+<?php if(!empty($this->categories_array['sets'])):?>
+<?php foreach($this->categories_array['sets'] as $sets_key => $sets_val):?>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900;"><?=$sets_val?></div>
+<div id="eatinicon">
+  <ul>
+	<?php foreach($this->sets_array[$sets_key] as $sets_details):?>
+  		<li><a onclick="AddSets(<?=$sets_details[0]?>)"><strong><?=$sets_details[4]?></strong></a></li>
+  	<?php endforeach;?>
+  </ul>
+</div>
+</div>
+<?php endforeach;?>
+<?php endif;?>
+<?php if(!empty($this->categories_array['normal'])):?>
+<?php foreach($this->categories_array['normal'] as $normal_key => $normal_val):?>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900;"><?=$normal_val?></div>
+<div id="eatinicon">
+  <ul>
+	<?php foreach($this->product_array[$normal_key] as $normal_details):?>
+  		<li><a onclick="AddProduct(<?=$normal_details[0]?>)"><strong><?=$normal_details[4]?></strong></a></li>
+  	<?php endforeach;?>
+  </ul>
+</div>
+</div>
+<?php endforeach;?>
+<?php endif;?>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<div id="bottomNav">
+<table width="100%" border="0">
+<tr>
+<td><a href="/orders/trash-order" onClick="return confirm('确认作废？');"><img src="/images/icons/trash2.png" border="0" alt="废弃订单" /></a></td>
+<td align="right"><div id="vdata" style="font-size: 75px; color: white;"><?php if($this->current_data['qty_in_cart']){echo "<a href='/orders/cart'>(".$this->current_data['qty_in_cart'].")件:￥".$this->current_data['amount_in_cart']."</a>";}else{echo "&nbsp;";}?></div></td>
+</tr>
+</table>
+</div>
+
+<script>
+function AddProduct(val1)
+{
+	var aj = $.ajax( {    
+	    url:'/ajax/add-product-into-eatin-session',
+	    data:{
+			pid: val1
+		},    
+	    type:'post',    
+	    cache:false,    
+	    dataType:'json',    
+	    success:function(data) {    
+	    	document.getElementById("vdata").innerHTML = "<a href='/orders/cart'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
+	     },    
+	     error : function() {      
+	          alert("操作异常，请联系管理员");    
+	     }    
+	});  
+}
+
+function AddSets(val1)
+{
+	var aj = $.ajax( {    
+	    url:'/ajax/add-sets-into-eatin-session',
+	    data:{
+			pid: val1
+		},    
+	    type:'post',    
+	    cache:false,    
+	    dataType:'json',    
+	    success:function(data) {    
+	    	document.getElementById("vdata").innerHTML = "<a href='/orders/cart'>(" + data.qty_in_cart + ")件:￥" + data.amount_in_cart + "</a>";
+	     },    
+	     error : function() {      
+	          alert("操作异常，请联系管理员");    
+	     }    
+	});  
+}
+</script>

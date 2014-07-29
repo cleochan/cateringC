@@ -114,4 +114,26 @@ class Databases_Tables_MateriaSets extends Zend_Db_Table
     	
     	return $result;
     }
+
+    function FetchAllSetsWithCategory($status=NULL)
+    {
+    	$result = array();
+    	 
+    	if($status || 0 === $status)
+    	{
+    		$data = $this->fetchAll("sets_status='".$status."'");
+    	}else{
+    		$data = $this->fetchAll();
+    	}
+    	 
+    	if(!empty($data))
+    	{
+    		foreach($data as $d)
+    		{
+    			$result[$d['sets_id']] = array($d['sets_category'], $d['sets_name']);
+    		}
+    	}
+    	 
+    	return $result;
+    }
 }

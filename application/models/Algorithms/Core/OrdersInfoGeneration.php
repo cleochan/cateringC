@@ -621,5 +621,294 @@ class Algorithms_Core_OrdersInfoGeneration
 		
 		return $result;
 	}
+	
+	function InitialUpdateOrderAddItemSession($to_array=NULL) //to_array = make array not session
+	{
+		$result = FALSE;
+	
+		if($to_array)
+		{
+			$result = array(
+					'items' => array(
+							'sets' => array(),
+							'products' => array()
+					),
+					'payment' => array(
+							'order_id' => NULL,
+							'ctime' => date("Y-m-d H:i:s"),
+							'subtotal' => 0,
+							'used_coupon' => 0,
+							'discount' => 0,
+							'total' => 0,
+							'cash' => 0,
+							'change' => 0,
+							'user_code' => $_SESSION['user_info']['user_code'],
+							'user_alias' => $_SESSION['user_info']['user_alias'],
+							'users_id' => NULL,
+							'member_id' => NULL,
+							'table_id' => NULL
+					)
+			);
+		}elseif(!$_SESSION['update-order-add-item']){
+			$_SESSION['update-order-add-item'] = array(
+					'items' => array(
+							'sets' => array(),
+							'products' => array()
+					),
+					'payment' => array(
+							'order_id' => NULL,
+							'ctime' => date("Y-m-d H:i:s"),
+							'subtotal' => 0,
+							'used_coupon' => 0,
+							'discount' => 0,
+							'total' => 0,
+							'cash' => 0,
+							'change' => 0,
+							'user_code' => $_SESSION['user_info']['user_code'],
+							'user_alias' => $_SESSION['user_info']['user_alias'],
+							'member_id' => NULL,
+							'table_id' => NULL
+					)
+			);
+				
+			$result = TRUE;
+		}
+	
+		return $result;
+	}
+	
+	function CleanUpdateOrderAddItemSession()
+	{
+		unset($_SESSION['update-order-add-item']);
+	
+		return TRUE;
+	}
+	
+	function AddProductIntoUpdateOrderAddItemSession()
+	{
+		$result = array(
+				"qty_in_cart" => 0,
+				"amount_in_cart" => 0.00
+		);
+	
+		$model_plugin = new Algorithms_Extensions_Plugin();
+	
+		if($this->item_id)
+		{
+			$model_products = new Databases_Tables_MateriaProducts();
+			$model_products->product_id = $this->item_id;
+			$model_products->business_channel_id = 1; //eat-in
+			$product_info = $model_products->FetchProductById();
+				
+			if($product_info)
+			{
+				if($product_info['product_status'])
+				{
+					if(0 < $product_info['stock_on_hand'])
+					{
+						//proceed
+						if($_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']]) //update qty
+						{
+							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0] += 1;
+							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]);
+						}else{ //add one
+							$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']] = array(1, $product_info['unit_price'], $product_info['product_name'], $product_info['product_category']);
+						}
+	
+						//update order amount
+						$_SESSION['update-order-add-item']['payment']['subtotal'] += $product_info['unit_price'];
+						$_SESSION['update-order-add-item']['payment']['total'] += $product_info['unit_price'];
+						$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
+						$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+	
+						if($_SESSION['update-order-add-item']['payment']['cash'])
+						{
+							$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+						}
+	
+						//count qty
+						if($_SESSION['update-order-add-item']['items']['sets'])
+						{
+							$qty_sets = count($_SESSION['update-order-add-item']['items']['sets']);
+						}else{
+							$qty_sets = 0;
+						}
+	
+						$qty_products = 0;
+	
+						foreach($_SESSION['update-order-add-item']['items']['products'] as $parray)
+						{
+							$qty_products += $parray[0];
+						}
+	
+						$result = array(
+								"qty_in_cart" => $qty_sets + $qty_products,
+								"amount_in_cart" => $_SESSION['update-order-add-item']['payment']['total']
+						);
+	
+						$error = 0; // no error
+	
+					}else{
+						$error = 3; //out of stock
+					}
+				}else{
+					$error = 2; //unavailable to sale
+				}
+			}
+		}
+	
+		return $result;
+	}
+	
+	function RemoveProductFromUpdateOrderAddItemSession()
+	{
+		$error = 1; //unknown reason
+		$model_plugin = new Algorithms_Extensions_Plugin();
+	
+		if($this->item_id)
+		{
+			$model_products = new Databases_Tables_MateriaProducts();
+			$model_products->product_id = $this->item_id;
+			$model_products->business_channel_id = 1; //eat-in
+			$product_info = $model_products->FetchProductById();
+				
+			if(1 < $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]) //deduct one
+			{
+				if($product_info)
+				{
+					//proceed
+					$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0] -= 1;
+					$_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']][0]);
+						
+					$error = 0; // no error
+				}
+			}else{ //unset directly
+				unset($_SESSION['update-order-add-item']['items']['products'][$product_info['product_id']]);
+			}
+				
+			//update order amount
+			$_SESSION['update-order-add-item']['payment']['subtotal'] -= $product_info['unit_price'];
+			$_SESSION['update-order-add-item']['payment']['total'] -= $product_info['unit_price'];
+			$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
+			$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+				
+			if($_SESSION['update-order-add-item']['payment']['cash'])
+			{
+				$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+			}
+		}
+	
+		return $error;
+	}
+	
+	function AddSetsIntoUpdateOrderAddItemSession()
+	{
+		$result = array(
+				"qty_in_cart" => 0,
+				"amount_in_cart" => 0.00
+		);
+	
+		$error = 1; //unknown reason
+		$model_plugin = new Algorithms_Extensions_Plugin();
+	
+		if($this->item_id)
+		{
+			$model_sets = new Databases_Tables_MateriaSets();
+			$model_sets->sets_id = $this->item_id;
+			$sets_info = $model_sets->FetchSetsInfo();
+				
+			$model_sets_details = new Databases_Joins_GetSetsInfo();
+			$model_sets_details->sets_id_array = array($this->item_id);
+			$model_sets_details->business_channel_id = 1; //eat-in
+			$sets_details = $model_sets_details->GetSetsPricesAndStock();
+				
+			if(!empty($sets_details['contains'][$this->item_id]) && !empty($sets_info))
+			{
+				if($sets_info['sets_status'])
+				{
+					if(0 < $sets_details['stock'][$this->item_id])
+					{
+						//proceed
+						$_SESSION['update-order-add-item']['items']['sets'][] = array(
+								'sets_id' => $this->item_id,
+								'sets_category' => $sets_info['sets_category'],
+								'sets_name' => $sets_info['sets_name'],
+								'sets_price' => $model_plugin->FormatPrice($sets_details['price'][$this->item_id]),
+								'contains' => $sets_details['contains'][$this->item_id]
+						);
+	
+						//update order amount
+						foreach($sets_details['contains'][$this->item_id] as $item_details)
+						{
+							$_SESSION['update-order-add-item']['payment']['subtotal'] += $item_details['unit_price'];
+							$_SESSION['update-order-add-item']['payment']['total'] += $item_details['unit_price'];
+						}
+	
+						$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
+						$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+	
+						if($_SESSION['update-order-add-item']['payment']['cash'])
+						{
+							$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+						}
+	
+						//count qty
+						if($_SESSION['update-order-add-item']['items']['sets'])
+						{
+							$qty_sets = count($_SESSION['update-order-add-item']['items']['sets']);
+						}else{
+							$qty_sets = 0;
+						}
+	
+						$qty_products = 0;
+	
+						foreach($_SESSION['update-order-add-item']['items']['products'] as $parray)
+						{
+							$qty_products += $parray[0];
+						}
+	
+						$result = array(
+								"qty_in_cart" => $qty_sets + $qty_products,
+								"amount_in_cart" => $_SESSION['update-order-add-item']['payment']['total']
+						);
+	
+						$error = 0; // no error
+	
+					}else{
+						$error = 3; //out of stock
+					}
+				}
+			}
+		}
+	
+		return $result;
+	}
+	
+	function RemoveSetsFromUpdateOrderAddItemSession()
+	{
+		$error = 1; //unknown reason
+		$model_plugin = new Algorithms_Extensions_Plugin();
+	
+		if(is_numeric($this->item_id))
+		{
+			$price = $_SESSION['update-order-add-item']['items']['sets'][$this->item_id]['sets_price'];
+				
+			//remove in session
+			unset($_SESSION['update-order-add-item']['items']['sets'][$this->item_id]);
+				
+			//update order amount
+			$_SESSION['update-order-add-item']['payment']['subtotal'] -= $price;
+			$_SESSION['update-order-add-item']['payment']['total'] -= $price;
+			$_SESSION['update-order-add-item']['payment']['subtotal'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['subtotal']);
+			$_SESSION['update-order-add-item']['payment']['total'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['total']);
+				
+			if($_SESSION['update-order-add-item']['payment']['cash'])
+			{
+				$_SESSION['update-order-add-item']['payment']['change'] = $model_plugin->FormatPrice($_SESSION['update-order-add-item']['payment']['cash'] - $_SESSION['update-order-add-item']['payment']['total']);
+			}
+		}
+	
+		return $error;
+	}
 }
 ?>
