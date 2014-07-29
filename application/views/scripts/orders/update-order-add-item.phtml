@@ -1,7 +1,7 @@
-<div id="eatinbar"><div style="font-size: 75px; font-weight:900; background-color: #ccc;">加菜单</div>
+<div id="eatinbar"><div style="font-size: 75px; font-weight:900; background-color: #FFED97;">加菜单</div>
 <?php if(!empty($this->categories_array['sets'])):?>
 <?php foreach($this->categories_array['sets'] as $sets_key => $sets_val):?>
-<div id="eatinbar"><div style="font-size: 75px; font-weight:900;"><?=$sets_val?></div>
+<div id="eatinbar" style="background-color: #FFED97;"><div style="font-size: 75px; font-weight:900;"><?=$sets_val?></div>
 <div id="eatinicon">
   <ul>
 	<?php foreach($this->sets_array[$sets_key] as $sets_details):?>
