@@ -117,7 +117,7 @@ class Databases_Joins_OrdersInfo
     
     function GetSpecifiedOrderDetails($type=NULL) //type 1=by code null=by id
     {
-    	$zone = $this->ZoneIdArray();
+//     	$zone = $this->ZoneIdArray();
     	
     	$result = array(
     			'items' => array(
@@ -180,17 +180,17 @@ class Databases_Joins_OrdersInfo
     				{
     					if($result['items']['sets'][$row['orders_contains_id']]) //update
     					{
-    						$result['items']['sets'][$row['orders_contains_id']]['contains'][] = array($row['materia_product_name'], $row['materia_product_qty'], $zone[$row['materia_product_id']]['zone_code']);
+    						$result['items']['sets'][$row['orders_contains_id']]['contains'][] = array($row['materia_product_name'], $row['materia_product_qty']);
     					}else{ //create
     						$result['items']['sets'][$row['orders_contains_id']] = array(
     								'sets_id' => $row['orders_item_id'],
     								'sets_name' => $row['orders_item_name'],
     								'sets_price' => $row['orders_item_price'],
-    								'contains' => array(array($row['materia_product_name'], $row['materia_product_qty'], $zone[$row['materia_product_id']]['zone_code']))
+    								'contains' => array(array($row['materia_product_name'], $row['materia_product_qty']))
     						);
     					}
     				}else{ //products
-    					$result['items']['products'][$row['orders_item_id']] = array($row['orders_item_qty'], $row['orders_item_price'], $row['orders_item_name'], $zone[$row['orders_item_id']]['zone_code']);
+    					$result['items']['products'][$row['orders_item_id']] = array($row['orders_item_qty'], $row['orders_item_price'], $row['orders_item_name']);
     				}
     			}
     		}
@@ -199,29 +199,29 @@ class Databases_Joins_OrdersInfo
     	return $result;
     }
     
-    function ZoneIdArray()
-    {
-    	$data = $this->db->select();
-    	$data->from("materia-products as p", array("products_id"));
-    	$data->joinLeft("zone-definition as z", "z.zone_id=p.zone_id", array("zone_id", "zone_code", "zone_name"));
-    	$rows = $this->db->fetchAll($data);
+//     function ZoneIdArray()
+//     {
+//     	$data = $this->db->select();
+//     	$data->from("materia-products as p", array("products_id"));
+//     	$data->joinLeft("zone-definition as z", "z.zone_id=p.zone_id", array("zone_id", "zone_code", "zone_name"));
+//     	$rows = $this->db->fetchAll($data);
     	
-    	$result = array();
+//     	$result = array();
     	
-    	if(!empty($rows))
-    	{
-    		foreach($rows as $row)
-    		{
-    			$result[$row['products_id']] = array(
-    				'zone_id' => $row['zone_id'],
-    				'zone_code' => $row['zone_code'],
-    				'zone_name' => $row['zone_name']
-    			);
-    		}
-    	}
+//     	if(!empty($rows))
+//     	{
+//     		foreach($rows as $row)
+//     		{
+//     			$result[$row['products_id']] = array(
+//     				'zone_id' => $row['zone_id'],
+//     				'zone_code' => $row['zone_code'],
+//     				'zone_name' => $row['zone_name']
+//     			);
+//     		}
+//     	}
     	
-    	return $result;
-    }
+//     	return $result;
+//     }
     
     function DumpLog()
     {
