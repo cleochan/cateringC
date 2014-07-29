@@ -263,7 +263,7 @@ class OrdersController extends Zend_Controller_Action
     function changeTableAction()
     {
     	$params = $this->_request->getParams();
-    	
+    	var_dump($params);die;
     	if($params['orders_id'])
     	{
     		$mod_orders_info = new Databases_Joins_OrdersInfo();
