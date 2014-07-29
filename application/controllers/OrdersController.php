@@ -401,7 +401,7 @@ class OrdersController extends Zend_Controller_Action
     			}elseif($params['qty'] < $ori_qty){
     				for($n=1;$n<=($ori_qty-$params['qty']);$n++)
     				{
-    					$mod_order_generation->RemoveProductFromEatInSession();
+    					$mod_order_generation->RemoveProductFromUpdateOrderSession();
     				}
     			}
     		}
