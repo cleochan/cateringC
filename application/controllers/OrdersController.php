@@ -396,7 +396,7 @@ class OrdersController extends Zend_Controller_Action
     			{
     				for($n=1;$n<=($params['qty']-$ori_qty);$n++)
     				{
-    					$mod_order_generation->AddProductIntoEatInSession();
+    					$mod_order_generation->AddProductIntoUpdateOrderSession();
     				}
     			}elseif($params['qty'] < $ori_qty){
     				for($n=1;$n<=($ori_qty-$params['qty']);$n++)
