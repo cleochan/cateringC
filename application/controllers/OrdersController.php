@@ -19,7 +19,7 @@ class OrdersController extends Zend_Controller_Action
 			{
 				$_SESSION['admin_session'] = $params['session_id'];
 			}
-			 
+			echo "bbb";die; 
 			if($_SESSION['admin_session']){
 				$mod_params = new Databases_Tables_Params();
 				if($_SESSION['admin_session'] === $mod_params->GetVal('TestSession'))
