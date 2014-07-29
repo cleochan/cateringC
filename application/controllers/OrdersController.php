@@ -457,7 +457,7 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-    	var_dump($params);die;
+    	var_dump($_SESSION['update-order']);die;
     	//proceed
     	$mod_orders = new Databases_Tables_Orders();
     	
