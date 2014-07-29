@@ -1,4 +1,4 @@
-<table width="100%" border="0">
+<table width="100%" border="0" style="background-color: #FFED97;">
 	<tr align="center" height="300">
 		<td colspan="2" style="color: green; font-weight: 900">编辑已选套餐<br /><?=$_SESSION['update-order']['items']['sets'][$this->item_id]['sets_name']?></td>
 	</tr>
@@ -34,6 +34,6 @@
 	<?php endif;?>
 	<tr align="center" valign="middle" height="400">
 		<td><a href="/orders/update-sets-add-item-submit/item_id/<?=$this->item_id?>/act/del" class="large red awesome">删除套餐</a></td>
-		<td><a href="/orders/update-order-add-item/orders_id/<?=$_SESSION['update-order']['payment']['order_id']?>" class="large yellow awesome">返回</a></td>
+		<td><a href="/orders/update-order-add-item-confirm" class="large yellow awesome">返回</a></td>
 	</tr>
 </table>
