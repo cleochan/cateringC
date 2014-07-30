@@ -9,7 +9,7 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     function InsertItems()
     {
     	$result = 0;
-    	
+    	echo "atat2";die;
     	if($this->orders_id && $this->items_array)
     	{
     		if($this->items_array['sets'])
