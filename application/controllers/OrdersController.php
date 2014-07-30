@@ -365,21 +365,18 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-    	$e = new Algorithms_Extensions_Plugin();
+//     	$e = new Algorithms_Extensions_Plugin();
 //     	$e->FormatArray($_SESSION['update-order']);die;
     	//update order items
-    	echo "orders_id = ".$_SESSION['update-order']['payment']['orders_id']."<br />";
-    	$e->FormatArray($_SESSION['update-order']['items']);
-    	echo "End.";
-    	die;
+    	
         $mod_orders_contains = new Databases_Tables_OrdersContains();
-        $mod_orders_contains->orders_id = $_SESSION['update-order']['payment']['orders_id'];
+        $mod_orders_contains->orders_id = $_SESSION['update-order']['payment']['order_id'];
         $mod_orders_contains->items_array = $_SESSION['update-order']['items'];
         $mod_orders_contains->InsertItems();
     	
         //update payments
         $mod_orders = new Databases_Tables_Orders();
-        $get_order = $mod_orders->fetchRow("orders_id = '".$_SESSION['update-order']['payment']['orders_id']."'");
+        $get_order = $mod_orders->fetchRow("orders_id = '".$_SESSION['update-order']['payment']['order_id']."'");
         if(!empty($get_order))
         {
         	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payment']['total'];
@@ -391,7 +388,7 @@ class OrdersController extends Zend_Controller_Action
         $mod_sync_down = new Databases_Tables_LogSyncDown();
         $mod_sync_down->log_time = date("Y-m-d H:i:s");
         $mod_sync_down->log_event = 'ADD_ITEM';
-        $mod_sync_down->log_key = $_SESSION['update-order']['payment']['orders_id']; //order ref
+        $mod_sync_down->log_key = $_SESSION['update-order']['payment']['order_id']; //order ref
         $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
         $mod_sync_down->AddLog();
         
