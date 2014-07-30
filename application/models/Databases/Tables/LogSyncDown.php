@@ -72,7 +72,7 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     
     function FetchLogToSync()
     {
-    	$rows = $this->fetchAll("log_status=0 and log_time >= '".date(Y-m-d)." 00:00:00'");
+    	$rows = $this->fetchAll("log_status=0 and log_time >= '".date("Y-m-d")." 00:00:00'");
     	
     	return $rows;
     }
