@@ -625,6 +625,9 @@ class Algorithms_Core_OrdersInfoGeneration
 	function InitialUpdateOrderSession($orders_id, $to_array=NULL) //to_array = make array not session
 	{
 		$result = FALSE;
+		
+		$mod_orders = new Databases_Tables_Orders();
+		$order_info = $mod_orders->fetchRow("orders_id = '".$orders_id."'");
 	
 		if($to_array)
 		{
@@ -642,11 +645,11 @@ class Algorithms_Core_OrdersInfoGeneration
 							'total' => 0,
 							'cash' => 0,
 							'change' => 0,
-							'user_code' => $_SESSION['user_info']['user_code'],
-							'user_alias' => $_SESSION['user_info']['user_alias'],
-							'users_id' => NULL,
+							'user_code' => $_SESSION['admin_info']['admin_users_id'],
+							'user_alias' => $_SESSION['admin_info']['admin_alias'],
+							'users_id' => $_SESSION['admin_info']['admin_users_id'],
 							'member_id' => NULL,
-							'table_id' => NULL
+							'table_id' => $order_info['table_id']
 					)
 			);
 		}else{
@@ -664,10 +667,11 @@ class Algorithms_Core_OrdersInfoGeneration
 							'total' => 0,
 							'cash' => 0,
 							'change' => 0,
-							'user_code' => $_SESSION['user_info']['user_code'],
-							'user_alias' => $_SESSION['user_info']['user_alias'],
+							'user_code' => $_SESSION['admin_info']['admin_users_id'],
+							'user_alias' => $_SESSION['admin_info']['admin_alias'],
+							'users_id' => $_SESSION['admin_info']['admin_users_id'],
 							'member_id' => NULL,
-							'table_id' => NULL
+							'table_id' => $order_info['table_id']
 					)
 			);
 				
