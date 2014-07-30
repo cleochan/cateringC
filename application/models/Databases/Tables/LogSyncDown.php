@@ -19,6 +19,7 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     var $log_key;
     var $log_val;
     var $log_time;
+    var $log_desc;
     
     function AddLog()
     {
@@ -33,6 +34,10 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     		if($this->log_val)
     		{
     			$row->log_val = $this->log_val;
+    		}
+    		if($this->log_desc)
+    		{
+    			$row->log_desc = $this->log_desc;
     		}
     		$row->log_updated_time = date("Y-m-d H:i:s");
     		
@@ -52,7 +57,9 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     		
     		if($is_success)
     		{
-    			$row->log_status = 1;
+    			$row->log_status = 1; //Successful
+    		}elseif(!$is_success && 3 < $row->log_tried_times){
+    			$row->log_status = 2; //Failed
     		}
     		
     		$result = $row->save();
@@ -65,8 +72,23 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     
     function FetchLogToSync() //尝试次数不大于3
     {
-    	$rows = $this->fetchAll("log_status=0 and log_tried_times<3");
+    	$rows = $this->fetchAll("log_status=0");
     	
     	return $rows;
     }
+    
+    function DumpList()
+    {
+    	$rows = $this->select();
+    	$rows->where("log_time >= ?", date("Y-m-d")." 00:00:00");
+    	$rows->order("log_id DESC");
+    	$data = $this->fetchAll($rows);
+    	
+    	return $data;
+    }
 }
+
+
+
+
+

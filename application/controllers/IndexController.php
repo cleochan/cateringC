@@ -149,5 +149,47 @@ class IndexController extends Zend_Controller_Action
 		
 		die;
 	}
+	
+    function authViewChangesAction()
+	{
+		$mod_params = new Databases_Tables_Params();
+		$app_id = $mod_params->GetVal('AppIdYX');
+		
+		$redirect_uri = urlencode("http://wechat.jushulin.mobi/index/auth-view-changes-submit");
+		
+		$this->_redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$app_id."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
+		die;
+	}
+	
+	function authViewChangesSubmitAction()
+	{
+		$params = $this->_request->getParams(); //
+		
+		$mod_params = new Databases_Tables_Params();
+		$app_id = $mod_params->GetVal('AppIdYX');
+		$app_secret = $mod_params->GetVal('AppSecretYX');
+		
+		$ch = curl_init();
+		
+		$str ='https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$app_id.'&secret='.$app_secret.'&code='.$params['code'].'&grant_type=authorization_code';
+		curl_setopt($ch, CURLOPT_URL, $str);
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+		$output = curl_exec($ch);
+		
+		$result = Zend_Json::decode($output);
+		
+		$mod_admin = new Databases_Tables_Admin();
+		$mod_admin->openid_yx = $result['openid'];
+		if($mod_admin->CheckYxOpenIdValidation())
+		{
+			$this->_redirect("/orders/view-changes");
+		}else{
+			echo "<font size='80'>对不起，系统不对外开放。</font>";
+			$mod_yx_tried_openid_log = new Databases_Tables_YxTriedOpenidLog();
+			$mod_yx_tried_openid_log->AddLog($result['openid']);
+		}
+		
+		die;
+	}
 }
 

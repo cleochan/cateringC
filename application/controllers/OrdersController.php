@@ -297,6 +297,7 @@ class OrdersController extends Zend_Controller_Action
     				'to_table' => $params['to_table']
     			)
     		);
+    		$mod_sync_down->log_desc = "换桌：".$params['from_table']." -> ".$params['to_table'];
     		$mod_sync_down->AddLog();
     	}
     	
@@ -390,6 +391,7 @@ class OrdersController extends Zend_Controller_Action
         $mod_sync_down->log_event = 'ADD_ITEM';
         $mod_sync_down->log_key = $_SESSION['update-order']['payment']['order_id']; //order ref
         $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
+        $mod_sync_down->log_desc = $_SESSION['update-order']['table_id']."号桌加菜";
         $mod_sync_down->AddLog();
         
         //clean session
@@ -489,6 +491,15 @@ class OrdersController extends Zend_Controller_Action
     	}
     	
     	$this->_redirect("/orders/update-order-add-item-confirm");
+    }
+    
+    function viewChangesAction()
+    {
+    	$params = $this->_request->getParams();
+    	
+    	$mod_orders_info = new Databases_Tables_LogSyncDown();
+    	
+    	$this->view->data = $mod_orders_info->DumpList();
     }
 }
 
