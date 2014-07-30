@@ -365,8 +365,8 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-    	$e = new Algorithms_Extensions_Plugin();
-    	$e->FormatArray($_SESSION['update-order']);die;
+//     	$e = new Algorithms_Extensions_Plugin();
+//     	$e->FormatArray($_SESSION['update-order']);die;
     	//update order items
     	
         $mod_orders_contains = new Databases_Tables_OrdersContains();
@@ -380,7 +380,7 @@ class OrdersController extends Zend_Controller_Action
         if(!empty($get_order))
         {
         	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payment']['total'];
-        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payment']['total'];
+        	$get_order->orders_subtotal = $get_order->orders_subtotal + $_SESSION['update-order']['payment']['subtotal'];
         	$get_order->save();
         }
         
