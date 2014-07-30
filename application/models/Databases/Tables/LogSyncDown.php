@@ -58,7 +58,7 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     		if($is_success)
     		{
     			$row->log_status = 1; //Successful
-    		}elseif(!$is_success && 3 < $row->log_tried_times){
+    		}elseif(!$is_success && 3 < $row->log_tried_times){  //尝试次数不大于3
     			$row->log_status = 2; //Failed
     		}
     		
@@ -70,7 +70,7 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     	return $result;
     }
     
-    function FetchLogToSync() //尝试次数不大于3
+    function FetchLogToSync()
     {
     	$rows = $this->fetchAll("log_status=0");
     	

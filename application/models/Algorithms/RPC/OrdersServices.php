@@ -204,8 +204,11 @@ class Algorithms_RPC_OrdersServices
     	return $result;
     }
     
-    function DownLogSync()
+    function DumpLogSyncDown()
     {
+    	$mod_log_sync_down = new Databases_Tables_LogSyncDown();
+    	$data = $mod_log_sync_down->FetchLogToSync();
     	
+    	return $data;
     }
 }
