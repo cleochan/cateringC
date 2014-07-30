@@ -357,17 +357,53 @@ class OrdersController extends Zend_Controller_Action
     	}
     }
     
+    function updateOrderAddItemConfirmAction()
+    {
+    	
+    }
+    
+    function updateOrderAddItemSubmitAction()
+    {
+        $params = $this->_request->getParams();
+    	$e = new Algorithms_Extensions_Plugin();
+    	$e->FormatArray($_SESSION['update-order']);die;
+    	//update order items
+        $mod_orders_contains = new Databases_Tables_OrdersContains();
+        $mod_orders_contains->orders_id = $_SESSION['update-order']['payments']['orders_id'];
+        $mod_orders_contains->items_array = $_SESSION['update-order']['items'];
+        $mod_orders_contains->InsertItems();
+    	
+        //update payments
+        $mod_orders = new Databases_Tables_Orders();
+        $get_order = $mod_orders->fetchRow("orders_id = '".$_SESSION['update-order']['payments']['orders_id']."'");
+        if(!empty($get_order))
+        {
+        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
+        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
+        	$get_order->save();
+        }
+        $e->FormatArray($_SESSION['update-order']);die;
+        //add to log sync down
+        $mod_sync_down = new Databases_Tables_LogSyncDown();
+        $mod_sync_down->log_time = date("Y-m-d H:i:s");
+        $mod_sync_down->log_event = 'ADD_ITEM';
+        $mod_sync_down->log_key = $_SESSION['update-order']['payments']['orders_id']; //order ref
+        $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
+        $mod_sync_down->AddLog();
+        
+        //clean session
+        $eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
+        $eatin_mod->CleanUpdateOrderSession();
+        
+        $this->_redirect("/orders/view-status");
+    }
+    
     function trashUpdateOrderAction()
     {
     	$mod_orders_info_generation = new Algorithms_Core_OrdersInfoGeneration();
     	$orders_id = $mod_orders_info_generation->CleanUpdateOrderSession();
     	
     	$this->_redirect("/orders/update-order-add-item/orders_id/".$orders_id);
-    }
-    
-    function updateOrderAddItemConfirmAction()
-    {
-    	
     }
     
     function updateProductInAddItemAction()
@@ -452,42 +488,6 @@ class OrdersController extends Zend_Controller_Action
     	}
     	
     	$this->_redirect("/orders/update-order-add-item-confirm");
-    }
-    
-    function updateOrderAddItemSubmitAction()
-    {
-        $params = $this->_request->getParams();
-    	$e = new Algorithms_Extensions_Plugin();
-    	$e->FormatArray($_SESSION['update-order']);die;
-    	//update order items
-        $mod_orders_contains = new Databases_Tables_OrdersContains();
-        $mod_orders_contains->orders_id = $_SESSION['update-order']['payments']['orders_id'];
-        $mod_orders_contains->items_array = $_SESSION['update-order']['items'];
-        $mod_orders_contains->InsertItems();
-    	
-        //update payments
-        $mod_orders = new Databases_Tables_Orders();
-        $get_order = $mod_orders->fetchRow("orders_id = '".$_SESSION['update-order']['payments']['orders_id']."'");
-        if(!empty($get_order))
-        {
-        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
-        	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payments']['total'];
-        	$get_order->save();
-        }
-        $e->FormatArray($_SESSION['update-order']);die;
-        //add to log sync down
-        $mod_sync_down = new Databases_Tables_LogSyncDown();
-        $mod_sync_down->log_time = date("Y-m-d H:i:s");
-        $mod_sync_down->log_event = 'ADD_ITEM';
-        $mod_sync_down->log_key = $_SESSION['update-order']['payments']['orders_id']; //order ref
-        $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
-        $mod_sync_down->AddLog();
-        
-        //clean session
-        $eatin_mod = new Algorithms_Core_OrdersInfoGeneration();
-        $eatin_mod->CleanUpdateOrderSession();
-        
-        $this->_redirect("/orders/view-status");
     }
 }
 
