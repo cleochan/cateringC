@@ -366,8 +366,6 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-//     	$e = new Algorithms_Extensions_Plugin();
-//     	$e->FormatArray($_SESSION['update-order']);die;
     	//update order items
     	
         $mod_orders_contains = new Databases_Tables_OrdersContains();
@@ -391,7 +389,7 @@ class OrdersController extends Zend_Controller_Action
         $mod_sync_down->log_event = 'ADD_ITEM';
         $mod_sync_down->log_key = $_SESSION['update-order']['payment']['order_id']; //order ref
         $mod_sync_down->log_val = Zend_Json::encode(Zend_Json::encode($_SESSION['update-order']));
-        $mod_sync_down->log_desc = $_SESSION['update-order']['table_id']."号桌加菜";
+        $mod_sync_down->log_desc = $_SESSION['update-order']['payment']['table_id']."号桌加菜";
         $mod_sync_down->AddLog();
         
         //clean session

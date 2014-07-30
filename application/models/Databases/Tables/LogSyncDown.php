@@ -74,6 +74,24 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     {
     	$rows = $this->fetchAll("log_status=0 and log_time >= '".date("Y-m-d")." 00:00:00'");
     	
+    	//update status
+    	if(!empty($rows))
+    	{
+    		$ids = array();
+    		
+    		foreach($rows as $row)
+    		{
+    			$ids[] = $row['log_id'];
+    		}
+    		
+    		$set = array(
+    			"log_tried_times" => 1,
+    			"log_status" => 1
+    		);
+    		$where = $this->quoteInto("log_id IN (?)", $ids);
+    		$this->update($set, $where);
+    	}
+    	
     	return $rows;
     }
     
