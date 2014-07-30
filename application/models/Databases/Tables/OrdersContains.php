@@ -9,7 +9,7 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     function InsertItems()
     {
     	$result = 0;
-    	echo "atat2";die;
+    	
     	if($this->orders_id && $this->items_array)
     	{
     		if($this->items_array['sets'])
@@ -18,7 +18,6 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     			
     			foreach($this->items_array['sets'] as $sets)
     			{
-    				echo "atat";die;
     				$row = $this->createRow();
     				$row->orders_id = $this->orders_id;
     				$row->orders_item_category = $sets['sets_category'];
