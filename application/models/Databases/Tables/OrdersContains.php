@@ -18,6 +18,7 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     			
     			foreach($this->items_array['sets'] as $sets)
     			{
+    				echo "atat";die;
     				$row = $this->createRow();
     				$row->orders_id = $this->orders_id;
     				$row->orders_item_category = $sets['sets_category'];
