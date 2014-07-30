@@ -15,7 +15,8 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     		if($this->items_array['sets'])
     		{
     			$mod_orders_sets_contains = new Databases_Tables_OrdersSetsContains();
-    			
+    			echo "asets";
+    			die;
     			foreach($this->items_array['sets'] as $sets)
     			{
     				$row = $this->createRow();
@@ -39,6 +40,8 @@ class Databases_Tables_OrdersContains extends Zend_Db_Table
     		
     		if($this->items_array['products'])
     		{
+    			echo "aproduct";
+    			die;
     			foreach($this->items_array['products'] as $product_id => $products)
     			{
     				$row = $this->createRow();

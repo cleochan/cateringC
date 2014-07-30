@@ -382,7 +382,7 @@ class OrdersController extends Zend_Controller_Action
         	$get_order->orders_amount = $get_order->orders_amount + $_SESSION['update-order']['payment']['total'];
         	$get_order->save();
         }
-//         $e->FormatArray($_SESSION['update-order']);die;
+        
         //add to log sync down
         $mod_sync_down = new Databases_Tables_LogSyncDown();
         $mod_sync_down->log_time = date("Y-m-d H:i:s");
