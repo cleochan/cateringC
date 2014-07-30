@@ -365,8 +365,8 @@ class OrdersController extends Zend_Controller_Action
     function updateOrderAddItemSubmitAction()
     {
         $params = $this->_request->getParams();
-//     	$e = new Algorithms_Extensions_Plugin();
-//     	$e->FormatArray($_SESSION['update-order']);die;
+    	$e = new Algorithms_Extensions_Plugin();
+    	$e->FormatArray($_SESSION['update-order']);die;
     	//update order items
     	
         $mod_orders_contains = new Databases_Tables_OrdersContains();
