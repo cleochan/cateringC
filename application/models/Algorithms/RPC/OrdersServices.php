@@ -213,7 +213,10 @@ class Algorithms_RPC_OrdersServices
     				if(!empty($log))
     				{
     					$log->log_status = 2; //Success
-    					$result += 1;
+    					if($log->save())
+    					{
+    						$result += 1;
+    					}
     				}
     			}
     		}
