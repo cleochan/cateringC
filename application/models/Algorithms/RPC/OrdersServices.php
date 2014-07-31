@@ -199,6 +199,24 @@ class Algorithms_RPC_OrdersServices
     				$mod_products->StockOperation(2);
     			}
     		}
+    		
+    		/**
+    		 * ADD_ITEM
+    		 */
+    		if(!empty($event_array['ADD_ITEM']))
+    		{
+    			$mod_log_sync_down = new Databases_Tables_LogSyncDown();
+    			 
+    			foreach ($event_array['ADD_ITEM'] as $key => $val)
+    			{
+    				$log = $mod_log_sync_down->fetchRow("log_id = '".$key."'");
+    				if(!empty($log))
+    				{
+    					$log->log_status = 2; //Success
+    					$result += 1;
+    				}
+    			}
+    		}
     	}
     	
     	return $result;
