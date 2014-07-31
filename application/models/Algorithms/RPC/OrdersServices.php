@@ -220,6 +220,27 @@ class Algorithms_RPC_OrdersServices
     				}
     			}
     		}
+    		
+    		/**
+    		 * CHANGE_TABLE
+    		 */
+    		if(!empty($event_array['CHANGE_TABLE']))
+    		{
+    			$mod_log_sync_down = new Databases_Tables_LogSyncDown();
+    			 
+    			foreach ($event_array['CHANGE_TABLE'] as $key => $val)
+    			{
+    				$log = $mod_log_sync_down->fetchRow("log_id = '".$key."'");
+    				if(!empty($log))
+    				{
+    					$log->log_status = 2; //Success
+    					if($log->save())
+    					{
+    						$result += 1;
+    					}
+    				}
+    			}
+    		}
     	}
     	
     	return $result;
