@@ -88,7 +88,7 @@ class Databases_Tables_LogSyncDown extends Zend_Db_Table
     			"log_tried_times" => 1,
     			"log_status" => 1
     		);
-    		$where = $this->quoteInto("log_id IN (?)", $ids);
+    		$where = $this->_db->quoteInto("log_id IN (?)", $ids);
     		$this->update($set, $where);
     	}
     	
