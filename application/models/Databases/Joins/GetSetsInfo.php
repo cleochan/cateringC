@@ -15,7 +15,7 @@ class Databases_Joins_GetSetsInfo
 		$result_contains = array();
 		
 		$model_plugin = new Algorithms_Extensions_Plugin();
-		
+		echo "pp1";die;
 		if(count($this->sets_id_array) && $this->business_channel_id)
 		{
 			$data = $this->db->select();
