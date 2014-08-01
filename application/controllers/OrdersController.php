@@ -63,6 +63,7 @@ class OrdersController extends Zend_Controller_Action
     
     function placeOrderAction()
     {
+    	echo "aa";die;
     	//Fetch category names
     	$get_categories = new Databases_Tables_MateriaCategories();
     	$this->view->categories_array = $categories_array = $get_categories->CategoriesForOrders();
@@ -78,7 +79,7 @@ class OrdersController extends Zend_Controller_Action
     	$sets->business_channel_id = 1;
     	$sets->category_id_array = $categories_array['sets'];
     	$this->view->sets_array = $sets->FetchProductsByCategory();
-    	echo "aa";die;
+    	
     	//Check data in current cart
     	if($_SESSION['eat-in'])
     	{
