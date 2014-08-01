@@ -34,7 +34,7 @@ class Databases_Tables_MateriaSets extends Zend_Db_Table
     			{
     				$product_id_array[] = $row['sets_id'];
     			}
-    			
+    			echo "alal";die;
     			$get_prices_and_stock = new Databases_Joins_GetSetsInfo();
     			$get_prices_and_stock->business_channel_id = $this->business_channel_id;
     			$get_prices_and_stock->sets_id_array = $product_id_array;
