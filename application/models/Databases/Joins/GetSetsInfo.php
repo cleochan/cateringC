@@ -27,7 +27,7 @@ class Databases_Joins_GetSetsInfo
 			$data->where("p.sets_channel_id = ?", $this->business_channel_id);
 			$data->where("c.contains_sets_id IN (?)", $this->sets_id_array);
 			$rows = $this->db->fetchAll($data);
-			
+			echo "llkkll";die;
 			if(!empty($rows))
 			{
 				$n=1;
