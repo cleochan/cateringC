@@ -57,7 +57,7 @@ class Databases_Joins_GetSetsInfo
 					{
 						$result_contains[$row['contains_sets_id']] = array();
 					}
-					echo "ddd";die;
+					
 					$result_contains[$row['contains_sets_id']][$row['contains_id']] = array(
 						"product_id" => $row['contains_product_id'],
 						"qty" => $row['contains_product_qty'],
