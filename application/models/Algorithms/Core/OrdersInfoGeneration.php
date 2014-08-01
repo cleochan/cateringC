@@ -638,6 +638,7 @@ class Algorithms_Core_OrdersInfoGeneration
 					),
 					'payment' => array(
 							'order_id' => $orders_id,
+							'order_type' => $order_info['orders_type'],
 							'ctime' => date("Y-m-d H:i:s"),
 							'subtotal' => 0,
 							'used_coupon' => 0,
@@ -660,6 +661,7 @@ class Algorithms_Core_OrdersInfoGeneration
 					),
 					'payment' => array(
 							'order_id' => $orders_id,
+							'order_type' => $order_info['orders_type'],
 							'ctime' => date("Y-m-d H:i:s"),
 							'subtotal' => 0,
 							'used_coupon' => 0,
