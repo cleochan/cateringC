@@ -39,7 +39,7 @@ class Databases_Tables_MateriaSets extends Zend_Db_Table
     			$get_prices_and_stock->business_channel_id = $this->business_channel_id;
     			$get_prices_and_stock->sets_id_array = $product_id_array;
     			$get_result = $get_prices_and_stock->GetSetsPricesAndStock();
-    			echo "alal2";die;
+    			
     			//get sets codes
     			$mod_codes = new Databases_Tables_MateriaCodes();
     			$mod_codes->item_type = 2; //sets

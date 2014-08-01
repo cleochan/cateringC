@@ -79,7 +79,6 @@ class OrdersController extends Zend_Controller_Action
     	$sets->category_id_array = $categories_array['sets'];
     	$this->view->sets_array = $sets->FetchProductsByCategory();
 
-    	echo "aa";die;
     	//Check data in current cart
     	if($_SESSION['eat-in'])
     	{
