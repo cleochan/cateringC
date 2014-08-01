@@ -22,6 +22,7 @@ class Databases_Joins_GetSetsInfo
 			$data->from("materia-sets-contains as c", array("contains_id", "contains_sets_id", "contains_product_id", "contains_product_qty"));
 			$data->joinLeft("materia-sets-prices as p", "p.sets_item_id=c.contains_id", array("sets_item_price"));
 			$data->joinLeft("materia-products as m", "m.products_id=c.contains_product_id", array("product_name", "stock_on_hand", "product_category"));
+			$data->joinLeft("zone-definition as z", "z.zone_id=m.zone_id", array("zone_code"));
 			$data->where("p.sets_type = ?", 1);
 			$data->where("p.sets_channel_id = ?", $this->business_channel_id);
 			$data->where("c.contains_sets_id IN (?)", $this->sets_id_array);
@@ -62,7 +63,8 @@ class Databases_Joins_GetSetsInfo
 						"qty" => $row['contains_product_qty'],
 						"unit_price" => $model_plugin->FormatPrice($row['sets_item_price'] * $row['contains_product_qty']),
 						"product_name" => $row['product_name'],
-						"product_category" => $row['product_category']
+						"product_category" => $row['product_category'],
+						"zone_code" => $row['zone_code']
 					);
 				}
 			}
