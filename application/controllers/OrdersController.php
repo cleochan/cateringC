@@ -67,13 +67,13 @@ class OrdersController extends Zend_Controller_Action
     	$get_categories = new Databases_Tables_MateriaCategories();
     	$this->view->categories_array = $categories_array = $get_categories->CategoriesForOrders();
 
-    	echo "aa";die;
     	//Fetch product and category relations
     	$products = new Databases_Tables_MateriaProducts();
     	$products->business_channel_id = 1;
     	$products->category_id_array = $categories_array['normal'];
     	$this->view->product_array = $products->FetchProductsByCategory();
-    	 
+
+    	echo "aa";die;
     	//Fetch sets and category relations
     	$sets = new Databases_Tables_MateriaSets();
     	$sets->business_channel_id = 1;
