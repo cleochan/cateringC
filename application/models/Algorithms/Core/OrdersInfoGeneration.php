@@ -700,6 +700,7 @@ class Algorithms_Core_OrdersInfoGeneration
 		);
 	
 		$model_plugin = new Algorithms_Extensions_Plugin();
+		$zone = $this->ZoneIdArray();
 	
 		if($this->item_id)
 		{
@@ -918,5 +919,29 @@ class Algorithms_Core_OrdersInfoGeneration
 	
 		return $error;
 	}
+    
+    function ZoneIdArray()
+    {
+    	$data = $this->db->select();
+    	$data->from("materia-products as p", array("products_id"));
+    	$data->joinLeft("zone-definition as z", "z.zone_id=p.zone_id", array("zone_id", "zone_code", "zone_name"));
+    	$rows = $this->db->fetchAll($data);
+    	
+    	$result = array();
+    	
+    	if(!empty($rows))
+    	{
+    		foreach($rows as $row)
+    		{
+    			$result[$row['products_id']] = array(
+    				'zone_id' => $row['zone_id'],
+    				'zone_code' => $row['zone_code'],
+    				'zone_name' => $row['zone_name']
+    			);
+    		}
+    	}
+    	
+    	return $result;
+    }
 }
 ?>
