@@ -360,8 +360,7 @@ class OrdersController extends Zend_Controller_Action
     
     function updateOrderAddItemConfirmAction()
     {
-    	$e = new Algorithms_Extensions_Plugin();
-    	$e->FormatArray($_SESSION['update-order']);die;
+    	
     }
     
     function updateOrderAddItemSubmitAction()
