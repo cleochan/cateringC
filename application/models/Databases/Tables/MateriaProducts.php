@@ -93,7 +93,8 @@ class Databases_Tables_MateriaProducts extends Zend_Db_Table
     				'product_status' => $product['product_status'],
     				'stock_on_hand' => $product['stock_on_hand'],
     				'unit_price' => $get_price[$product['products_id']],
-    				'product_category' => $product['product_category']
+    				'product_category' => $product['product_category'],
+    				'zone_id' => $product['zone_id']
     			);
     		}
     	}

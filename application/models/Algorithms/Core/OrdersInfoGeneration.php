@@ -721,7 +721,7 @@ class Algorithms_Core_OrdersInfoGeneration
 							$_SESSION['update-order']['items']['products'][$product_info['product_id']][0] += 1;
 							$_SESSION['update-order']['items']['products'][$product_info['product_id']][1] = $model_plugin->FormatPrice($product_info['unit_price'] * $_SESSION['update-order']['items']['products'][$product_info['product_id']][0]);
 						}else{ //add one
-							$_SESSION['update-order']['items']['products'][$product_info['product_id']] = array(1, $product_info['unit_price'], $product_info['product_name'], $product_info['product_category']);
+							$_SESSION['update-order']['items']['products'][$product_info['product_id']] = array(1, $product_info['unit_price'], $product_info['product_name'], $zone[$product_info['product_id']['zone_code']], $product_info['product_category']);
 						}
 	
 						//update order amount
