@@ -765,7 +765,7 @@ class Algorithms_Core_OrdersInfoGeneration
 				}
 			}
 		}
-	
+		
 		return $result;
 	}
 	
