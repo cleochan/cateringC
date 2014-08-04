@@ -206,7 +206,7 @@ class OrdersController extends Zend_Controller_Action
     function checkOutAction()
     {
         $params = $this->_request->getParams();
-    	
+    	var_dump($params);die;
     	//proceed
     	$mod_orders = new Databases_Tables_Orders();
     	
