@@ -206,7 +206,7 @@ class OrdersController extends Zend_Controller_Action
     function checkOutAction()
     {
         $params = $this->_request->getParams();
-    	var_dump($params);die;
+    	
     	//proceed
     	$mod_orders = new Databases_Tables_Orders();
     	
@@ -225,6 +225,10 @@ class OrdersController extends Zend_Controller_Action
     	$mod_orders-> orders_subtotal = $_SESSION['eat-in']['payment']['subtotal'];
     	$mod_orders-> orders_coupon = $_SESSION['eat-in']['payment']['used_coupon'];
     	$mod_orders-> orders_discount = $_SESSION['eat-in']['payment']['discount'];
+    	if($params['pending'])
+    	{
+    		$mod_orders-> pending = 1;
+    	}
     	$mod_orders-> orders_items = $_SESSION['eat-in']['items'];
     	
     	$result = $mod_orders-> InsertOrder();

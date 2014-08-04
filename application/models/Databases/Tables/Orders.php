@@ -22,6 +22,7 @@ class Databases_Tables_Orders extends Zend_Db_Table
     var $device_id;
     var $orders_items; //array
     var $take_out_phone;
+    var $pending;
     
     function InsertOrder()
     {
@@ -45,6 +46,10 @@ class Databases_Tables_Orders extends Zend_Db_Table
     		$row->table_id = $this->table_id;
     		$row->users_id = $this->users_id;
     		$row->device_id = $this->device_id;
+    		if($this->pending)
+    		{
+    			$row->pending = 1;
+    		}
     		$orders_id = $row->save();
     		
     		//insert items
