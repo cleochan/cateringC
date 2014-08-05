@@ -116,7 +116,8 @@ class OrdersController extends Zend_Controller_Action
     
     function cartAction()
     {
-    	
+    	$mod_tables = new Databases_Tables_TablesNumber();
+    	$this->view->tables = $mod_tables->DumpTables();
     }
     
     function updateProductAction()
@@ -274,6 +275,9 @@ class OrdersController extends Zend_Controller_Action
     		$mod_orders_info->order_id = $params['orders_id'];
     		$this->view->orders_id = $params['orders_id'];
     		$this->view->data = $mod_orders_info->GetSpecifiedOrderDetails();
+    		
+    		$mod_tables = new Databases_Tables_TablesNumber();
+    		$this->view->tables = $mod_tables->DumpTables();
     	}else{
     		echo "Invalid Action";
     		die;
