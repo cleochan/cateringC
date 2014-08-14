@@ -30,11 +30,12 @@
 <option value="/reports/si?category=<?=$cat_key?><?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" <?php if($cat_key==$this->category){echo "selected='selected'";}?>><?=$cat_val?></option>
 <?php endforeach;?>
 <?php endif;?>
-</select>&nbsp;&nbsp;
+</select><br /><br />
 排序：<select name="orderby" onchange="javascript:location.href=this.value;">
 <option value="/reports/si?orderby=qty<?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?>" <?php if('qty'==$this->orderby){echo "selected='selected'";}?>>销售量</option>
 <option value="/reports/si?orderby=amount<?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?>" <?php if('amount'==$this->orderby){echo "selected='selected'";}?>>销售额</option>
-</select>&nbsp;&nbsp;
+</select><br /><br />
 <a href="/reports/si?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近1天</a>&nbsp;&nbsp;
 <a href="/reports/si?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-7, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近7天</a>&nbsp;&nbsp;
 <a href="/reports/si?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近30天</a>
+<br /><br />
