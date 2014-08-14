@@ -9,7 +9,6 @@ class ReportsController extends Zend_Controller_Action
     
     function preDispatch()
     {
-        echo "aaa";die;
         //get system_name
         $get_title = new Databases_Tables_Params();
         $this->view->system_name = $get_title -> GetVal("system_name");
