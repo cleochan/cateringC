@@ -1,0 +1,45 @@
+<br />
+<a href="/reports/sum-rev/range/day" class="middle blue awesome">按天</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/reports/sum-rev/range/week" class="middle blue awesome">按周</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/reports/sum-rev/range/month" class="middle blue awesome">按月</a>&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="/rport/sync-reports"><font color="red">将最新数据同步至报表</font></a>
+<br /><br />
+<h3>销售额变化曲线图</h3>
+<canvas id="data-range" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>销售额时间分布图</h3>
+<canvas id="data-hour" data-type="Line" width="800" height="400"></canvas>
+
+<script src="/scripts/prettify.js"></script>
+<script src="/scripts/Chart.min.js"></script>
+<script>
+var data = {
+	labels : ["<?=$this->data['result_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			pointColor : "rgba(151,187,205,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_val']?>]
+		}
+	]
+}
+
+var data2 = {
+		labels : ["<?=$this->data['result_hour_key']?>"],
+		datasets : [
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,1)",
+				data : [<?=$this->data['result_hour_val']?>]
+			}
+		]
+	}
+
+var ctx = document.getElementById("data-range").getContext("2d");
+new Chart(ctx).Line(data);
+
+var ctx2 = document.getElementById("data-hour").getContext("2d");
+new Chart(ctx2).Bar(data2);
+</script>

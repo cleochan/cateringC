@@ -1,0 +1,43 @@
+<br />
+类别：<select name="category" onchange="javascript:location.href=this.value;">
+<option value="/reports/sum-items?category=0<?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>">全部</option>
+<?php if($this->categories):?>
+<?php foreach($this->categories as $cat_key => $cat_val):?>
+<option value="/reports/sum-items?category=<?=$cat_key?><?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" <?php if($cat_key==$this->category){echo "selected='selected'";}?>><?=$cat_val?></option>
+<?php endforeach;?>
+<?php endif;?>
+</select>&nbsp;&nbsp;
+排序：<select name="orderby" onchange="javascript:location.href=this.value;">
+<option value="/reports/sum-items?orderby=qty<?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?>" <?php if('qty'==$this->orderby){echo "selected='selected'";}?>>销售量</option>
+<option value="/reports/sum-items?orderby=amount<?php if($this->date_from){echo "&date_from=".$this->date_from;}?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?>" <?php if('amount'==$this->orderby){echo "selected='selected'";}?>>销售额</option>
+</select>&nbsp;&nbsp;
+<a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近1天</a>&nbsp;&nbsp;
+<a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-7, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近7天</a>&nbsp;&nbsp;
+<a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近30天</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="/rport/sync-reports"><font color="red">将最新数据同步至报表</font></a>
+<br /><br />
+<table width="400" border="1" cellpadding="0" cellspacing="0">
+	<tr>
+		<td colspan="4" style="font-size: 20px;"><strong>单品销售排名 Top50</strong></td>
+	</tr>
+	<tr>
+		<td align="center">排名</td>
+		<td align="center">销售量</td>
+		<td align="center">销售额</td>
+		<td align="center">名称</td>
+	</tr>
+	<?php if($this->data):?>
+	<?php $n = 1;?>
+	<?php foreach($this->data as $data):?>
+	<tr>
+		<td align="center"><?=$n?></td>
+		<td align="center"><?=$data['qty']?></td>
+		<td align="center"><?=$data['price']?></td>
+		<td align="center"><?=$data['ritem_name']?></td>
+	</tr>
+	<?php $n += 1;?>
+	<?php if(50 < $n){break;}?>
+	<?php endforeach;?>
+	<?php endif;?>
+</table>
+<br /><br />
