@@ -14,7 +14,6 @@
 <a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近1天</a>&nbsp;&nbsp;
 <a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-7, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近7天</a>&nbsp;&nbsp;
 <a href="/reports/sum-items?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近30天</a>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="/rport/sync-reports"><font color="red">将最新数据同步至报表</font></a>
 <br /><br />
 <table width="400" border="1" cellpadding="0" cellspacing="0">
 	<tr>
