@@ -1,4 +1,10 @@
-<table width="400" border="1" cellpadding="0" cellspacing="0">
+<style>
+td {
+	 font-size: 40px;
+}
+</style>
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
 	<tr>
 		<td colspan="4" style="font-size: 20px;"><strong>单品销售排名 Top50</strong></td>
 	</tr>
@@ -11,7 +17,7 @@
 	<?php if($this->data):?>
 	<?php $n = 1;?>
 	<?php foreach($this->data as $data):?>
-	<tr>
+	<tr bgcolor="<?php if(1 == $n%2){echo "#9F9DAB";}else{echo "#D5D8CD";}?>">
 		<td align="center"><?=$n?></td>
 		<td align="center"><?=$data['qty']?></td>
 		<td align="center"><?=$data['price']?></td>
