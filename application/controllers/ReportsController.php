@@ -2,7 +2,7 @@
 
 class ReportsController extends Zend_Controller_Action
 {
-    function init()
+    function init()//
     {
         $this->db = Zend_Registry::get("db");
     }
