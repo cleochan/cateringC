@@ -53,4 +53,19 @@ class Algorithms_Extensions_Plugin
     	
     	return $result;
     }
+    
+    function MakeToken()
+    {
+    	$mod_params = new Databases_Tables_Params();
+    	$username = $mod_params->GetVal('CateringAUsername');
+    	$password = $mod_params->GetVal('CateringAPassword');
+    	$token_key = $mod_params->GetVal('CateringATokenKey');
+    	 
+    	$token = sha1($password.$token_key.$username);
+    	 
+    	return array(
+    		'username' => $username,
+    		'token' => $token
+    	);
+    }
 }
