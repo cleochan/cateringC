@@ -69,6 +69,10 @@ class Algorithms_RPC_OrdersServices
     			{
     				$mod_log_sync->log_val = $pa['log_val'];
     			}
+    			if($pa['business_channel'])
+    			{
+    				$mod_log_sync->business_channel = $pa['business_channel'];
+    			}
     			$mod_log_sync->AddLog();
     			
     			//combine array

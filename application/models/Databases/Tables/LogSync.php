@@ -23,6 +23,7 @@ class Databases_Tables_LogSync extends Zend_Db_Table
     var $log_key;
     var $log_val;
     var $log_time;
+    var $business_channel;
     
     function AddLog()
     {
@@ -37,6 +38,10 @@ class Databases_Tables_LogSync extends Zend_Db_Table
     		if($this->log_val)
     		{
     			$row->log_val = $this->log_val;
+    		}
+    		if($this->business_channel)
+    		{
+    			$row->business_channel = $this->business_channel;
     		}
     		$row->log_updated_time = date("Y-m-d H:i:s");
     		
