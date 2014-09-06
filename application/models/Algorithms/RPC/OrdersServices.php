@@ -96,31 +96,34 @@ class Algorithms_RPC_OrdersServices
     		{
     			$mod_orders = new Databases_Tables_Orders();
     			
-    			foreach ($event_array['UPDATE_ORDER_STATUS'] as $key => $val)
+    			foreach ($event_array['UPDATE_ORDER_STATUS'] as $key => $val_array)
     			{
-    				if($val['orders_code'] || $val['status'] || $val['payment_status'])
+    				foreach ($val_array as $val)
     				{
-    					$row = $mod_orders->fetchRow("orders_id = '".$key."'");
-    					
-    					if($val['orders_code'])
+    					if($val['orders_code'] || $val['status'] || $val['payment_status'])
     					{
-    						$row->orders_code = $val['orders_code'];
+    						$row = $mod_orders->fetchRow("orders_id = '".$key."'");
+    							
+    						if($val['orders_code'])
+    						{
+    							$row->orders_code = $val['orders_code'];
+    						}
+    							
+    						if($val['status'])
+    						{
+    							$row->orders_status = $val['status'];
+    						}
+    							
+    						if($val['payment_status'])
+    						{
+    							$row->orders_payment_status = $val['payment_status'];
+    						}
+    							
+    						$row->save();
     					}
     					
-    					if($val['status'])
-    					{
-    						$row->orders_status = $val['status'];
-    					}
-    					
-    					if($val['payment_status'])
-    					{
-    						$row->orders_payment_status = $val['payment_status'];
-    					}
-    					
-    					$row->save();
+    					$result += 1;
     				}
-    				
-    				$result += 1;
     			}
     		}
     		
@@ -131,13 +134,16 @@ class Algorithms_RPC_OrdersServices
     		{
     			$mod_products = new Databases_Tables_MateriaProducts();
     			 
-    			foreach ($event_array['UPDATE_PRODUCT_STATUS'] as $key => $val)
+    			foreach ($event_array['UPDATE_PRODUCT_STATUS'] as $key => $val_array)
     			{
-    				$mod_products->product_id = $key;
-    				$mod_products->status = $val['status'];
-    				$mod_products->UpdateStatus();
-    				
-    				$result += 1;
+    				foreach ($val_array as $val)
+    				{
+    					$mod_products->product_id = $key;
+    					$mod_products->status = $val['status'];
+    					$mod_products->UpdateStatus();
+    					
+    					$result += 1;
+    				}
     			}
     		}
     		
@@ -148,13 +154,16 @@ class Algorithms_RPC_OrdersServices
     		{
     			$mod_sets = new Databases_Tables_MateriaSets();
     		
-    			foreach ($event_array['UPDATE_SETS_STATUS'] as $key => $val)
+    			foreach ($event_array['UPDATE_SETS_STATUS'] as $key => $val_array)
     			{
-    				$mod_sets->sets_id = $key;
-    				$mod_sets->status = $val['status'];
-    				$mod_sets->UpdateStatus();
-    				
-    				$result += 1;
+    				foreach ($val_array as $val)
+    				{
+	    				$mod_sets->sets_id = $key;
+	    				$mod_sets->status = $val['status'];
+	    				$mod_sets->UpdateStatus();
+	    				
+	    				$result += 1;
+    				}
     			}
     		}
     		
@@ -168,27 +177,30 @@ class Algorithms_RPC_OrdersServices
     			$items_plus = array();
     			$items_deduct = array();
     		
-    			foreach ($event_array['UPDATE_STOCK'] as $key => $val)
+    			foreach ($event_array['UPDATE_STOCK'] as $key => $val_array)
     			{
-    				if(1 == $val['action_type'])
+    				foreach ($val_array as $val)
     				{
-    					if(!$items_plus[$key])
-    					{
-    						$items_plus[$key] = 0;
-    					}
-    					
-    					$items_plus[$key] += $val['qty'];
-    				}elseif(2 == $val['action_type'])
-    				{
-    					if(!$items_deduct[$key])
-    					{
-    						$items_deduct[$key] = 0;
-    					}
-    					
-    					$items_deduct[$key] += $val['qty'];
+	    				if(1 == $val['action_type'])
+	    				{
+	    					if(!$items_plus[$key])
+	    					{
+	    						$items_plus[$key] = 0;
+	    					}
+	    					
+	    					$items_plus[$key] += $val['qty'];
+	    				}elseif(2 == $val['action_type'])
+	    				{
+	    					if(!$items_deduct[$key])
+	    					{
+	    						$items_deduct[$key] = 0;
+	    					}
+	    					
+	    					$items_deduct[$key] += $val['qty'];
+	    				}
+	    				
+	    				$result += 1;
     				}
-    				
-    				$result += 1;
     			}
     			
     			if(!empty($items_plus))
