@@ -69,6 +69,7 @@ class Algorithms_RPC_OrdersServices
     			{
     				$mod_log_sync->log_val = $pa['log_val'];
     			}
+    			
     			if($pa['business_channel'])
     			{
     				$mod_log_sync->business_channel = $pa['business_channel'];
@@ -84,7 +85,12 @@ class Algorithms_RPC_OrdersServices
     				$event_array[$pa['log_event']] = array();
     			}
     			
-    			$event_array[$pa['log_event']][$pa['log_key']] = $log_val;
+    			if(!$event_array[$pa['log_event']][$pa['log_key']])
+    			{
+    				$event_array[$pa['log_event']][$pa['log_key']] = array();
+    			}
+    			
+    			$event_array[$pa['log_event']][$pa['log_key']][] = $log_val;
     		}
     		
     		//proceed
