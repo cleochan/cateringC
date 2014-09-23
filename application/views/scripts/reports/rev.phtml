@@ -1,7 +1,22 @@
-<h3>销售额变化曲线图</h3>
+<h3>营业额变化曲线图</h3>
 <canvas id="data-range" data-type="Line" width="800" height="400"></canvas>
 <br /><br />
-<h3>销售额时间分布图</h3>
+<h3>早市营业额（00:00-10:29）</h3>
+<canvas id="data-breakfast" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>午市营业额（10:30-13:59）</h3>
+<canvas id="data-lunch" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>下午茶营业额（14:00-16:59）</h3>
+<canvas id="data-afternoon" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>晚市营业额（17:00-19:59）</h3>
+<canvas id="data-dinner" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>宵夜营业额（20:00-23:59）</h3>
+<canvas id="data-night" data-type="Line" width="800" height="400"></canvas>
+<br /><br />
+<h3>营业额时间分布图</h3>
 <canvas id="data-hour" data-type="Line" width="800" height="400"></canvas>
 <br /><br />
 <a href="/reports/rev/range/day" class="middle blue awesome">按天</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,9 +50,81 @@ var data2 = {
 		]
 	}
 
+
+
+var data3 = {
+	labels : ["<?=$this->data['result_breakfast_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_breakfast_val']?>]
+		}
+	]
+}
+
+var data4 = {
+	labels : ["<?=$this->data['result_lunch_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_lunch_val']?>]
+		}
+	]
+}
+
+var data5 = {
+	labels : ["<?=$this->data['result_afternoon_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_afternoon_val']?>]
+		}
+	]
+}
+
+var data6 = {
+	labels : ["<?=$this->data['result_dinner_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_dinner_val']?>]
+		}
+	]
+}
+
+var data7 = {
+	labels : ["<?=$this->data['result_night_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_night_val']?>]
+		}
+	]
+}
+	
 var ctx = document.getElementById("data-range").getContext("2d");
 new Chart(ctx).Line(data);
 
 var ctx2 = document.getElementById("data-hour").getContext("2d");
 new Chart(ctx2).Bar(data2);
+
+var ctx3 = document.getElementById("data-breakfast").getContext("2d");
+new Chart(ctx3).Line(data3);
+
+var ctx4 = document.getElementById("data-lunch").getContext("2d");
+new Chart(ctx4).Line(data4);
+
+var ctx5 = document.getElementById("data-afternoon").getContext("2d");
+new Chart(ctx5).Line(data5);
+
+var ctx6 = document.getElementById("data-dinner").getContext("2d");
+new Chart(ctx6).Line(data6);
+
+var ctx7 = document.getElementById("data-night").getContext("2d");
+new Chart(ctx7).Line(data7);
 </script>
