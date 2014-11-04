@@ -77,14 +77,12 @@ class Databases_Joins_Reports
     		$rows = $this->db->fetchAll($data);
     
     		/*
-    		 * breakfast 00:00 - 10:29
-    		* lunch 10:30 - 13:59
+    		 * lunch 08:00 - 13:59
     		* afternoon 14:00 - 16:59
     		* dinner 17:00 - 19:59
-    		* night 20:00 - 23:59
+    		* night 20:00 - 21:59
+    		* midnight 22:00 - 01:59
     		*/
-    		$result_breakfast_key = array();
-    		$result_breakfast_val = array();
     		$result_lunch_key = array();
     		$result_lunch_val = array();
     		$result_afternoon_key = array();
@@ -93,12 +91,14 @@ class Databases_Joins_Reports
     		$result_dinner_val = array();
     		$result_night_key = array();
     		$result_night_val = array();
+    		$result_midnight_key = array();
+    		$result_midnight_val = array();
     
-    		$breakfast = array();
     		$lunch = array();
     		$afternoon = array();
     		$dinner = array();
     		$night = array();
+    		$midnight = array();
     
     		if(!empty($rows))
     		{
@@ -109,16 +109,7 @@ class Databases_Joins_Reports
     
     				$day = substr($row['order_time'],5,5);
     
-    				if($hour < 10 || ($hour==10 && $min < 30))
-    				{
-    					if(!$breakfast[$day])
-    					{
-    						$breakfast[$day] = 0;
-    					}
-    						
-    					$breakfast[$day] += $row['order_amount'];
-    						
-    				}elseif(($hour==10 && $min >= 30) || in_array($hour, array(11,12,13)))
+    				if(in_array($hour, array(8,9,10,11,12,13,'08','09')))
     				{
     					if(!$lunch[$day])
     					{
@@ -145,7 +136,7 @@ class Databases_Joins_Reports
     						
     					$dinner[$day] += $row['order_amount'];
     						
-    				}elseif(in_array($hour, array(20,21,22,23)))
+    				}elseif(in_array($hour, array(20,21)))
     				{
     					if(!$night[$day])
     					{
@@ -153,16 +144,14 @@ class Databases_Joins_Reports
     					}
     						
     					$night[$day] += $row['order_amount'];
-    						
-    				}
-    			}
-    			 
-    			if(!empty($breakfast))
-    			{
-    				foreach($breakfast as $breakfast_key => $breakfast_val)
+    				}elseif(in_array($hour, array(0,1,22,23,'00','01')))
     				{
-    					$result_breakfast_key[] = $breakfast_key;
-    					$result_breakfast_val[] = $breakfast_val;
+    					if(!$midnight[$day])
+    					{
+    						$midnight[$day] = 0;
+    					}
+    						
+    					$midnight[$day] += $row['order_amount'];
     				}
     			}
     			 
@@ -199,6 +188,15 @@ class Databases_Joins_Reports
     				{
     					$result_night_key[] = $night_key;
     					$result_night_val[] = $night_val;
+    				}
+    			}
+    			 
+    			if(!empty($midnight))
+    			{
+    				foreach($midnight as $midnight_key => $midnight_val)
+    				{
+    					$result_midnight_key[] = $midnight_key;
+    					$result_midnight_val[] = $midnight_val;
     				}
     			}
     		}
@@ -243,14 +241,12 @@ class Databases_Joins_Reports
     		$rows = $this->db->fetchAll($data);
     
     		/*
-    		 * breakfast 00:00 - 10:29
-    		* lunch 10:30 - 13:59
+    		 * lunch 08:00 - 13:59
     		* afternoon 14:00 - 16:59
     		* dinner 17:00 - 19:59
-    		* night 20:00 - 23:59
+    		* night 20:00 - 21:59
+    		* midnight 22:00 - 01:59
     		*/
-    		$result_breakfast_key = array();
-    		$result_breakfast_val = array();
     		$result_lunch_key = array();
     		$result_lunch_val = array();
     		$result_afternoon_key = array();
@@ -259,12 +255,14 @@ class Databases_Joins_Reports
     		$result_dinner_val = array();
     		$result_night_key = array();
     		$result_night_val = array();
+    		$result_midnight_key = array();
+    		$result_midnight_val = array();
     
-    		$breakfast = array();
     		$lunch = array();
     		$afternoon = array();
     		$dinner = array();
     		$night = array();
+    		$midnight = array();
     
     		if(!empty($rows))
     		{
@@ -275,16 +273,7 @@ class Databases_Joins_Reports
     
     				$week = date("W", mktime(0,0,0,substr($row['order_time'],5,2),substr($row['order_time'],8,2),substr($row['order_time'],0,4)));
     
-    				if($hour < 10 || ($hour==10 && $min < 30))
-    				{
-    					if(!$breakfast[$week])
-    					{
-    						$breakfast[$week] = 0;
-    					}
-    
-    					$breakfast[$week] += $row['order_amount'];
-    
-    				}elseif(($hour==10 && $min >= 30) || in_array($hour, array(11,12,13)))
+    				if(in_array($hour, array(8,9,10,11,12,13,'08','09')))
     				{
     					if(!$lunch[$week])
     					{
@@ -311,7 +300,7 @@ class Databases_Joins_Reports
     
     					$dinner[$week] += $row['order_amount'];
     
-    				}elseif(in_array($hour, array(20,21,22,23)))
+    				}elseif(in_array($hour, array(20,21)))
     				{
     					if(!$night[$week])
     					{
@@ -320,15 +309,15 @@ class Databases_Joins_Reports
     
     					$night[$week] += $row['order_amount'];
     
-    				}
-    			}
-    
-    			if(!empty($breakfast))
-    			{
-    				foreach($breakfast as $breakfast_key => $breakfast_val)
+    				}elseif(in_array($hour, array(22,23,0,1,'00','01')))
     				{
-    					$result_breakfast_key[] = $breakfast_key;
-    					$result_breakfast_val[] = $breakfast_val;
+    					if(!$midnight[$week])
+    					{
+    						$midnight[$week] = 0;
+    					}
+    
+    					$midnight[$week] += $row['order_amount'];
+    
     				}
     			}
     
@@ -365,6 +354,15 @@ class Databases_Joins_Reports
     				{
     					$result_night_key[] = $night_key;
     					$result_night_val[] = $night_val;
+    				}
+    			}
+    
+    			if(!empty($midnight))
+    			{
+    				foreach($midnight as $midnight_key => $midnight_val)
+    				{
+    					$result_midnight_key[] = $midnight_key;
+    					$result_midnight_val[] = $midnight_val;
     				}
     			}
     		}
@@ -409,14 +407,12 @@ class Databases_Joins_Reports
     		$rows = $this->db->fetchAll($data);
     
     		/*
-    		 * breakfast 00:00 - 10:29
-    		* lunch 10:30 - 13:59
+    		 * lunch 08:00 - 13:59
     		* afternoon 14:00 - 16:59
     		* dinner 17:00 - 19:59
-    		* night 20:00 - 23:59
+    		* night 20:00 - 21:59
+    		* midnight 22:00 - 01:59
     		*/
-    		$result_breakfast_key = array();
-    		$result_breakfast_val = array();
     		$result_lunch_key = array();
     		$result_lunch_val = array();
     		$result_afternoon_key = array();
@@ -425,12 +421,14 @@ class Databases_Joins_Reports
     		$result_dinner_val = array();
     		$result_night_key = array();
     		$result_night_val = array();
+    		$result_midnight_key = array();
+    		$result_midnight_val = array();
     
-    		$breakfast = array();
     		$lunch = array();
     		$afternoon = array();
     		$dinner = array();
     		$night = array();
+    		$midnight = array();
     
     		if(!empty($rows))
     		{
@@ -441,16 +439,7 @@ class Databases_Joins_Reports
     
     				$month = substr($row['order_time'],5,2);
     
-    				if($hour < 10 || ($hour==10 && $min < 30))
-    				{
-    					if(!$breakfast[$month])
-    					{
-    						$breakfast[$month] = 0;
-    					}
-    
-    					$breakfast[$month] += $row['order_amount'];
-    
-    				}elseif(($hour==10 && $min >= 30) || in_array($hour, array(11,12,13)))
+    				if(in_array($hour, array(8,9,10,11,12,13,'08','09')))
     				{
     					if(!$lunch[$month])
     					{
@@ -477,7 +466,7 @@ class Databases_Joins_Reports
     
     					$dinner[$month] += $row['order_amount'];
     
-    				}elseif(in_array($hour, array(20,21,22,23)))
+    				}elseif(in_array($hour, array(20,21)))
     				{
     					if(!$night[$month])
     					{
@@ -486,15 +475,15 @@ class Databases_Joins_Reports
     
     					$night[$month] += $row['order_amount'];
     
-    				}
-    			}
-    
-    			if(!empty($breakfast))
-    			{
-    				foreach($breakfast as $breakfast_key => $breakfast_val)
+    				}elseif(in_array($hour, array(22,23,0,1,'00','01')))
     				{
-    					$result_breakfast_key[] = $breakfast_key;
-    					$result_breakfast_val[] = $breakfast_val;
+    					if(!$midnight[$month])
+    					{
+    						$midnight[$month] = 0;
+    					}
+    
+    					$midnight[$month] += $row['order_amount'];
+    
     				}
     			}
     
@@ -533,6 +522,15 @@ class Databases_Joins_Reports
     					$result_night_val[] = $night_val;
     				}
     			}
+    
+    			if(!empty($midnight))
+    			{
+    				foreach($midnight as $midnight_key => $midnight_val)
+    				{
+    					$result_midnight_key[] = $midnight_key;
+    					$result_midnight_val[] = $midnight_val;
+    				}
+    			}
     		}
     
     		$data = $this->db->select();
@@ -556,8 +554,6 @@ class Databases_Joins_Reports
     	$result['result_val'] = implode(",", $result_val);
     	$result['result_hour_key'] = implode('","', $result_hour_key);
     	$result['result_hour_val'] = implode(",", $result_hour_val);
-    	$result['result_breakfast_key'] = implode('","', $result_breakfast_key);
-    	$result['result_breakfast_val'] = implode(",", $result_breakfast_val);
     	$result['result_lunch_key'] = implode('","', $result_lunch_key);
     	$result['result_lunch_val'] = implode(",", $result_lunch_val);
     	$result['result_afternoon_key'] = implode('","', $result_afternoon_key);
@@ -566,6 +562,8 @@ class Databases_Joins_Reports
     	$result['result_dinner_val'] = implode(",", $result_dinner_val);
     	$result['result_night_key'] = implode('","', $result_night_key);
     	$result['result_night_val'] = implode(",", $result_night_val);
+    	$result['result_midnight_key'] = implode('","', $result_midnight_key);
+    	$result['result_midnight_val'] = implode(",", $result_midnight_val);
     	 
     	return $result;
     }
