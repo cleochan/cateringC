@@ -31,149 +31,149 @@
 <script src="/scripts/Chart.min.js"></script>
 <script>
 var data = {
-		labels : ["<?=$this->data['result_key']?>"],
-		datasets : [
-			{
-				label: "全天",
-				fillColor : "rgba(220,220,220,0.5)",
-				strokeColor : "rgba(220,220,220,1)",
-				pointColor : "rgba(220,220,220,1)",
-				pointStrokeColor : "#fff",
-				data : [<?=$this->data['result_val']?>]
-			},
-			{
-				label: "午市",
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				pointColor : "rgba(151,187,205,1)",
-				pointStrokeColor : "#fff",
-				data : [<?=$this->data['result_lunch_val']?>]
-			},
-			{
-				label: "下午茶",
-				fillColor : "rgba(204,0,102,0.5)",
-				strokeColor : "rgba(204,0,102,1)",
-				pointColor : "rgba(204,0,102,1)",
-				pointStrokeColor : "#fff",
-				data : [<?=$this->data['result_afternoon_val']?>]
-			},
-			{
-				label: "晚市",
-				fillColor : "rgba(204,204,102,0.5)",
-				strokeColor : "rgba(204,204,102,1)",
-				pointColor : "rgba(204,204,102,1)",
-				pointStrokeColor : "#fff",
-				data : [<?=$this->data['result_dinner_val']?>]
-			},
-			{
-				label: "宵夜",
-				fillColor : "rgba(102,153,51,0.5)",
-				strokeColor : "rgba(102,153,51,1)",
-				pointColor : "rgba(102,153,51,1)",
-				pointStrokeColor : "#fff",
-				data : [<?=$this->data['result_night_val']?>]
-			}
-		]
-	}
+	labels : ["<?=$this->data['result_key']?>"],
+	datasets : [
+		{
+			label: "全天",
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_val']?>]
+		},
+		{
+			label: "午市",
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			pointColor : "rgba(151,187,205,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_lunch_val']?>]
+		},
+		{
+			label: "下午茶",
+			fillColor : "rgba(204,0,102,0.5)",
+			strokeColor : "rgba(204,0,102,1)",
+			pointColor : "rgba(204,0,102,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_afternoon_val']?>]
+		},
+		{
+			label: "晚市",
+			fillColor : "rgba(204,204,102,0.5)",
+			strokeColor : "rgba(204,204,102,1)",
+			pointColor : "rgba(204,204,102,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_dinner_val']?>]
+		},
+		{
+			label: "宵夜",
+			fillColor : "rgba(102,153,51,0.5)",
+			strokeColor : "rgba(102,153,51,1)",
+			pointColor : "rgba(102,153,51,1)",
+			pointStrokeColor : "#fff",
+			data : [<?=$this->data['result_night_val']?>]
+		}
+	]
+}
 
-	var data2 = {
-		labels : ["<?=$this->data['result_hour_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_hour_val']?>]
-			}
-		]
-	}
+var data2 = {
+	labels : ["<?=$this->data['result_hour_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_hour_val']?>]
+		}
+	]
+}
 
-	var data4 = {
-		labels : ["<?=$this->data['result_lunch_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_lunch_val']?>]
-			}
-		]
-	}
+var data4 = {
+	labels : ["<?=$this->data['result_lunch_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_lunch_val']?>]
+		}
+	]
+}
 
-	var data5 = {
-		labels : ["<?=$this->data['result_afternoon_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_afternoon_val']?>]
-			}
-		]
-	}
+var data5 = {
+	labels : ["<?=$this->data['result_afternoon_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(204,0,102,0.5)",
+			strokeColor : "rgba(204,0,102,1)",
+			data : [<?=$this->data['result_afternoon_val']?>]
+		}
+	]
+}
 
-	var data6 = {
-		labels : ["<?=$this->data['result_dinner_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_dinner_val']?>]
-			}
-		]
-	}
+var data6 = {
+	labels : ["<?=$this->data['result_dinner_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(204,204,102,0.5)",
+			strokeColor : "rgba(204,204,102,1)",
+			data : [<?=$this->data['result_dinner_val']?>]
+		}
+	]
+}
 
-	var data7 = {
-		labels : ["<?=$this->data['result_night_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_night_val']?>]
-			}
-		]
-	}
+var data7 = {
+	labels : ["<?=$this->data['result_night_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(102,153,51,0.5)",
+			strokeColor : "rgba(102,153,51,1)",
+			data : [<?=$this->data['result_night_val']?>]
+		}
+	]
+}
 
-	var data8 = {
-		labels : ["<?=$this->data['result_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_customer_qty']?>]
-			}
-		]
-	}
+var data8 = {
+	labels : ["<?=$this->data['result_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_customer_qty']?>]
+		}
+	]
+}
 
-	var data9 = {
-		labels : ["<?=$this->data['result_key']?>"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				data : [<?=$this->data['result_avg_sale']?>]
-			}
-		]
-	}
+var data9 = {
+	labels : ["<?=$this->data['result_key']?>"],
+	datasets : [
+		{
+			fillColor : "rgba(151,187,205,0.5)",
+			strokeColor : "rgba(151,187,205,1)",
+			data : [<?=$this->data['result_avg_sale']?>]
+		}
+	]
+}
 
-	var ctx = document.getElementById("data-range").getContext("2d");
-	new Chart(ctx).Line(data);
+var ctx = document.getElementById("data-range").getContext("2d");
+new Chart(ctx).Line(data);
 
-	var ctx2 = document.getElementById("data-hour").getContext("2d");
-	new Chart(ctx2).Bar(data2);
+var ctx2 = document.getElementById("data-hour").getContext("2d");
+new Chart(ctx2).Bar(data2);
 
-	var ctx4 = document.getElementById("data-lunch").getContext("2d");
-	new Chart(ctx4).Line(data4);
+var ctx4 = document.getElementById("data-lunch").getContext("2d");
+new Chart(ctx4).Line(data4);
 
-	var ctx5 = document.getElementById("data-afternoon").getContext("2d");
-	new Chart(ctx5).Line(data5);
+var ctx5 = document.getElementById("data-afternoon").getContext("2d");
+new Chart(ctx5).Line(data5);
 
-	var ctx6 = document.getElementById("data-dinner").getContext("2d");
-	new Chart(ctx6).Line(data6);
+var ctx6 = document.getElementById("data-dinner").getContext("2d");
+new Chart(ctx6).Line(data6);
 
-	var ctx7 = document.getElementById("data-night").getContext("2d");
-	new Chart(ctx7).Line(data7);
+var ctx7 = document.getElementById("data-night").getContext("2d");
+new Chart(ctx7).Line(data7);
 
-	var ctx8 = document.getElementById("data-customer-qty").getContext("2d");
-	new Chart(ctx8).Line(data8);
+var ctx8 = document.getElementById("data-customer-qty").getContext("2d");
+new Chart(ctx8).Line(data8);
 
-	var ctx9 = document.getElementById("data-avg-sale").getContext("2d");
-	new Chart(ctx9).Line(data9);
+var ctx9 = document.getElementById("data-avg-sale").getContext("2d");
+new Chart(ctx9).Line(data9);
 </script>
