@@ -1,5 +1,5 @@
 <strong>营业额总览</strong>&nbsp;
-<font color="#dcdcdc">➊全天</font>&nbsp;&nbsp;<font color="#97bbcd">➋午市</font>&nbsp;&nbsp;<font color="#cc0066">➌下午茶</font>&nbsp;&nbsp;<font color="#cccc66">➍晚市</font>&nbsp;&nbsp;<font color="#669933">➎宵夜</font><br />
+<font color="#dcdcdc">➊全天</font>&nbsp;&nbsp;<font color="#97bbcd">➋午市</font>&nbsp;&nbsp;<font color="#cc0066">➌下午茶</font>&nbsp;&nbsp;<font color="#ffaa56">➍晚市</font>&nbsp;&nbsp;<font color="#669933">➎宵夜</font><br />
 <canvas id="data-range" data-type="Line" width="800" height="400"></canvas>
 <br /><br />
 <strong>午市（08:00-14:00）</strong>
@@ -59,9 +59,9 @@ var data = {
 		},
 		{
 			label: "晚市",
-			fillColor : "rgba(204,204,102,0.5)",
-			strokeColor : "rgba(204,204,102,1)",
-			pointColor : "rgba(204,204,102,1)",
+			fillColor : "rgba(255,170,86,0.5)",
+			strokeColor : "rgba(255,170,86,1)",
+			pointColor : "rgba(255,170,86,1)",
 			pointStrokeColor : "#fff",
 			data : [<?=$this->data['result_dinner_val']?>]
 		},
@@ -113,8 +113,8 @@ var data6 = {
 	labels : ["<?=$this->data['result_dinner_key']?>"],
 	datasets : [
 		{
-			fillColor : "rgba(204,204,102,0.5)",
-			strokeColor : "rgba(204,204,102,1)",
+			fillColor : "rgba(255,170,86,0.5)",
+			strokeColor : "rgba(255,170,86,1)",
 			data : [<?=$this->data['result_dinner_val']?>]
 		}
 	]
