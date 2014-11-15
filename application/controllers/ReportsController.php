@@ -78,6 +78,9 @@ class ReportsController extends Zend_Controller_Action
     		{
     			$amount += $pie_val['price'];
     		}
+    		
+    		$this->view->amount = $amount;
+    		$this->view->pie_data = $pie;
     	
     		foreach($pie as $pie_val)
     		{
