@@ -8,7 +8,7 @@ td {
 <br /><br />
 <h3>分类占比明细</h3>
 <table width="100%" border="0" cellpadding="1" cellspacing="1">
-	<tr>
+	<tr bgcolor="#ccc">
 		<td align="center">排名</td>
 		<td align="center">分类</td>
 		<td align="center">销售量</td>
@@ -17,7 +17,7 @@ td {
 	<?php if($this->pie_data):?>
 	<?php $m = 1;?>
 	<?php foreach($this->pie_data as $pie_data):?>
-	<tr>
+	<tr bgcolor="<?php if(1 == $n%2){echo "#9F9DAB";}else{echo "#D5D8CD";}?>">
 		<td align="center"><?=$m?></td>
 		<td align="center"><?=$pie_data['category_name']?></td>
 		<td align="center"><?=$pie_data['price']?>元</td>
@@ -25,7 +25,7 @@ td {
 	</tr>
 	<?php $m += 1;?>
 	<?php endforeach;?>
-	<tr>
+	<tr bgcolor="#ccc">
 		<td align="center" colspan="2">合计</td>
 		<td align="center"><?=number_format($this->amount,2,'.','')?>元</td>
 		<td align="center">100.0%</td>
@@ -35,7 +35,7 @@ td {
 <br /><br />
 <h3>单品销售排名 Top50</h3>
 <table width="100%" border="0" cellpadding="1" cellspacing="1">
-	<tr>
+	<tr bgcolor="#ccc">
 		<td align="center">排名</td>
 		<td align="center">销售量</td>
 		<td align="center">销售额</td>
