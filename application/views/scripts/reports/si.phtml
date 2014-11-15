@@ -3,6 +3,9 @@ td {
 	 font-size: 40px;
 }
 </style>
+<h3>分类占比</h3>
+<canvas id="category-pie" data-type="Pie" width="400" height="400"></canvas>
+<br /><br />
 <h3>单品销售排名 Top50</h3>
 <table width="100%" border="0" cellpadding="1" cellspacing="1">
 	<tr>
@@ -42,3 +45,12 @@ td {
 <a href="/reports/si?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-7, date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近7天</a>&nbsp;&nbsp;
 <a href="/reports/si?date_from=<?php echo date("Y-m-d", mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));?><?php if($this->date_to){echo "&date_to=".$this->date_to;}?><?php if($this->category){echo "&category=".$this->category;}?><?php if($this->orderby){echo "&orderby=".$this->orderby;}?>" class="middle blue awesome">近30天</a>
 <br /><br />
+
+<script src="/scripts/prettify.js"></script>
+<script src="/scripts/Chart.min.js"></script>
+<script>
+var data = [<?=$this->pie?>];
+
+var ctx = document.getElementById("category-pie").getContext("2d");
+new Chart(ctx).Pie(data);
+</script>

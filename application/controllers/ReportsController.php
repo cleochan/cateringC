@@ -29,15 +29,23 @@ class ReportsController extends Zend_Controller_Action
     	
     	if($params['date_from'])
     	{
-    		$mod_reports->date_from = $params['date_from'];
-    		$this->view->date_from = $params['date_from'];
+    		$date_from = $params['date_from'];
+    	}else{
+    		$date_from = date("Y-m-d", mktime(0, 0, 0, date("m")  , date("d")-1, date("Y")));
     	}
+    	
+    	$mod_reports->date_from = $date_from;
+    	$this->view->date_from = $date_from;
     	
     	if($params['date_to'])
     	{
-    		$mod_reports->date_to = $params['date_to'];
-    		$this->view->date_to = $params['date_to'];
+    		$data_to = $params['date_to'];
+    	}else{
+    		$date_to = date("Y-m-d", time());
     	}
+    	
+    	$mod_reports->date_to = $date_to;
+    	$this->view->date_to = $date_to;
     	
     	if($params['category'] || 0 == $params['category'])
     	{
@@ -57,6 +65,29 @@ class ReportsController extends Zend_Controller_Action
     	$mod_categories = new Databases_Tables_MateriaCategories();
     	$this->view->categories = $mod_categories->DumpAll();
     	
+    	//make pie
+    	$pie = $mod_reports->MakeCategoriesPie();
+    	 
+    	$pie_array = array();
+    	 
+    	if(!empty($pie))
+    	{
+    		$amount = 0;
+    	
+    		foreach($pie as $pie_val)
+    		{
+    			$amount += $pie_val['price'];
+    		}
+    	
+    		foreach($pie as $pie_val)
+    		{
+    			$percent = number_format($pie_val['price'] / $amount * 100, 1, '.', '');
+    			 
+    			$pie_array[] = "{label: '".$pie_val['category_name']." ".$percent."%',value:".$pie_val['price'].",color:'#".$pie_val['category_color']."'}";
+    		}
+    	}
+    	 
+    	$this->view->pie = implode(",", $pie_array);
     }
     
     function revAction()

@@ -45,6 +45,30 @@ class Databases_Joins_Reports
     	return $rows;
     }
     
+    function MakeCategoriesPie()
+    {
+    	$data = $this->db->select();
+    	$data->from("report-items as r", array("rcategory", "sum(ritem_price) as price"));
+    	$data->joinLeft("materia-categories as g", "g.categories_id=r.rcategory", array("category_name", "category_color"));
+
+    	if($this->date_from)
+    	{
+    		$data->where("rdate >= ?", $this->date_from." 00:00:00");
+    	}
+    	
+    	if($this->date_to)
+    	{
+    		$data->where("rdate <= ?", $this->date_to." 23:59:59");
+    	}
+    	
+    	$data->group("rcategory");
+    	$data->having("price > ?", 0);
+    	
+    	$rows = $this->db->fetchAll($data);
+    	
+    	return $rows;
+    }
+    
     function MakeReportRevList($range)
     {
     	$mod_plugin = new Algorithms_Extensions_Plugin();
