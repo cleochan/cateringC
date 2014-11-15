@@ -63,6 +63,7 @@ class Databases_Joins_Reports
     	
     	$data->group("rcategory");
     	$data->having("price > ?", 0);
+    	$data->order("price DESC");
     	
     	$rows = $this->db->fetchAll($data);
     	
