@@ -17,7 +17,7 @@ td {
 	<?php if($this->pie_data):?>
 	<?php $m = 1;?>
 	<?php foreach($this->pie_data as $pie_data):?>
-	<tr bgcolor="<?php if(1 == $m%2){echo "#9F9DAB";}else{echo "#D5D8CD";}?>">
+	<tr bgcolor="#<?=$pie_data['category_color']?>">
 		<td align="center"><?=$m?></td>
 		<td align="center"><?=$pie_data['category_name']?></td>
 		<td align="center"><?=$pie_data['price']?>元</td>
