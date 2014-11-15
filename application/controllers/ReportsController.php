@@ -81,7 +81,7 @@ class ReportsController extends Zend_Controller_Action
     		
     		$this->view->amount = $amount;
     		$this->view->pie_data = $pie;
-    	
+    		var_dump($this->view->pie_data);die;
     		foreach($pie as $pie_val)
     		{
     			$percent = number_format($pie_val['price'] / $amount * 100, 1, '.', '');
