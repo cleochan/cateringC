@@ -158,40 +158,40 @@ class Databases_Joins_Reports
     				
     				$day = substr($row['order_time'],5,5);
     				
+    				if(!$lunch[$day])
+    				{
+    					$lunch[$day] = 0;
+    				}
+    				
+    				if(!$afternoon[$day])
+    				{
+    					$afternoon[$day] = 0;
+    				}
+    				
+    				if(!$dinner[$day])
+    				{
+    					$dinner[$day] = 0;
+    				}
+    				
+    				if(!$night[$day])
+    				{
+    					$night[$day] = 0;
+    				}
+    				
     				if(in_array($hour, array(9,10,11,12,13,'09')))
     				{
-    					if(!$lunch[$day])
-    					{
-    						$lunch[$day] = 0;
-    					}
-    					
     					$lunch[$day] += $row['order_amount'];
     					
     				}elseif(in_array($hour, array(14,15,16)))
     				{
-    					if(!$afternoon[$day])
-    					{
-    						$afternoon[$day] = 0;
-    					}
-    					
     					$afternoon[$day] += $row['order_amount'];
     					
     				}elseif(in_array($hour, array(17,18,19,20)))
     				{
-    					if(!$dinner[$day])
-    					{
-    						$dinner[$day] = 0;
-    					}
-    					
     					$dinner[$day] += $row['order_amount'];
     					
     				}elseif(in_array($hour, array(21,22,23,0,'00')))
     				{
-    					if(!$night[$day])
-    					{
-    						$night[$day] = 0;
-    					}
-    					
     					$night[$day] += $row['order_amount'];
     				}
     			}
@@ -325,40 +325,40 @@ class Databases_Joins_Reports
     		
     				$week = date("W", mktime(0,0,0,substr($row['order_time'],5,2),substr($row['order_time'],8,2),substr($row['order_time'],0,4)));
     		
+    				if(!$lunch[$week])
+    				{
+    					$lunch[$week] = 0;
+    				}
+    				
+    				if(!$afternoon[$week])
+    				{
+    					$afternoon[$week] = 0;
+    				}
+    				
+    				if(!$dinner[$week])
+    				{
+    					$dinner[$week] = 0;
+    				}
+    				
+    				if(!$night[$week])
+    				{
+    					$night[$week] = 0;
+    				}
+    				
     				if(in_array($hour, array(9,10,11,12,13,'09')))
     				{
-    					if(!$lunch[$week])
-    					{
-    						$lunch[$week] = 0;
-    					}
-    						
     					$lunch[$week] += $row['order_amount'];
     						
     				}elseif(in_array($hour, array(14,15,16)))
     				{
-    					if(!$afternoon[$week])
-    					{
-    						$afternoon[$week] = 0;
-    					}
-    						
     					$afternoon[$week] += $row['order_amount'];
     						
     				}elseif(in_array($hour, array(17,18,19,20)))
     				{
-    					if(!$dinner[$week])
-    					{
-    						$dinner[$week] = 0;
-    					}
-    						
     					$dinner[$week] += $row['order_amount'];
     						
     				}elseif(in_array($hour, array(21,22,23,0,'00')))
-    				{
-    					if(!$night[$week])
-    					{
-    						$night[$week] = 0;
-    					}
-    						
+    				{	
     					$night[$week] += $row['order_amount'];
     						
     				}
@@ -492,41 +492,41 @@ class Databases_Joins_Reports
     				$min = substr($row['order_time'],14,2);
     		
     				$month = substr($row['order_time'],5,2);
+    				
+    				if(!$lunch[$month])
+    				{
+    					$lunch[$month] = 0;
+    				}
+    				
+    				if(!$afternoon[$month])
+    				{
+    					$afternoon[$month] = 0;
+    				}
+    				
+    				if(!$dinner[$month])
+    				{
+    					$dinner[$month] = 0;
+    				}
+    				
+    				if(!$night[$month])
+    				{
+    					$night[$month] = 0;
+    				}
     		
     				if(in_array($hour, array(9,10,11,12,13,'09')))
     				{
-    					if(!$lunch[$month])
-    					{
-    						$lunch[$month] = 0;
-    					}
-    		
     					$lunch[$month] += $row['order_amount'];
     		
     				}elseif(in_array($hour, array(14,15,16)))
     				{
-    					if(!$afternoon[$month])
-    					{
-    						$afternoon[$month] = 0;
-    					}
-    		
     					$afternoon[$month] += $row['order_amount'];
     		
     				}elseif(in_array($hour, array(17,18,19,20)))
     				{
-    					if(!$dinner[$month])
-    					{
-    						$dinner[$month] = 0;
-    					}
-    		
     					$dinner[$month] += $row['order_amount'];
     		
     				}elseif(in_array($hour, array(21,22,23,0,'00')))
     				{
-    					if(!$night[$month])
-    					{
-    						$night[$month] = 0;
-    					}
-    		
     					$night[$month] += $row['order_amount'];
     		
     				}
